@@ -1,0 +1,346 @@
+#SignInBG {
+    -fx-background-image: url("Pics/Pattern.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.BG {
+    -fx-background-color: #FFFDF7;
+}
+
+.nav {
+    -fx-background-image: url("Pics/Dashboard.png");
+}
+
+.btn {
+    -fx-background-color: #F6A048;
+    -fx-background-radius: 999;
+    -fx-text-fill: #F8F9F9;
+}
+.btn:hover {
+    -fx-background-color: rgba(246, 160, 72, 0.7);
+    -fx-cursor: hand;
+}
+.btn:pressed {
+    -fx-background-color: #e37315;
+}
+
+.btnDelete {
+    -fx-background-color: #D05C2F;
+    -fx-background-radius: 999;
+    -fx-text-fill: #F8F9F9;
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-padding: 5;
+}
+.btnDelete:hover {
+    -fx-background-color: rgba(208, 92, 47, 0.7);
+    -fx-cursor: hand;
+}
+.btnDelete:pressed {
+    -fx-background-color: #be4517;
+}
+
+.btnNav {
+    -fx-background-color: transparent;
+    -fx-text-fill: #54362E;
+}
+.btnNav:hover {
+    -fx-cursor: hand;
+}
+.btnNav:pressed {
+    -fx-background-color: rgba(148, 148, 148, 0.3);
+}
+
+.btnTickVouc {
+    -fx-background-color: rgba(246, 160, 72, 0.5);
+    -fx-text-fill: #54362E;
+    -fx-font-size: 18;
+    -fx-background-radius: 10 10 0 0;
+    -fx-font-weight: bold;
+}
+.active {
+    -fx-background-color: rgba(246, 160, 72, 0.3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+.active:disabled {
+    -fx-opacity: 1.0;  /* ellers bliver disabled automatisk grå */
+}
+.inactive:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.txtField {
+    -fx-background-color: #F8F9F9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: #6C5046;
+    -fx-text-fill: #54362E;
+    -fx-prompt-text-fill: rgba(84, 54, 46, 0.3);
+    -fx-font-size: 14;
+}
+.txtFieldRec {
+    -fx-background-color: #F8F9F9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: rgba(108, 80, 70, 0.5);
+    -fx-text-fill: rgba(84, 54, 46, 0.7);
+    -fx-prompt-text-fill: rgba(108, 80, 70, 0.5);
+    -fx-font-size: 14;
+}
+
+.picBG {
+    -fx-background-color: #F8F9F9;
+    -fx-background-radius: 999;
+    -fx-padding: 26;
+
+    -fx-effect:
+            dropshadow(gaussian, rgba(0,0,0,0.30), 30, 0, 0, 8),
+            dropshadow(gaussian, rgba(0,0,0,0.20), 10, 0, 0, 2);
+}
+
+.subTitle {
+    -fx-font-size: 25;
+    -fx-font-weight: bold;
+    -fx-text-fill: #54362E;
+}
+
+.lblNavType {
+    -fx-font-size: 18;
+    -fx-text-fill: #54362E;
+}
+
+.lblTextfield {
+    -fx-font-size: 20;
+    -fx-text-fill: #54362E;
+}
+.lblTextfieldRec {
+    -fx-font-size: 20;
+    -fx-text-fill: rgba(84, 54, 46, 0.7);
+}
+.combo-box .text-field {
+    -fx-prompt-text-fill: rgba(84, 54, 46, 0.5);
+    -fx-background-radius: 10;
+}
+
+.combo-box .arrow {
+    -fx-background-color: #54362E;
+}
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+
+.title {
+    -fx-font-size: 40;
+    -fx-font-weight: bold;
+    -fx-text-fill: #54362E;
+}
+
+.topBorder {
+    -fx-border-color: #6C5046;
+    -fx-border-width: 1 0 0 0;
+}
+
+.rightBorder {
+    -fx-border-color: #6C5046;
+    -fx-border-width: 0 1 0 0;
+}
+
+.lstUsers {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-border-color: #6C5046;
+}
+
+.lstEvents {
+    -fx-background-color: transparent;
+    -fx-background-radius: 15 15 0 0;
+    -fx-border-radius: 15 15 0 0;
+}
+
+.whiteLayerBox {
+    -fx-background-color: #F8F9F9;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-border-color: #6C5046;
+}
+
+.separator {
+    -fx-background-color: transparent;
+}
+
+.separator .line {
+    -fx-border-color: #6C5046;
+    -fx-border-width: 1 0 0 0;
+}
+
+.ticketSeparator {
+    -fx-background-color: transparent;
+}
+
+.ticketSeparator .line {
+    -fx-border-color: rgba(164, 115, 188, 0.5);
+    -fx-border-width: 1 0 0 0;
+}
+
+.ticketWhite {
+    -fx-background-color: #F8F9F9;
+    -fx-background-radius: 20;
+}
+
+.ticketPurple {
+    -fx-background-color: #A473BC;
+    -fx-background-radius: 20;
+}
+.ticketPurpleTop {
+    -fx-background-color: #A473BC;
+    -fx-background-radius: 20 20 0 0;
+}
+
+#ticketBlur {
+    -fx-effect:
+            dropshadow(gaussian, rgba(0,0,0,0.30), 30, 0, 0, 8),
+            dropshadow(gaussian, rgba(0,0,0,0.20), 10, 0, 0, 2);
+}
+
+#invisibleLayer {
+    -fx-background-color: rgba(255, 253, 247, 0.5);
+}
+
+.avatar-big {
+    -fx-background-color: transparent;
+    -fx-border-color: #6C5046;
+    -fx-border-width: 1;
+    -fx-background-radius: 999;
+    -fx-border-radius: 999;
+    -fx-font-size: 35;
+    -fx-text-fill: #54362E;
+}
+.avatar-big:hover {
+    -fx-cursor: hand;
+}
+
+.avatar-small {
+    -fx-background-color: #F6A048;
+    -fx-background-radius: 999;
+    -fx-font-size: 16;
+    -fx-text-fill: #F8F9F9;
+}
+.avatar-small:hover {
+    -fx-cursor: hand;
+}
+
+/* cards */
+
+.imgView {
+    -fx-border-width: 1;
+    -fx-border-color: #6C5046;
+    -fx-border-radius: 999;
+}
+
+.cardBox {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #6C5046;
+    -fx-border-radius: 12;
+}
+
+.cardBox Button:pressed {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell:selected .cardBox {
+    -fx-border-width: 3;
+    -fx-border-color: #73408f;
+}
+
+.cardName {
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #54362E;
+}
+.list-view .list-cell:selected .cardName {
+    -fx-text-fill: #54362E;
+}
+
+.cardSub {
+    -fx-font-size: 15;
+    -fx-text-fill: #54362E;
+}
+.list-view .list-cell:selected .cardSub {
+    -fx-text-fill: #54362E;
+}
+
+.cardType {
+    -fx-background-color: rgba(164, 115, 188, 0.1);
+    -fx-text-fill: #73408f;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-color: #73408f;
+    -fx-padding: 2 10 2 10;
+    -fx-font-size: 12;
+}
+
+.coorPrimary {
+    -fx-background-color: #73408f;
+    -fx-text-fill: #f2edf4;
+    -fx-background-radius: 5;
+    -fx-padding: 1 10 1 10;
+    -fx-font-size: 14;
+}
+.list-view .list-cell:selected .coorPrimary {
+    -fx-text-fill: #f2edf4;
+}
+
+.coorSecondary {
+    -fx-background-color: rgba(164, 115, 188, 0.2);
+    -fx-text-fill: #73408f;
+    -fx-background-radius: 5;
+    -fx-padding: 1 10 1 10;
+    -fx-font-size: 14;
+}
+.list-view .list-cell:selected .coorSecondary {
+    -fx-text-fill: #73408f;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+}
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-view .list-cell:filled:selected,
+.list-view .list-cell:filled:selected:hover {
+    -fx-background-color: transparent;
+}
+
+.voucherBG {
+    -fx-background-color: #FFFDF7;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+}
+
+/* Når scrollpane får fokus: behold samme border (så der ikke sker noget) */
+.scroll-pane:focused {
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.border {
+    -fx-border-color: green;
+    -fx-border-width: 1;
+}

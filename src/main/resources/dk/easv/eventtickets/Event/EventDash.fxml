@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="900.0" styleClass="BG" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.Event.EDashController">
+    <children>
+        <Label styleClass="title" text="Dashboard">
+            <padding>
+                <Insets bottom="20.0" left="20.0" top="20.0" />
+            </padding>
+        </Label>
+        <Separator prefWidth="200.0" />
+        <Label styleClass="subTitle" text="Your Events">
+            <VBox.margin>
+                <Insets left="20.0" top="20.0" />
+            </VBox.margin>
+        </Label>
+        <ScrollPane fitToWidth="true" pannable="true">
+            <content>
+                <TilePane fx:id="tilePane" alignment="TOP_CENTER" hgap="24.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="BG" tileAlignment="TOP_CENTER" vgap="24.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </TilePane>
+            </content>
+        </ScrollPane>
+    </children>
+</VBox>
