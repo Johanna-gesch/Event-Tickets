@@ -2,54 +2,99 @@ package dk.easv.eventtickets.BE;
 
 
 public class User {
-    private String firstName, lastName;
-    private String email;
+    private int id;
+    private String FName, LName;
+    private String Email;
     private String type;
-
+    private String username;
+    private String passwordHash;
+    //private String phoneNumber;
     private String imagePath;
 
     //image skal ikke væk fra constructoren
-    public User(String firstName, String lastName, String email, String type, String imagePath) {
-        this.firstName = firstName;
-        this.lastName= lastName;
-        this.email = email;
+    public User(int id, String username, String passwordHash, String FName, String LName, String email, String type) {
+        this.id = id;
+        this.FName = FName;
+        this.LName= LName;
+        this.Email = Email;
         this.type = type;
         this.imagePath = imagePath;
+        this.username = username;
+        this.passwordHash = passwordHash;
+        //this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFName() {
-        return firstName;
+        return FName;
     }
 
     public void setFName(String firstName) {
-        this.firstName = firstName;
+        this.FName = firstName;
     }
 
-    public String getLName() { return lastName;}
+    public String getLName() {
+        return LName;
+    }
 
-    public void setLName(String lastName) { this.lastName = lastName;}
+    public void setLName(String lastName) {
+        this.LName = lastName;
+    }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
 
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String type){
         this.type = type;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String password) {
+        this.passwordHash = password;
+    }
+
+    /**
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+     */
+
 
     public String getImagePath() {
         return imagePath;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
+
 }

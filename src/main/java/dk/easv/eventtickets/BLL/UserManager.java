@@ -1,0 +1,26 @@
+package dk.easv.eventtickets.BLL;
+
+import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.DAL.Users.IUserDataAccess;
+import dk.easv.eventtickets.DAL.Users.UserDAO_DB;
+
+import java.io.IOException;
+import java.util.List;
+
+public class UserManager {
+    private List<User> usersList;
+    private final IUserDataAccess userDao;
+
+    public UserManager() throws Exception {
+        userDao = new UserDAO_DB();
+        usersList = userDao.getAllUsers();
+    }
+
+    public List<User> getAllUsers() throws Exception{
+        return userDao.getAllUsers();
+    }
+
+    public User createUser (User user) throws Exception {
+        return userDao.createUser(user);
+    }
+}
