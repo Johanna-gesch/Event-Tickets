@@ -12,6 +12,8 @@ public class Customer {
         this.Email = Email;
     }
 
+    public Customer(){}
+
     public int getId() {
         return id;
     }

@@ -25,7 +25,7 @@ public class UserDAO_DB implements IUserDataAccess{
 
     @Override
     public User createUser(User newUser) throws Exception {
-        String sql = "INSERT INTO dbo.Users (Username, Password, FName, LName, Email,  type) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO dbo.Users (Username, PasswordHash, FName, LName, Email,  type) VALUES (?, ?, ?, ?, ?, ?);";
 
         try (Connection conn = databaseConnector.getConnection()) {
             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -36,7 +36,7 @@ public class UserDAO_DB implements IUserDataAccess{
             stmt.setString(3, newUser.getFName());
             stmt.setString(4, newUser.getLName());
             stmt.setString(5, newUser.getEmail());
-            //stmt.setString(6, newUser.getPhoneNumber());
+            stmt.setString(6, newUser.getType());
 
             //Run the SQL statement
             stmt.executeUpdate();
@@ -48,7 +48,12 @@ public class UserDAO_DB implements IUserDataAccess{
                 userId = rs.getInt(1);
             }
 
-            User createdUser = new User(userId, newUser.getUsername(), null, newUser.getFName(), newUser.getLName(), newUser.getEmail(), null);
+            User createdUser = new User
+                    (userId, newUser.getUsername(),
+                            null,
+                            newUser.getFName(),
+                            newUser.getLName(),
+                            newUser.getEmail(), newUser.getType());
 
             return createdUser;
         }catch (SQLException e) {
