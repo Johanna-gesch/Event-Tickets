@@ -4,12 +4,14 @@ public class Customer {
     private int id;
     private String FName, LName;
     private String Email;
+    private Role role;
 
-    public Customer(int id, String FName, String LName, String Email){
+    public Customer(int id, String FName, String LName, String Email, Role role){
         this.id = id;
         this.FName = FName;
         this.LName = LName;
         this.Email = Email;
+        this.role = role;
     }
 
     public Customer(){}
@@ -17,6 +19,9 @@ public class Customer {
     public int getId() {
         return id;
     }
+    public void setRole(Role role){this.role = role;}
+
+    public Role getRole (){return role;}
 
     public void setId(int id) {
         this.id = id;
