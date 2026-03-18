@@ -4,24 +4,24 @@ package dk.easv.eventtickets.BE;
 public class User {
     private int id;
     private String FName, LName;
-    private String Email;
+    private String email;
     private String type;
     private String username;
     private String passwordHash;
-    //private String phoneNumber;
     private String imagePath;
+    private Role role;
 
     //image skal ikke væk fra constructoren
-    public User(int id, String username, String passwordHash, String FName, String LName, String email, String type) {
+    public User(int id, String username, String passwordHash, String FName, String LName, String email, Role role) {
         this.id = id;
         this.FName = FName;
         this.LName= LName;
-        this.Email = Email;
+        this.email = email;
         this.type = type;
         this.imagePath = imagePath;
         this.username = username;
         this.passwordHash = passwordHash;
-        //this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
     public User(){}
@@ -32,6 +32,12 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Role getRole(){return role;}
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getFName() {
@@ -51,19 +57,11 @@ public class User {
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.Email = email;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type){
-        this.type = type;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -81,17 +79,6 @@ public class User {
     public void setPasswordHash(String password) {
         this.passwordHash = password;
     }
-
-    /**
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-     */
 
 
     public String getImagePath() {

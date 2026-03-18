@@ -1,7 +1,9 @@
 package dk.easv.eventtickets.GUI.Controllers.Admin;
 
 import dk.easv.eventtickets.BE.Customer;
+import dk.easv.eventtickets.BE.Role;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Controllers.Model.CustomerModel;
 import dk.easv.eventtickets.GUI.Controllers.Model.UserModel;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.awt.datatransfer.StringSelection;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -22,6 +25,7 @@ public class ACreateController implements Initializable {
     @FXML
     private TextField txtUserType;
     private UserModel userModel;
+    private CustomerModel customerModel;
     @FXML
     private VBox personalInfo;
     @FXML
@@ -89,42 +93,60 @@ public class ACreateController implements Initializable {
         String fName = txtFName.getText();
         String lName = txtLName.getText();
         String email = txtEmail.getText();
-        String type = comboType.getSelectionModel().getSelectedItem();
+        String role = comboType.getSelectionModel().getSelectedItem();
 
-        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || type == null) {
+        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || role == null) {
             displayError(new Exception("Something went wrong"));
             return;
         }
-        if ("Customer".equals(type)){
+        if ("Customer".equals(role)){
             onCustomerSave(fName, lName, email);
         } else {
-            onBtnAdminOrCoordinatorControllerSave(fName, lName, email, type);
+            onBtnAdminOrCoordinatorControllerSave(fName, lName, email);
         }
     }
 
     public void onCustomerSave(String fName, String lName, String email){
+        String selectedRole = comboType.getSelectionModel().getSelectedItem();
+
+
+        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty()){
+            displayError(new Exception("You must fill in all the fields"));
+        }
+        Role role = new Role(0, selectedRole);
+
         currentCustomer = new Customer();
         currentCustomer.setFName(fName);
         currentCustomer.setLName(lName);
         currentCustomer.setEmail(email);
+        currentCustomer.setRole(role);
+
+        try{
+            customerModel.createCustomer(currentCustomer);
+        } catch (Exception e) {
+            displayError(new Exception("Could not create customer",e));
+        }
 
     }
 
-    public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
+    public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email){
         String username = txtUsername.getText();
         String password = txtPassword.getText();
+        String selectedRole = comboType.getSelectionModel().getSelectedItem();
 
         if (username.isEmpty() || password.isEmpty()){
-            displayError(new Exception("Something went wrong"));
+            displayError(new Exception("You must fill in all the fields"));
         }
+
+        Role role = new Role(0, selectedRole);
 
         currentUser = new User();
         currentUser.setFName(fName);
         currentUser.setLName(lName);
         currentUser.setEmail(email);
-        currentUser.setType(type);
         currentUser.setUsername(username);
         currentUser.setPasswordHash(password);
+        currentUser.setRole(role);
 
         try {
             userModel.createUser(currentUser);
@@ -134,7 +156,7 @@ public class ACreateController implements Initializable {
             txtPassword.clear();
 
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            displayError(new Exception("Could not create admin or coordinator",e));
         }
 
 //        this.currentUser = tempUser;
@@ -150,6 +172,7 @@ public class ACreateController implements Initializable {
     private void initUserModel() {
         try {
             userModel = new UserModel();
+            customerModel = new CustomerModel();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("");
