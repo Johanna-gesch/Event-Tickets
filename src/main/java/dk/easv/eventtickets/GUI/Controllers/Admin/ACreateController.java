@@ -150,10 +150,13 @@ public class ACreateController implements Initializable {
 
         try {
             userModel.createUser(currentUser);
-
-
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
             txtUsername.clear();
             txtPassword.clear();
+            txtUserType.clear();
+
 
         } catch (Exception e) {
             displayError(new Exception("Could not create admin or coordinator",e));
