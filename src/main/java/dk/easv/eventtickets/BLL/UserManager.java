@@ -23,4 +23,7 @@ public class UserManager {
     public User createUser (User user) throws Exception {
         return userDao.createUser(user);
     }
+    public void deleteUser (User user) throws Exception {
+        userDao.deleteUser(user);
+    }
 }

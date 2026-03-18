@@ -24,4 +24,9 @@ public class UserModel {
         return usercreated;
 
     }
+
+    public void deleteUser(User deleteUser) throws Exception {
+        uMan.deleteUser(deleteUser);
+
+    }
 }
