@@ -82,6 +82,23 @@
     -fx-prompt-text-fill: rgba(84, 54, 46, 0.3);
     -fx-font-size: 14;
 }
+
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.combo-box-popup .list-cell {
+    -fx-text-fill: #54362E;
+    -fx-background-color: white;
+    -fx-font-size: 14;
+}
+
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #E6E6E6;
+}
+
 .txtFieldRec {
     -fx-background-color: #F8F9F9;
     -fx-background-radius: 10;
