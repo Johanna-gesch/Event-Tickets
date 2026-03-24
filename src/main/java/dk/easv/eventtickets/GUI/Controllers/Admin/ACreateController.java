@@ -16,9 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
-import java.awt.datatransfer.StringSelection;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ACreateController implements Initializable {
@@ -96,7 +94,7 @@ public class ACreateController implements Initializable {
         String role = comboType.getSelectionModel().getSelectedItem();
 
         if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || role == null) {
-            displayError(new Exception("Something went wrong"));
+            displayError(new Exception("You must fill in all the fields"));
             return;
         }
         if ("Customer".equals(role)){
@@ -123,6 +121,10 @@ public class ACreateController implements Initializable {
 
         try{
             customerModel.createCustomer(currentCustomer);
+            txtFName.clear();
+            txtLName.clear();
+            txtEmail.clear();
+            comboType.getSelectionModel().clearSelection();
         } catch (Exception e) {
             displayError(new Exception("Could not create customer",e));
         }
@@ -156,20 +158,12 @@ public class ACreateController implements Initializable {
             txtUsername.clear();
             txtPassword.clear();
             txtUserType.clear();
-
-
+            comboType.getSelectionModel().clearSelection();
         } catch (Exception e) {
             displayError(new Exception("Could not create admin or coordinator",e));
         }
-
-//        this.currentUser = tempUser;
-//        tempUser.setType(type);
-
         personalInfo.setVisible(true);
         invisibleLayer.setVisible(false);
-
-        //comboboxUser.getItems().add(type);
-
     }
 
     private void initUserModel() {
