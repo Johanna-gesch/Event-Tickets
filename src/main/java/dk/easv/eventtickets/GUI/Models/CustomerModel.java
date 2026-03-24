@@ -1,9 +1,7 @@
-package dk.easv.eventtickets.GUI.Controllers.Model;
+package dk.easv.eventtickets.GUI.Models;
 
 import dk.easv.eventtickets.BE.Customer;
-import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.CustomerManager;
-import javafx.collections.ObservableList;
 
 public class CustomerModel {
     private CustomerManager cMan;
