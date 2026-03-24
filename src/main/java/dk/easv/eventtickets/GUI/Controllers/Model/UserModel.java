@@ -7,22 +7,25 @@ import javafx.collections.ObservableList;
 
 public class UserModel {
     private UserManager uMan;
-    //private ObservableList<User> userToBeViewed;
+    private ObservableList<User> userToBeViewed;
 
     public UserModel() throws Exception {
         uMan = new UserManager();
-        //userToBeViewed = FXCollections.observableArrayList();
-        //userToBeViewed.addAll(uMan.getAllUsers());
+        userToBeViewed = FXCollections.observableArrayList();
+        userToBeViewed.addAll(uMan.getAllUsers());
     }
 
     public User createUser(User newUser) throws Exception {
 
         User usercreated = uMan.createUser(newUser);
 
-        //userToBeViewed.add(usercreated);
+        userToBeViewed.add(usercreated);
 
         return usercreated;
 
+    }
+    public ObservableList<User> getUserToBeViewed() {
+        return userToBeViewed;
     }
 
     public void deleteUser(User deleteUser) throws Exception {

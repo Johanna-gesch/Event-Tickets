@@ -74,7 +74,7 @@
                                 <Insets bottom="20.0" top="20.0" />
                             </padding>
                         </HBox>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="subTitle" text="Label">
+                        <Label maxWidth="1.7976931348623157E308" styleClass="subTitle" text="Events">
                             <padding>
                                 <Insets left="25.0" />
                             </padding>
