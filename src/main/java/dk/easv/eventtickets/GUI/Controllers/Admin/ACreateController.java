@@ -1,8 +1,8 @@
 package dk.easv.eventtickets.GUI.Controllers.Admin;
 
 import dk.easv.eventtickets.BE.Customer;
-import dk.easv.eventtickets.BE.Role;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.BE.UserRole;
 import dk.easv.eventtickets.GUI.Models.CustomerModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.application.Platform;
@@ -91,56 +91,41 @@ public class ACreateController implements Initializable {
         String fName = txtFName.getText();
         String lName = txtLName.getText();
         String email = txtEmail.getText();
-        String role = comboType.getSelectionModel().getSelectedItem();
+        String selectedType = comboType.getValue();
 
-        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || role == null) {
+        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || selectedType == null) {
             displayError(new Exception("You must fill in all the fields"));
             return;
         }
-        if ("Customer".equals(role)){
+        if ("Customer".equals(selectedType)){
             onCustomerSave(fName, lName, email);
         } else {
-            onBtnAdminOrCoordinatorControllerSave(fName, lName, email);
+            onBtnAdminOrCoordinatorControllerSave(fName, lName, email, selectedType);
         }
     }
 
     public void onCustomerSave(String fName, String lName, String email){
-        String selectedRole = comboType.getSelectionModel().getSelectedItem();
-
-
-        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty()){
-            displayError(new Exception("You must fill in all the fields"));
-        }
-        Role role = new Role(0, selectedRole);
-
         currentCustomer = new Customer();
         currentCustomer.setFName(fName);
         currentCustomer.setLName(lName);
         currentCustomer.setEmail(email);
-        currentCustomer.setRole(role);
 
         try{
             customerModel.createCustomer(currentCustomer);
-            txtFName.clear();
-            txtLName.clear();
-            txtEmail.clear();
-            comboType.getSelectionModel().clearSelection();
+            clearFields();
         } catch (Exception e) {
             displayError(new Exception("Could not create customer",e));
         }
 
     }
 
-    public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email){
+    public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
         String username = txtUsername.getText();
         String password = txtPassword.getText();
-        String selectedRole = comboType.getSelectionModel().getSelectedItem();
 
         if (username.isEmpty() || password.isEmpty()){
             displayError(new Exception("You must fill in all the fields"));
         }
-
-        Role role = new Role(0, selectedRole);
 
         currentUser = new User();
         currentUser.setFName(fName);
@@ -148,22 +133,22 @@ public class ACreateController implements Initializable {
         currentUser.setEmail(email);
         currentUser.setUsername(username);
         currentUser.setPasswordHash(password);
-        currentUser.setRole(role);
+
+        if ("Admin".equals(type)) {
+            currentUser.addRole(UserRole.ADMIN);
+        } else if ("Event Coordinator".equals(type)) {
+            currentUser.addRole(UserRole.EVENT_COORDINATOR);
+        }
+
 
         try {
-            userModel.createUser(currentUser);
-            txtFName.clear();
-            txtLName.clear();
-            txtEmail.clear();
-            txtUsername.clear();
-            txtPassword.clear();
-            txtUserType.clear();
-            comboType.getSelectionModel().clearSelection();
+            User userCreated = userModel.createUser(currentUser);
+            clearFields();
+            personalInfo.setVisible(true);
+            invisibleLayer.setVisible(false);
         } catch (Exception e) {
             displayError(new Exception("Could not create admin or coordinator",e));
         }
-        personalInfo.setVisible(true);
-        invisibleLayer.setVisible(false);
     }
 
     private void initUserModel() {
@@ -191,6 +176,15 @@ public class ACreateController implements Initializable {
         alert.setTitle("Something is wrong");
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
+    }
+
+    private void clearFields() {
+        txtFName.clear();
+        txtLName.clear();
+        txtEmail.clear();
+        txtUsername.clear();
+        txtPassword.clear();
+        comboType.getSelectionModel().clearSelection();
     }
 
 }

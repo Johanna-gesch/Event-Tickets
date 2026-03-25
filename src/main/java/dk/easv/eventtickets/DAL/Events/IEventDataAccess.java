@@ -13,5 +13,5 @@ public interface IEventDataAccess {
 
     void deleteEvent(Event event) throws Exception;
 
-    List<Event> getMoviesForEvent(Event event) throws Exception;
+    List<Event> getUsersForEvent(Event event) throws Exception;
 }

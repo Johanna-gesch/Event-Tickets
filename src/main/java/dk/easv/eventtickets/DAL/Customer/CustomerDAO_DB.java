@@ -14,11 +14,6 @@ public class CustomerDAO_DB implements ICustomerDataAccess{
     }
 
     @Override
-    public List<Customer> getAllCustomer() throws Exception {
-        return List.of();
-    }
-
-    @Override
     public Customer createCustomer(Customer newCustomer) throws Exception {
         String customerSql = "INSERT INTO dbo.Customers (FName, LName, Email) VALUES (?, ?, ?);";
 
@@ -41,27 +36,12 @@ public class CustomerDAO_DB implements ICustomerDataAccess{
                 customerId = rs.getInt(1);
             }
 
-            Customer createdCustomer = new Customer(customerId, newCustomer.getFName(), newCustomer.getLName(), newCustomer.getEmail(), newCustomer.getRole());
+            Customer createdCustomer = new Customer(customerId, newCustomer.getFName(), newCustomer.getLName(), newCustomer.getEmail());
 
             return createdCustomer;
         }catch (SQLException e) {
             e.printStackTrace();
             throw new Exception("Could not create User", e);
         }
-    }
-
-    @Override
-    public void updateCustomer(Customer customer) throws Exception {
-
-    }
-
-    @Override
-    public void deleteCustomer(Customer customer) throws Exception {
-
-    }
-
-    @Override
-    public List<Customer> getMoviesForCustomer(Customer customer) throws Exception {
-        return List.of();
     }
 }

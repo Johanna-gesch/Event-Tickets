@@ -26,7 +26,7 @@ public class EventDAO_DB implements IEventDataAccess {
     }
 
     @Override
-    public List<Event> getMoviesForEvent(Event event) throws Exception {
+    public List<Event> getUsersForEvent(Event event) throws Exception {
         return List.of();
     }
 }

@@ -28,6 +28,7 @@ public class UserCardController {
 
         lblName.setText(user.getFName() + " " + user.getLName());
         lblEmail.setText(user.getEmail());
+        lblType.setText(user.getRoleDisplayName());
 
         //Image image = new Image(getClass().getResource(user.getImagePath()).toExternalForm());
         //imgView.setImage(image);
