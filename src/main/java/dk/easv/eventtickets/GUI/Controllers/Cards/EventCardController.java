@@ -11,6 +11,11 @@ import javafx.scene.layout.HBox;
 import java.util.List;
 
 public class EventCardController {
+
+    @FXML
+    private Button btnCreateTicket;
+    @FXML
+    private Button btnEditEC;
     @FXML
     private Label lblName;
     @FXML
@@ -22,13 +27,10 @@ public class EventCardController {
     @FXML
     private Label lblNotes;
     @FXML
-    private Button btnEdit;
+    private Button btnEditEvent;
     @FXML
     private HBox subCoordinators;
-    @FXML
-    private Separator separator;
-    @FXML
-    private HBox hBoxBtnDelete;
+
 
     public void setEvent(Event event) {
         lblName.setText(event.getName());
@@ -41,14 +43,14 @@ public class EventCardController {
     }
 
     public void isEventDash(boolean visible) {
-        btnEdit.setVisible(visible); // Makes it invisble but still takes up space
-        btnEdit.setManaged(visible); // Removes the space it takes up
+        btnEditEvent.setVisible(visible); // Makes it invisble but still takes up space
+        btnEditEvent.setManaged(visible); // Removes the space it takes up
 
-        separator.setVisible(visible);
-        separator.setManaged(visible);
+        btnEditEC.setVisible(!visible);
+        btnEditEC.setManaged(!visible);
 
-        hBoxBtnDelete.setVisible(visible);
-        hBoxBtnDelete.setManaged(visible);
+        btnCreateTicket.setVisible(visible);
+        btnCreateTicket.setManaged(visible);
     }
 
     private void setCoordinators(List<String> names) {
@@ -76,12 +78,21 @@ public class EventCardController {
     }
 
     @FXML
-    private void onEdit(ActionEvent actionEvent) {
+    private void onEditEvent(ActionEvent actionEvent) {
         System.out.println("You pressed the button");
     }
 
     @FXML
-    private void onDelete(ActionEvent actionEvent) {
+    private void onEditEC(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    private void onDeleteEvent(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private void onCreateTicket(ActionEvent actionEvent) {
 
     }
 }

@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.GUI.Controllers.Model;
+package dk.easv.eventtickets.GUI.Models;
 
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UserManager;
@@ -18,11 +18,12 @@ public class UserModel {
     public User createUser(User newUser) throws Exception {
 
         User usercreated = uMan.createUser(newUser);
+
         userToBeViewed.add(usercreated);
 
         return usercreated;
-    }
 
+    }
     public ObservableList<User> getUserToBeViewed() {
         return userToBeViewed;
     }

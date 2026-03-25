@@ -110,16 +110,31 @@ public class UserDAO_DB implements IUserDataAccess{
 
     @Override
     public void deleteUser(User user) throws Exception {
-        String DeleteUsersql = "DELETE FROM dbo.Users WHERE ID =?; ";
+        String deleteUserSql = "DELETE FROM dbo.Users WHERE UserID =?; ";
+        String deleteUserRolesSql = "DELETE FROM dbo.UserRoles WHERE UserId = ?;";
 
-        try(Connection conn = databaseConnector.getConnection();
-        PreparedStatement stmt = conn.prepareStatement(DeleteUsersql)){
-            stmt.setInt(1,user.getId());
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
 
-            stmt.executeUpdate();
-        }
-        catch (SQLException ex){
-            throw new Exception("Could not delete user");
+            try (PreparedStatement roleStmt = conn.prepareStatement(deleteUserRolesSql);
+                 PreparedStatement userStmt = conn.prepareStatement(deleteUserSql)) {
+
+                roleStmt.setInt(1, user.getId());
+                roleStmt.executeUpdate();
+
+                userStmt.setInt(1, user.getId());
+                int rowsAffected = userStmt.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    conn.rollback();
+                    throw new Exception("Could not delete user: no user found with ID " + user.getId());
+                }
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new Exception("Could not delete user: " + e.getMessage(), e);
+            }
         }
     }
 

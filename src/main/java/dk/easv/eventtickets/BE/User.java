@@ -42,6 +42,14 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+    public List<String> getRoles() {
+        return roles;
+    }
+
+
+    public void setRoles(List<String> roles) {
+        this.roles = (roles != null) ? roles : new ArrayList<>();
+    }
 
     public List<String> getRoles() {
         return roles;
