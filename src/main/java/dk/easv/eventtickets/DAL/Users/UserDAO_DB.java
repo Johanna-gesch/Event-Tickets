@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.DAL.Users;
 
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.BE.UserRole;
 import dk.easv.eventtickets.DAL.DBConnector;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAO_DB implements IUserDataAccess{
+public class UserDAO_DB implements IUserDataAccess {
     private final DBConnector databaseConnector;
 
     public UserDAO_DB() throws IOException {
@@ -17,89 +18,116 @@ public class UserDAO_DB implements IUserDataAccess{
 
     @Override
     public List<User> getAllUsers() throws Exception {
-        ArrayList<User> allUsers = new ArrayList<>();
+        List<User> allUsers = new ArrayList<>();
 
-        String usersSql = "SELECT UserID, Username, FName, LName, Email FROM dbo.Users";
-        String userRolesSql = "SELECT r.RoleName FROM UserRoles ur JOIN Roles r ON ur.RoleId = r.RoleId WHERE ur.UserId = ?";
-        try (Connection conn = databaseConnector.getConnection()) {
-            try(PreparedStatement userStmt = conn.prepareStatement(usersSql);
-                ResultSet userRs = userStmt.executeQuery()){
-                while (userRs.next()){
-                    User user = new User();
-                    user.setId(userRs.getInt("UserID"));
-                    user.setUsername(userRs.getString("Username"));
-                    user.setFName(userRs.getString("FName"));
-                    user.setLName(userRs.getString("LName"));
-                    user.setEmail(userRs.getString("Email"));
+        String sql = """
+        SELECT u.UserID, u.Username, u.FName, u.LName, u.Email, u.PasswordHash, r.RoleName
+        FROM dbo.Users u
+        INNER JOIN UserRoles ur ON u.UserID = ur.UserID
+        INNER JOIN Roles r ON ur.RoleID = r.RoleID
+        ORDER BY u.LName, u.FName
+    """;
 
-                    try(PreparedStatement roleStmt = conn.prepareStatement(userRolesSql)){
-                        roleStmt.setInt(1, userRs.getInt("UserID"));
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
 
-                        try(ResultSet roleRs = roleStmt.executeQuery()){
-                            List<String> roles = new ArrayList<>();
-                            while (roleRs.next()){
-                                roles.add(roleRs.getString("RoleName"));
-                            }
-                            user.setRoles(roles);
-                        }
+            User currentUser = null;
+            int previousUserId = -1;
+
+            while (rs.next()) {
+                int userId = rs.getInt("UserID");
+
+
+                if (userId != previousUserId) {
+                    currentUser = new User();
+                    currentUser.setId(userId);
+                    currentUser.setUsername(rs.getString("Username"));
+                    currentUser.setFName(rs.getString("FName"));
+                    currentUser.setLName(rs.getString("LName"));
+                    currentUser.setEmail(rs.getString("Email"));
+                    currentUser.setPasswordHash(rs.getString("PasswordHash"));
+
+                    allUsers.add(currentUser);
+                    previousUserId = userId;
+                }
+
+                // Add role from db to Enum
+                String roleName = rs.getString("RoleName");
+                if (roleName != null && currentUser != null) {
+                    try {
+                        // Converts "Admin" → UserRole.ADMIN
+                        UserRole role = UserRole.valueOf(roleName.toUpperCase().replace(" ", "_"));
+                        currentUser.addRole(role);
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Unknown name in db: " + roleName);
                     }
-                    allUsers.add(user);
-
                 }
             }
-
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw new Exception("Could not get all users" + e.getMessage());
+            throw new Exception("Could not get all users", e);
         }
+
         return allUsers;
     }
 
     @Override
     public User createUser(User newUser) throws Exception {
-        String userSql = "INSERT INTO dbo.Users (Username, PasswordHash, FName, LName, Email) VALUES (?, ?, ?, ?, ?);";
-
-        String userRolessql = "INSERT INTO dbo.UserRoles (UserId, RoleId)" + "SELECT ?, RoleId FROM Roles WHERE RoleName = ?;";
+        String sql = """
+        INSERT INTO dbo.Users 
+        (Username, PasswordHash, FName, LName, Email)
+        VALUES (?, ?, ?, ?, ?)
+    """;
 
         try (Connection conn = databaseConnector.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement stmt = conn.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS)) {
+            int userId;
 
-                //Bind parameters
+            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, newUser.getUsername());
                 stmt.setString(2, newUser.getPasswordHash());
                 stmt.setString(3, newUser.getFName());
                 stmt.setString(4, newUser.getLName());
                 stmt.setString(5, newUser.getEmail());
 
-                //Run the SQL statement
                 stmt.executeUpdate();
 
-                //Get generated ID
-                ResultSet rs = stmt.getGeneratedKeys();
-                int userId = 0;
-                if (rs.next()) {
-                    userId = rs.getInt(1);
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        userId = rs.getInt(1);
+                    } else {
+                        throw new SQLException("Ingen UserID genereret");
+                    }
                 }
-
-                try (PreparedStatement roleStmt = conn.prepareStatement(userRolessql)) {
-                    roleStmt.setInt(1, userId);
-                    roleStmt.setString(2, newUser.getRole().getRoleName());
-
-                    int rowsAffected = roleStmt.executeUpdate();
-                }
-
-                conn.commit();
-
-                User createdUser = new User
-                        (userId, newUser.getUsername(), null, newUser.getFName(), newUser.getLName(), newUser.getEmail(), newUser.getRole());
-                return createdUser;
-            } catch (SQLException e) {
-                conn.rollback();
-                e.printStackTrace();
-                throw new Exception("Could not create User", e);
             }
+
+            // Tilføj alle roller
+            if (newUser.getRoles() != null) {
+                for (UserRole role : newUser.getRoles()) {
+                    addRoleToUser(conn, userId, role);
+                }
+            }
+
+            conn.commit();
+
+            // Returner brugeren med roller
+            User created = new User();
+            created.setId(userId);
+            created.setUsername(newUser.getUsername());
+            created.setPasswordHash(null);   // sikkerhed
+            created.setFName(newUser.getFName());
+            created.setLName(newUser.getLName());
+            created.setEmail(newUser.getEmail());
+
+            for (UserRole role : newUser.getRoles()) {
+                created.addRole(role);
+            }
+
+            return created;
+        } catch (Exception e) {
+            throw new Exception("Cant create User", e);
         }
     }
 
@@ -142,5 +170,23 @@ public class UserDAO_DB implements IUserDataAccess{
     @Override
     public List<User> getMoviesForGenre(User user) throws Exception {
         return List.of();
+    }
+
+
+    private void addRoleToUser(Connection conn, int userId, UserRole role) throws SQLException {
+        String sql = "INSERT INTO UserRoles (UserID, RoleID) VALUES (?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            stmt.setInt(2, getRoleId(role));   // se nedenfor
+            stmt.executeUpdate();
+        }
+    }
+
+    private int getRoleId(UserRole role) {
+        return switch (role) {
+            case ADMIN -> 1;
+            case EVENT_COORDINATOR -> 2;
+        };
     }
 }

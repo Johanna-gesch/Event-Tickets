@@ -2,30 +2,29 @@ package dk.easv.eventtickets.BE;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class User {
     private int id;
     private String FName, LName;
     private String email;
-    private String type;
     private String username;
     private String passwordHash;
     private String imagePath;
-    private Role role;
-    private List<String> roles = new ArrayList<>();
+    //private Role role;
+    private final List<UserRole> roles = new ArrayList<>();
 
     //image skal ikke væk fra constructoren
-    public User(int id, String username, String passwordHash, String FName, String LName, String email, Role role) {
+    public User(int id, String username, String passwordHash, String FName, String LName, String email) {
         this.id = id;
         this.FName = FName;
         this.LName= LName;
         this.email = email;
-        this.type = type;
         this.imagePath = imagePath;
         this.username = username;
         this.passwordHash = passwordHash;
-        this.role = role;
+        //this.role = role;
     }
 
     public User(){}
@@ -34,23 +33,43 @@ public class User {
         return id;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public Role getRole(){return role;}
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-    public List<String> getRoles() {
-        return roles;
+    public void addRole(UserRole role) {
+        if (role != null && !roles.contains(role)) {
+            roles.add(role);
+        }
     }
 
-
-    public void setRoles(List<String> roles) {
-        this.roles = (roles != null) ? roles : new ArrayList<>();
+    public boolean hasRole(UserRole role) {
+        return roles.contains(role);
     }
+
+    public boolean isAdmin() {
+        return hasRole(UserRole.ADMIN);
+    }
+
+    public boolean isEventCoordinator() {
+        return hasRole(UserRole.EVENT_COORDINATOR);
+    }
+
+    public List<UserRole> getRoles() {
+        return Collections.unmodifiableList(roles);
+    }
+
+    public String getRoleDisplayName() {
+        if (roles.isEmpty()) {
+            return "Ingen rolle";
+        }
+        return roles.stream()
+                .map(UserRole::getDisplayName)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("Ingen rolle");
+    }
+
 
     public String getFName() {
         return FName;
@@ -96,6 +115,5 @@ public class User {
     public String getImagePath() {
         return imagePath;
     }
-
 
 }

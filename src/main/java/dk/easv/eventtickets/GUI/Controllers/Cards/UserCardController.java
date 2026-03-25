@@ -2,12 +2,10 @@ package dk.easv.eventtickets.GUI.Controllers.Cards;
 
 import dk.easv.eventtickets.BE.User;
 
-import dk.easv.eventtickets.GUI.Controllers.Model.UserModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class UserCardController {
@@ -30,6 +28,7 @@ public class UserCardController {
 
         lblName.setText(user.getFName() + " " + user.getLName());
         lblEmail.setText(user.getEmail());
+        lblType.setText(user.getRoleDisplayName());
 
         //Image image = new Image(getClass().getResource(user.getImagePath()).toExternalForm());
         //imgView.setImage(image);
