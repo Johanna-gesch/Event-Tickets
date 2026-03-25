@@ -9,14 +9,16 @@ public class Event {
     private String location;
     private String notes;
     private List<String> coordinators;
+    private int eventId;
 
-    public Event (String name, String date, String time, String location, String notes, List<String> coordinators) {
+    public Event (String name, String date, String time, String location, String notes, List<String> coordinators, int eventId) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.location = location;
         this.notes = notes;
         this.coordinators = coordinators;
+        this.eventId = eventId;
     }
 
     public String getName() {
@@ -66,4 +68,12 @@ public class Event {
     public void setCoordinators(List<String> coordinators) {
         this.coordinators = coordinators;
     }
+
+    public void setEventId(int eventId){
+        this.eventId = eventId;
+    };
+
+    public int getEventId(){return eventId;}
+
+
 }
