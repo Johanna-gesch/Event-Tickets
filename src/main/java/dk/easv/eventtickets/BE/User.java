@@ -1,15 +1,18 @@
 package dk.easv.eventtickets.BE;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private int id;
     private String FName, LName;
     private String email;
-    private String type;
     private String username;
     private String passwordHash;
     private String imagePath;
     private Role role;
+    private List<String> roles = new ArrayList<>();
 
     //image skal ikke væk fra constructoren
     public User(int id, String username, String passwordHash, String FName, String LName, String email, Role role) {
@@ -17,7 +20,6 @@ public class User {
         this.FName = FName;
         this.LName= LName;
         this.email = email;
-        this.type = type;
         this.imagePath = imagePath;
         this.username = username;
         this.passwordHash = passwordHash;
@@ -30,6 +32,7 @@ public class User {
         return id;
     }
 
+
     public void setId(int id) {
         this.id = id;
     }
@@ -38,6 +41,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = (roles != null) ? roles : new ArrayList<>();
     }
 
     public String getFName() {

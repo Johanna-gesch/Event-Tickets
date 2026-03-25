@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers.Admin;
 
 import dk.easv.eventtickets.BE.*;
 import dk.easv.eventtickets.GUI.Controllers.Cards.*;
+import dk.easv.eventtickets.GUI.Controllers.Model.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,8 @@ import java.util.ResourceBundle;
 
 public class ADashController implements Initializable {
 
+    private UserModel userModel;
+
     @FXML
     private ListView<User> lstUsers;
     @FXML
@@ -35,9 +38,16 @@ public class ADashController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try{
+            userModel = new UserModel();
+            handleUserCards();
+            handleEventCards();
 
-        handleUserCards();
-        handleEventCards();
+            lstUsers.setItems(userModel.getUserToBeViewed());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void handleUserCards() {

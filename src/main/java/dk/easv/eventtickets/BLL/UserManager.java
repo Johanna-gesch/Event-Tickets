@@ -16,9 +16,9 @@ public class UserManager {
         usersList = userDao.getAllUsers();
     }
 
-//    public List<User> getAllUsers() throws Exception{
-//        return userDao.getAllUsers();
-//    }
+    public List<User> getAllUsers() throws Exception{
+        return userDao.getAllUsers();
+    }
 
     public User createUser (User user) throws Exception {
         return userDao.createUser(user);

@@ -19,8 +19,40 @@ public class UserDAO_DB implements IUserDataAccess{
     public List<User> getAllUsers() throws Exception {
         ArrayList<User> allUsers = new ArrayList<>();
 
-        String sql = "SELECT * FROM dbo.Users";
-        return null;
+        String usersSql = "SELECT UserID, Username, FName, LName, Email FROM dbo.Users";
+        String userRolesSql = "SELECT r.RoleName FROM UserRoles ur JOIN Roles r ON ur.RoleId = r.RoleId WHERE ur.UserId = ?";
+        try (Connection conn = databaseConnector.getConnection()) {
+            try(PreparedStatement userStmt = conn.prepareStatement(usersSql);
+                ResultSet userRs = userStmt.executeQuery()){
+                while (userRs.next()){
+                    User user = new User();
+                    user.setId(userRs.getInt("UserID"));
+                    user.setUsername(userRs.getString("Username"));
+                    user.setFName(userRs.getString("FName"));
+                    user.setLName(userRs.getString("LName"));
+                    user.setEmail(userRs.getString("Email"));
+
+                    try(PreparedStatement roleStmt = conn.prepareStatement(userRolesSql)){
+                        roleStmt.setInt(1, userRs.getInt("UserID"));
+
+                        try(ResultSet roleRs = roleStmt.executeQuery()){
+                            List<String> roles = new ArrayList<>();
+                            while (roleRs.next()){
+                                roles.add(roleRs.getString("RoleName"));
+                            }
+                            user.setRoles(roles);
+                        }
+                    }
+                    allUsers.add(user);
+
+                }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new Exception("Could not get all users" + e.getMessage());
+        }
+        return allUsers;
     }
 
     @Override
