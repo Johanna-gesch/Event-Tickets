@@ -25,16 +25,11 @@ public class EDashController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        eventMockData();
+
         showEvents(events);
     }
 
-    private void eventMockData() {
-        events = List.of(
-                new Event("EASV Party", "3rd of April 2026", "19:00 - 02:00", "Erhvervsakademiet", "!! Sold out !!\nRemember to hold staff meeting and buy decorations.", List.of("Judy Doe")),
-                new Event("Coding Workshop", "4th of May 2026", "14:00 - 17:00", "Innovatoriet", "Snacks will be provided.", List.of("Judy Doe", "Jim Doe"))
-        );
-    }
+
 
     private void showEvents(List<Event> events) {
 

@@ -1,24 +1,22 @@
 package dk.easv.eventtickets.BE;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class Event {
     private String name;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
+    private String date;
+    private String time;
     private String location;
     private String notes;
     private List<String> coordinators;
-    private int eventId;
 
-    public Event (String name, LocalDateTime startDateTime, String location, String notes, List<String> coordinators, int eventId) {
+    public Event (String name, String date, String time, String location, String notes, List<String> coordinators) {
         this.name = name;
-        this.startDateTime = startDateTime;
+        this.date = date;
+        this.time = time;
         this.location = location;
         this.notes = notes;
         this.coordinators = coordinators;
-        this.eventId = eventId;
     }
 
     public String getName() {
@@ -29,20 +27,20 @@ public class Event {
         this.name = name;
     }
 
-    public LocalDateTime getStartDateTime() {
-        return startDateTime;
+    public String getDate() {
+        return date;
     }
 
-    public void setStartDateTime(LocalDateTime startDateTime) {
-        this.startDateTime = startDateTime;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public LocalDateTime getEndDateTime() {
-        return endDateTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setEndDateTime(LocalDateTime endDateTime) {
-        this.endDateTime = endDateTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getLocation() {
@@ -68,10 +66,4 @@ public class Event {
     public void setCoordinators(List<String> coordinators) {
         this.coordinators = coordinators;
     }
-
-    public void setEventId(int eventId){
-        this.eventId = eventId;
-    };
-
-    public int getEventId(){return eventId;}
 }
