@@ -5,9 +5,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class EventCardController {
@@ -33,6 +33,9 @@ public class EventCardController {
 
 
     public void setEvent(Event event) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")
+
         lblName.setText(event.getName());
         lblDate.setText(event.getDate());
         lblTime.setText(event.getTime());
@@ -84,6 +87,8 @@ public class EventCardController {
 
     @FXML
     private void onEditEC(ActionEvent actionEvent) {
+
+
     }
 
     @FXML

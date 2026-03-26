@@ -8,12 +8,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserManager {
-    private List<User> usersList;
     private final IUserDataAccess userDao;
 
     public UserManager() throws Exception {
         userDao = new UserDAO_DB();
-        usersList = userDao.getAllUsers();
     }
 
     public List<User> getAllUsers() throws Exception{

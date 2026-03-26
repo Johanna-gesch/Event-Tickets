@@ -12,7 +12,6 @@ public class User {
     private String username;
     private String passwordHash;
     private String imagePath;
-    //private Role role;
     private final List<UserRole> roles = new ArrayList<>();
 
     //image skal ikke væk fra constructoren
@@ -24,7 +23,6 @@ public class User {
         this.imagePath = imagePath;
         this.username = username;
         this.passwordHash = passwordHash;
-        //this.role = role;
     }
 
     public User(){}
@@ -62,12 +60,12 @@ public class User {
 
     public String getRoleDisplayName() {
         if (roles.isEmpty()) {
-            return "Ingen rolle";
+            return "No Roles";
         }
         return roles.stream()
                 .map(UserRole::getDisplayName)
                 .reduce((a, b) -> a + ", " + b)
-                .orElse("Ingen rolle");
+                .orElse("No Roles");
     }
 
 
@@ -110,7 +108,6 @@ public class User {
     public void setPasswordHash(String password) {
         this.passwordHash = password;
     }
-
 
     public String getImagePath() {
         return imagePath;

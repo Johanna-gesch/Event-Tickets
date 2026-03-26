@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers.Admin;
 
 import dk.easv.eventtickets.BE.*;
 import dk.easv.eventtickets.GUI.Controllers.Cards.*;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class ADashController implements Initializable {
     private UserModel userModel;
+    private EventModel eventModel;
 
     @FXML
     private ListView<User> lstUsers;
@@ -27,10 +29,13 @@ public class ADashController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         try{
             userModel = new UserModel();
+            eventModel = new EventModel();
+
             handleUserCards();
             handleEventCards();
 
             lstUsers.setItems(userModel.getUserToBeViewed());
+            lstEvents.setItems(eventModel.getEventsToBeViewed());
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -81,7 +86,7 @@ public class ADashController implements Initializable {
 
     private void handleEventCards() {
 
-        lstUsers.setSelectionModel(null); // Making cells non-clickable
+        lstEvents.setSelectionModel(null); // Making cells non-clickable
 
         lstEvents.setCellFactory(list -> new ListCell<>() {
 
