@@ -82,4 +82,25 @@ public class EventDAO_DB implements IEventDataAccess {
     public List<Event> getUsersForEvent(Event event) throws Exception {
         return List.of();
     }
+
+    @Override
+    public void removeCoordinator(Event event, int userId) throws Exception {
+        String sql = "DELETE FROM EventCoordinators WHERE EventId = ? AND UserId = ?;";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, event.getId());
+                stmt.setInt(2, userId);
+
+                stmt.executeUpdate();
+
+                conn.commit();
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
+        }
+    }
 }

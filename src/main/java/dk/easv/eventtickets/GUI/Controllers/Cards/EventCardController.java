@@ -19,9 +19,9 @@ public class EventCardController {
     @FXML
     private Label lblName;
     @FXML
-    private Label lblDate;
+    private Label lblStartDateTime;
     @FXML
-    private Label lblTime;
+    private Label lblEndDateTime;
     @FXML
     private Label lblLocation;
     @FXML
@@ -34,11 +34,12 @@ public class EventCardController {
 
     public void setEvent(Event event) {
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm");
 
         lblName.setText(event.getName());
-        lblDate.setText(event.getDate());
-        lblTime.setText(event.getTime());
+
+        lblStartDateTime.setText(event.getStartDateTime().format(formatter));
+        lblEndDateTime.setText(event.getTime());
         lblLocation.setText(event.getLocation());
         lblNotes.setText(event.getNotes());
 

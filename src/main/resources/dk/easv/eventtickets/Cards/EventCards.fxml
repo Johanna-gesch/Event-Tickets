@@ -17,8 +17,8 @@
                 <Insets bottom="5.0" />
             </VBox.margin>
         </Label>
-        <Label fx:id="lblDate" styleClass="cardSub" text="Label" />
-        <Label fx:id="lblTime" styleClass="cardSub" text="Label" />
+        <Label fx:id="lblStartDateTime" styleClass="cardSub" text="Label" />
+        <Label fx:id="lblEndDateTime" styleClass="cardSub" text="Label" />
         <Label fx:id="lblLocation" styleClass="cardSub" text="Label">
             <VBox.margin>
                 <Insets bottom="10.0" />
