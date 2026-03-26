@@ -1,22 +1,37 @@
 package dk.easv.eventtickets.BE;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Event {
+    private int id;
     private String name;
-    private String date;
-    private String time;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
     private String location;
     private String notes;
     private List<String> coordinators;
 
-    public Event (String name, String date, String time, String location, String notes, List<String> coordinators) {
+    public Event (int id, String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String notes, List<String> coordinators) {
+        this.id = id;
         this.name = name;
-        this.date = date;
-        this.time = time;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
         this.location = location;
         this.notes = notes;
         this.coordinators = coordinators;
+    }
+
+    public Event() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -27,20 +42,20 @@ public class Event {
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
     }
 
-    public String getTime() {
-        return time;
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
     }
 
     public String getLocation() {
