@@ -29,11 +29,11 @@ public class SignInController {
             // Load center content
             if ("admin".equalsIgnoreCase(txtUsername.getText())) {
                 sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
-                sbmc.setType("admin");
+                sbmc.setRole("admin");
             }
             if ("event".equalsIgnoreCase(txtUsername.getText())) {
                 sbmc.setView("/dk/easv/eventtickets/Event/EventDash.fxml");
-                sbmc.setType("event");
+                sbmc.setRole("event");
             }
 
             // 4) switch scene in same window

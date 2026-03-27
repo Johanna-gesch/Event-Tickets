@@ -12,10 +12,10 @@ public class User {
     private String username;
     private String passwordHash;
     private String imagePath;
-    private final List<UserRole> roles = new ArrayList<>();
+    private UserRole role;
 
     //image skal ikke væk fra constructoren
-    public User(int id, String username, String passwordHash, String FName, String LName, String email) {
+    public User(int id, String username, String passwordHash, String FName, String LName, String email, UserRole role) {
         this.id = id;
         this.FName = FName;
         this.LName= LName;
@@ -23,6 +23,7 @@ public class User {
         this.imagePath = imagePath;
         this.username = username;
         this.passwordHash = passwordHash;
+        this.role = role;
     }
 
     public User(){}
@@ -36,36 +37,22 @@ public class User {
         this.id = id;
     }
 
-    public void addRole(UserRole role) {
-        if (role != null && !roles.contains(role)) {
-            roles.add(role);
-        }
-    }
-
-    public boolean hasRole(UserRole role) {
-        return roles.contains(role);
-    }
-
     public boolean isAdmin() {
-        return hasRole(UserRole.ADMIN);
+        return role == UserRole.ADMIN;
     }
 
     public boolean isEventCoordinator() {
-        return hasRole(UserRole.EVENT_COORDINATOR);
+        return role == UserRole.EVENT_COORDINATOR;
     }
 
-    public List<UserRole> getRoles() {
-        return Collections.unmodifiableList(roles);
+    public UserRole getRole() {
+        return role;
     }
+
+    public void setRole(UserRole role) { this.role = role;}
 
     public String getRoleDisplayName() {
-        if (roles.isEmpty()) {
-            return "No Roles";
-        }
-        return roles.stream()
-                .map(UserRole::getDisplayName)
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("No Roles");
+        return role.getDisplayName();
     }
 
 
