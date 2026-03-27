@@ -5,7 +5,7 @@ import javafx.event.ActionEvent;
 
 public class EEditEC {
     private EventManager eMan;
-    private
+    /*private
 
 
      void onbtnDelete(ActionEvent actionEvent) {
@@ -17,5 +17,5 @@ public class EEditEC {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

@@ -35,7 +35,7 @@
         <Region HBox.hgrow="ALWAYS" />
         <VBox alignment="TOP_RIGHT">
             <children>
-                <Label fx:id="lblType" prefHeight="21.0" prefWidth="80.0" styleClass="cardType" text="Label">
+                <Label fx:id="lblType" prefHeight="21.0" styleClass="cardType" text="Label">
                <font>
                   <Font size="10.0" />
                </font></Label>

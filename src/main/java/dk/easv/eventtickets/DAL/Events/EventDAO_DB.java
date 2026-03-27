@@ -25,9 +25,14 @@ public class EventDAO_DB implements IEventDataAccess {
     public List<Event> getAllEvents() throws Exception {
         List<Event> allEvents = new ArrayList<>();
 
+        // Left join so events without coordinators also show up
         String sql = """
-        SELECT e.EventId, e.Title, e.StartDateTime, e.EndDateTime, e.Location, e.Notes
+        SELECT e.EventId, e.Title, e.StartDateTime, e.EndDateTime, e.Location, e.Notes,
+               u.UserID, u.FName, u.LName
         FROM dbo.Events e
+        LEFT JOIN dbo.EventCoordinators ec ON e.EventId = ec.EventId
+        LEFT JOIN dbo.Users u ON ec.UserId = u.UserID
+        ORDER BY e.EventId
         """;
 
         try (Connection conn = databaseConnector.getConnection();
@@ -49,6 +54,25 @@ public class EventDAO_DB implements IEventDataAccess {
                     currentEvent.setEndDateTime(rs.getObject("EndDateTime", LocalDateTime.class));
                     currentEvent.setLocation(rs.getString("Location"));
                     currentEvent.setNotes(rs.getString("Notes"));
+
+                    // Make list of ecs
+                    List<User> ecs = new ArrayList<>();
+
+                    // Ved LEFT JOIN kan UserId være NULL hvis eventet ikke har en coordinator.
+                    // getInt() kan ikke returnere null og giver derfor 0 i stedet - hvilket kan give en coordinator (hvis man har startet ids fra 0 af),
+                    // så vi bruger wasNull() til at afgøre om værdien faktisk var NULL i joinet. (det er en sikkerhedsforanstaltning for at gøre koden mere robost
+
+                    int userId = rs.getInt("UserID");
+                    if (!rs.wasNull()) {
+                        User ec = new User();
+                        ec.setId(userId);
+                        ec.setFName(rs.getString("FName"));
+                        ec.setLName(rs.getString("LName"));
+
+                        ecs.add(ec);
+                    }
+
+                    currentEvent.setCoordinators(ecs);
 
                     allEvents.add(currentEvent);
                     previousEventId = eventId;

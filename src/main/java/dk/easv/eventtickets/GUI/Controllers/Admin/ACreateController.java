@@ -125,6 +125,7 @@ public class ACreateController implements Initializable {
 
         if (username.isEmpty() || password.isEmpty()){
             displayError(new Exception("You must fill in all the fields"));
+            return;
         }
 
         currentUser = new User();
@@ -135,9 +136,9 @@ public class ACreateController implements Initializable {
         currentUser.setPasswordHash(password);
 
         if ("Admin".equals(type)) {
-            currentUser.addRole(UserRole.ADMIN);
+            currentUser.setRole(UserRole.ADMIN);
         } else if ("Event Coordinator".equals(type)) {
-            currentUser.addRole(UserRole.EVENT_COORDINATOR);
+            currentUser.setRole(UserRole.EVENT_COORDINATOR);
         }
 
 

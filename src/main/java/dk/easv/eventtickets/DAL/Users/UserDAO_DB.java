@@ -21,64 +21,44 @@ public class UserDAO_DB implements IUserDataAccess {
         List<User> allUsers = new ArrayList<>();
 
         String sql = """
-        SELECT u.UserID, u.Username, u.FName, u.LName, u.Email, u.PasswordHash, r.RoleName
-        FROM dbo.Users u
-        INNER JOIN UserRoles ur ON u.UserID = ur.UserID
-        INNER JOIN Roles r ON ur.RoleID = r.RoleID
-        ORDER BY u.LName, u.FName
-    """;
+        SELECT UserID, Username, FName, LName, Email, PasswordHash, Role
+        FROM dbo.Users
+        ORDER BY LName, FName
+        """;
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
-            User currentUser = null;
-            int previousUserId = -1;
-
             while (rs.next()) {
-                int userId = rs.getInt("UserID");
 
+                User user = new User();
+                user.setId(rs.getInt("UserID"));
+                user.setUsername(rs.getString("Username"));
+                user.setFName(rs.getString("FName"));
+                user.setLName(rs.getString("LName"));
+                user.setEmail(rs.getString("Email"));
+                user.setPasswordHash(rs.getString("PasswordHash"));
+                user.setRole(UserRole.valueOf(rs.getString("Role")));
 
-                if (userId != previousUserId) {
-                    currentUser = new User();
-                    currentUser.setId(userId);
-                    currentUser.setUsername(rs.getString("Username"));
-                    currentUser.setFName(rs.getString("FName"));
-                    currentUser.setLName(rs.getString("LName"));
-                    currentUser.setEmail(rs.getString("Email"));
-                    currentUser.setPasswordHash(rs.getString("PasswordHash"));
-
-                    allUsers.add(currentUser);
-                    previousUserId = userId;
-                }
-
-                // Add role from db to Enum
-                String roleName = rs.getString("RoleName");
-                if (roleName != null && currentUser != null) {
-                    try {
-                        // Converts "Admin" → UserRole.ADMIN
-                        UserRole role = UserRole.valueOf(roleName.toUpperCase().replace(" ", "_"));
-                        currentUser.addRole(role);
-                    } catch (IllegalArgumentException e) {
-                        System.err.println("Unknown name in db: " + roleName);
-                    }
-                }
+                allUsers.add(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new Exception("Could not get all users", e);
+            throw new Exception("Could not get all Users", e);
         }
 
         return allUsers;
     }
 
+
     @Override
     public User createUser(User newUser) throws Exception {
         String sql = """
-        INSERT INTO dbo.Users 
-        (Username, PasswordHash, FName, LName, Email)
-        VALUES (?, ?, ?, ?, ?)
-    """;
+                INSERT INTO dbo.Users
+                (Username, PasswordHash, FName, LName, Email, Role)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """;
 
         try (Connection conn = databaseConnector.getConnection()) {
             conn.setAutoCommit(false);
@@ -92,6 +72,8 @@ public class UserDAO_DB implements IUserDataAccess {
                 stmt.setString(4, newUser.getLName());
                 stmt.setString(5, newUser.getEmail());
 
+                stmt.setString(6, String.valueOf(newUser.getRole()));
+
                 stmt.executeUpdate();
 
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -103,16 +85,8 @@ public class UserDAO_DB implements IUserDataAccess {
                 }
             }
 
-            // Tilføj alle roller
-            if (newUser.getRoles() != null) {
-                for (UserRole role : newUser.getRoles()) {
-                    addRoleToUser(conn, userId, role);
-                }
-            }
-
             conn.commit();
 
-            // Returner brugeren med roller
             User created = new User();
             created.setId(userId);
             created.setUsername(newUser.getUsername());
@@ -120,16 +94,15 @@ public class UserDAO_DB implements IUserDataAccess {
             created.setFName(newUser.getFName());
             created.setLName(newUser.getLName());
             created.setEmail(newUser.getEmail());
-
-            for (UserRole role : newUser.getRoles()) {
-                created.addRole(role);
-            }
+            created.setRole(newUser.getRole());
 
             return created;
+
         } catch (Exception e) {
-            throw new Exception("Cant create User", e);
+            throw new Exception("Can't create User", e);
         }
     }
+
 
     @Override
     public void updateUser(User user) throws Exception {
@@ -139,20 +112,15 @@ public class UserDAO_DB implements IUserDataAccess {
 
     @Override
     public void deleteUser(User user) throws Exception {
-        String deleteUserSql = "DELETE FROM dbo.Users WHERE UserID =?; ";
-        String deleteUserRolesSql = "DELETE FROM dbo.UserRoles WHERE UserId = ?;";
+        String sql = "DELETE FROM dbo.Users WHERE UserID = ?;";
 
         try (Connection conn = databaseConnector.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement roleStmt = conn.prepareStatement(deleteUserRolesSql);
-                 PreparedStatement userStmt = conn.prepareStatement(deleteUserSql)) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                roleStmt.setInt(1, user.getId());
-                roleStmt.executeUpdate();
-
-                userStmt.setInt(1, user.getId());
-                int rowsAffected = userStmt.executeUpdate();
+                stmt.setInt(1, user.getId());
+                int rowsAffected = stmt.executeUpdate();
 
                 if (rowsAffected == 0) {
                     conn.rollback();
@@ -172,21 +140,4 @@ public class UserDAO_DB implements IUserDataAccess {
         return List.of();
     }
 
-
-    private void addRoleToUser(Connection conn, int userId, UserRole role) throws SQLException {
-        String sql = "INSERT INTO UserRoles (UserID, RoleID) VALUES (?, ?)";
-
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            stmt.setInt(2, getRoleId(role));   // se nedenfor
-            stmt.executeUpdate();
-        }
-    }
-
-    private int getRoleId(UserRole role) {
-        return switch (role) {
-            case ADMIN -> 1;
-            case EVENT_COORDINATOR -> 2;
-        };
-    }
 }

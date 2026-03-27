@@ -10,9 +10,9 @@ public class Event {
     private LocalDateTime endDateTime;
     private String location;
     private String notes;
-    private List<String> coordinators;
+    private List<User> coordinators;
 
-    public Event (int id, String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String notes, List<String> coordinators) {
+    public Event (int id, String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String notes, List<User> coordinators) {
         this.id = id;
         this.name = name;
         this.startDateTime = startDateTime;
@@ -74,11 +74,11 @@ public class Event {
         this.notes = notes;
     }
 
-    public List<String> getCoordinators() {
+    public List<User> getCoordinators() {
         return coordinators;
     }
 
-    public void setCoordinators(List<String> coordinators) {
+    public void setCoordinators(List<User> coordinators) {
         this.coordinators = coordinators;
     }
 }

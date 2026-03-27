@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.GUI.Controllers.Cards;
 
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -38,9 +39,15 @@ public class EventCardController {
 
         lblName.setText(event.getName());
 
-        lblStartDateTime.setText(event.getStartDateTime().format(formatter));
-        lblEndDateTime.setText(event.getTime());
-        lblLocation.setText(event.getLocation());
+        lblStartDateTime.setText("Start: " + event.getStartDateTime().format(formatter));
+
+        if (event.getEndDateTime() != null) {
+            lblEndDateTime.setText("End: " + event.getEndDateTime().format(formatter));
+        } else {
+            lblEndDateTime.setText("");
+        }
+
+        lblLocation.setText("Location: " + event.getLocation());
         lblNotes.setText(event.getNotes());
 
         setCoordinators(event.getCoordinators());
@@ -57,7 +64,7 @@ public class EventCardController {
         btnCreateTicket.setManaged(visible);
     }
 
-    private void setCoordinators(List<String> names) {
+    private void setCoordinators(List<User> names) {
 
         // List cells are reused, so without clear, labels would be doubling for every click on the cell
         subCoordinators.getChildren().clear();
@@ -69,7 +76,7 @@ public class EventCardController {
 
         for (int i = 0; i < names.size(); i++) {
 
-            Label lblCoor = new Label(names.get(i));
+            Label lblCoor = new Label(names.get(i).getFName() + " " + names.get(i).getLName());
 
             if (i == 0) {
                 lblCoor.getStyleClass().add("coorPrimary");
