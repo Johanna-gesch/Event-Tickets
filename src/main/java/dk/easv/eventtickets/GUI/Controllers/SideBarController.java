@@ -41,11 +41,11 @@ public class SideBarController {
     }
 
     private void configureSidebar() {
-        if ("admin".equals(role)) {
+        if ("Admin".equals(role)) {
             btnSecond.setText("\uD83D\uDC64   Create User");
             lblNavType.setText("Admin");
         }
-        if ("event".equals(role)) {
+        if ("Event".equals(role)) {
             btnSecond.setText("\uD83D\uDCC5   Events & Tickets");
             lblNavType.setText("Event Coordinator");
         }
@@ -53,20 +53,20 @@ public class SideBarController {
 
     @FXML
     private void onDashboard(ActionEvent actionEvent) {
-        if ("admin".equals(role)) {
+        if ("Admin".equals(role)) {
             setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
         }
-        if ("event".equals(role)) {
+        if ("Event".equals(role)) {
             setView("/dk/easv/eventtickets/Event/EventDash.fxml");
         }
     }
 
     @FXML
     private void onBtnSecond(ActionEvent actionEvent) {
-        if ("admin".equals(role)) {
+        if ("Admin".equals(role)) {
             setView("/dk/easv/eventtickets/Admin/CreateUser.fxml");
         }
-        if ("event".equals(role)) {
+        if ("Event".equals(role)) {
             setView("/dk/easv/eventtickets/Event/CreateEvent.fxml");
         }
     }

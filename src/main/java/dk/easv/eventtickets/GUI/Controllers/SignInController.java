@@ -29,11 +29,11 @@ public class SignInController {
             // Load center content
             if ("admin".equalsIgnoreCase(txtUsername.getText())) {
                 sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
-                sbmc.setRole("admin");
+                sbmc.setRole("Admin");
             }
             if ("event".equalsIgnoreCase(txtUsername.getText())) {
                 sbmc.setView("/dk/easv/eventtickets/Event/EventDash.fxml");
-                sbmc.setRole("event");
+                sbmc.setRole("Event");
             }
 
             // 4) switch scene in same window
@@ -42,6 +42,7 @@ public class SignInController {
             stage.show();
 
         } catch (IOException e) {
+            e.printStackTrace();
             displayError(e, "Failed to load FXML");
         }
 

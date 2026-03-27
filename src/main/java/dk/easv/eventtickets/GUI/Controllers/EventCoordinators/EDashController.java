@@ -1,13 +1,12 @@
-package dk.easv.eventtickets.GUI.Controllers.Event;
+package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.GUI.Controllers.Cards.EventCardController;
-import javafx.event.ActionEvent;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.TilePane;
 
 import java.io.IOException;
@@ -20,16 +19,20 @@ public class EDashController implements Initializable {
     @FXML
     private TilePane tilePane;
 
-    private List<Event> events;
+    private EventModel eventModel;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        showEvents(events);
+        try {
+            eventModel = new EventModel();
+            showEvents(eventModel.getEventsToBeViewed());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
-
-
 
     private void showEvents(List<Event> events) {
 

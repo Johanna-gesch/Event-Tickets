@@ -32,7 +32,10 @@
         </Label>
         <HBox spacing="10.0">
             <children>
-                <Label styleClass="cardSub" text="Event Coordinator(s):" underline="true" />
+                <Label styleClass="cardSub" text="Event Coordinator(s):" underline="true">
+               <HBox.margin>
+                  <Insets bottom="5.0" />
+               </HBox.margin></Label>
                 <Button fx:id="btnEditEC" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onEditEC" styleClass="btnNav" text="✐">
                     <font>
                         <Font name="Segoe UI Symbol" size="20.0" />
@@ -52,7 +55,7 @@
         <Region VBox.vgrow="ALWAYS" />
         <HBox alignment="CENTER_LEFT" spacing="30.0">
             <children>
-                <Button fx:id="btnCreateTicket" mnemonicParsing="false" rotate="-83.7" onAction="#onCreateTicket" styleClass="btnNav" text="🎟">
+                <Button fx:id="btnCreateTicket" mnemonicParsing="false" onAction="#onCreateTicket" rotate="-83.7" styleClass="btnNav" text="🎟">
                     <font>
                         <Font name="Segoe UI Symbol" size="25.0" />
                     </font>
@@ -81,6 +84,9 @@
                         <Insets bottom="-8.0" left="-8.0" right="-8.0" top="-8.0" />
                     </padding></Button>
             </children>
+         <VBox.margin>
+            <Insets top="5.0" />
+         </VBox.margin>
         </HBox>
     </children>
     <padding>

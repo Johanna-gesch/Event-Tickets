@@ -54,29 +54,29 @@ public class EventDAO_DB implements IEventDataAccess {
                     currentEvent.setEndDateTime(rs.getObject("EndDateTime", LocalDateTime.class));
                     currentEvent.setLocation(rs.getString("Location"));
                     currentEvent.setNotes(rs.getString("Notes"));
-
-                    // Make list of ecs
-                    List<User> ecs = new ArrayList<>();
-
-                    // Ved LEFT JOIN kan UserId være NULL hvis eventet ikke har en coordinator.
-                    // getInt() kan ikke returnere null og giver derfor 0 i stedet - hvilket kan give en coordinator (hvis man har startet ids fra 0 af),
-                    // så vi bruger wasNull() til at afgøre om værdien faktisk var NULL i joinet. (det er en sikkerhedsforanstaltning for at gøre koden mere robost
-
-                    int userId = rs.getInt("UserID");
-                    if (!rs.wasNull()) {
-                        User ec = new User();
-                        ec.setId(userId);
-                        ec.setFName(rs.getString("FName"));
-                        ec.setLName(rs.getString("LName"));
-
-                        ecs.add(ec);
-                    }
-
-                    currentEvent.setCoordinators(ecs);
+                    currentEvent.setCoordinators(new ArrayList<>());
 
                     allEvents.add(currentEvent);
+
                     previousEventId = eventId;
                 }
+
+                // Make list of ecs
+
+                // Ved LEFT JOIN kan UserId være NULL hvis eventet ikke har en coordinator.
+                // getInt() kan ikke returnere null og giver derfor 0 i stedet - hvilket kan give en coordinator (hvis man har startet ids fra 0 af),
+                // så vi bruger wasNull() til at afgøre om værdien faktisk var NULL i joinet. (det er en sikkerhedsforanstaltning for at gøre koden mere robost
+
+                int userId = rs.getInt("UserID");
+                if (!rs.wasNull()) {
+                    User ec = new User();
+                    ec.setId(userId);
+                    ec.setFName(rs.getString("FName"));
+                    ec.setLName(rs.getString("LName"));
+
+                    currentEvent.getCoordinators().add(ec);
+                }
+
 
             }
         } catch (SQLException e) {
