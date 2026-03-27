@@ -38,6 +38,7 @@ public class ADashController implements Initializable {
             lstEvents.setItems(eventModel.getEventsToBeViewed());
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
 
