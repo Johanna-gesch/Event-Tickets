@@ -39,7 +39,7 @@ public class UserDAO_DB implements IUserDataAccess {
                 user.setLName(rs.getString("LName"));
                 user.setEmail(rs.getString("Email"));
                 user.setPasswordHash(rs.getString("PasswordHash"));
-                user.setRole(UserRole.valueOf(rs.getString("Role").toUpperCase()));
+                user.setRole(UserRole.valueOf(rs.getString("Role").toUpperCase().replace(" ", "_")));
 
                 allUsers.add(user);
             }

@@ -1,10 +1,9 @@
-package dk.easv.eventtickets.GUI.Controllers.Admin;
+package dk.easv.eventtickets.GUI.Controllers.Admins;
 
 import dk.easv.eventtickets.BE.*;
 import dk.easv.eventtickets.GUI.Controllers.Cards.*;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.GUI.Controllers.Admin;
+package dk.easv.eventtickets.GUI.Controllers.Admins;
 
 import dk.easv.eventtickets.BE.Customer;
 import dk.easv.eventtickets.BE.User;

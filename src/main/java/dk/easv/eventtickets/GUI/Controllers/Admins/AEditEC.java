@@ -1,9 +1,8 @@
-package dk.easv.eventtickets.GUI.Controllers.Event;
+package dk.easv.eventtickets.GUI.Controllers.Admins;
 
 import dk.easv.eventtickets.BLL.EventManager;
-import javafx.event.ActionEvent;
 
-public class EEditEC {
+public class AEditEC {
     private EventManager eMan;
     /*private
 

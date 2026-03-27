@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.GUI.Controllers.Event;
+package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
