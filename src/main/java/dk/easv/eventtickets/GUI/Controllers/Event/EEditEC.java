@@ -8,10 +8,11 @@ public class EEditEC {
     private
 
 
-    public void onbtnDelete(ActionEvent actionEvent) {
+     void onbtnDelete(ActionEvent actionEvent) {
         try {
-            uMod.deleteUser(currentUser);
-            uMod.getUserToBeViewed().remove(currentUser); // fjerner fra UI
+
+            //uMod.deleteUser(currentUser);
+            //uMod.getUserToBeViewed().remove(currentUser); // fjerner fra UI
         } catch (Exception e) {
             e.printStackTrace();
         }
