@@ -140,4 +140,26 @@ public class UserDAO_DB implements IUserDataAccess {
         return List.of();
     }
 
+    public List<User> getAllCoordinators() throws Exception {
+        List<User> allCoordinators = new ArrayList<>();
+
+        String sql = "SELECT UserID, FName, LName, Email FROM Users WHERE Role = 'Event Coordinator'";
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("UserID"));
+                u.setFName(rs.getString("FName"));
+                u.setLName(rs.getString("LName"));
+                u.setEmail(rs.getString("Email"));
+                u.setRole(UserRole.EVENT_COORDINATOR);
+                allCoordinators.add(u);
+            }
+        }
+        return allCoordinators;
+    }
+
 }

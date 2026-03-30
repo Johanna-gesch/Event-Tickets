@@ -5,13 +5,15 @@ import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.DAL.Events.EventDAO_DB;
 import dk.easv.eventtickets.DAL.Events.IEventDataAccess;
 
-
-
 import dk.easv.eventtickets.DAL.DBConnector;
+import dk.easv.eventtickets.DAL.Users.IUserDataAccess;
+import dk.easv.eventtickets.DAL.Users.UserDAO_DB;
 
 import java.util.List;
 
 public class EventManager {
+
+    private final IUserDataAccess userDAO = new UserDAO_DB();
 
     private final IEventDataAccess eventDAO;
 
@@ -29,5 +31,17 @@ public class EventManager {
 
     public void deleteEvent (Event event) throws Exception {
         eventDAO.deleteEvent(event);
+    }
+
+    public List<User> getAllCoordinators() throws Exception {
+        return userDAO.getAllCoordinators();
+    }
+
+    public List<User> getCoordinatorsForEvent(int eventId) throws Exception {
+        return eventDAO.getCoordinatorsForEvent(eventId);
+    }
+
+    public void updateEventCoordinators(int eventId, List<User> coordinators) throws Exception {
+        eventDAO.replaceCoordinators(eventId, coordinators);
     }
 }

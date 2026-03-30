@@ -14,4 +14,6 @@ public interface IUserDataAccess {
     void deleteUser(User user) throws Exception;
 
     List<User> getMoviesForGenre(User user) throws Exception;
+
+    List<User> getAllCoordinators() throws Exception;
 }

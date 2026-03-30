@@ -148,4 +148,64 @@ public class EventDAO_DB implements IEventDataAccess {
             }
         }
     }
+
+
+
+    @Override
+    public List<User> getCoordinatorsForEvent(int eventId) throws Exception {
+        List<User> coordinatorsForEvent = new ArrayList<>();
+
+        String sql = """
+        SELECT u.UserID, u.FName, u.LName, u.Email
+        FROM EventCoordinators ec
+        JOIN Users u ON ec.UserID = u.UserID
+        WHERE ec.EventID = ?
+    """;
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                User u = new User();
+                u.setId(rs.getInt("UserID"));
+                u.setFName(rs.getString("FName"));
+                u.setLName(rs.getString("LName"));
+                u.setEmail(rs.getString("Email"));
+                u.setRole(UserRole.EVENT_COORDINATOR);
+                coordinatorsForEvent.add(u);
+            }
+        }
+        return coordinatorsForEvent;
+
+    }
+
+    @Override
+    public void replaceCoordinators(int eventId, List<User> coordinators) throws Exception {
+        String deleteSql = "DELETE FROM EventCoordinators WHERE EventID = ?";
+        String insertSql = "INSERT INTO EventCoordinators (EventID, UserID) VALUES (?, ?)";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
+                deleteStmt.setInt(1, eventId);
+                deleteStmt.executeUpdate();
+            }
+
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                for (User u : coordinators) {
+                    insertStmt.setInt(1, eventId);
+                    insertStmt.setInt(2, u.getId());
+                    insertStmt.addBatch();
+                }
+                insertStmt.executeBatch();
+            }
+
+            conn.commit();
+        }
+
+    }
 }

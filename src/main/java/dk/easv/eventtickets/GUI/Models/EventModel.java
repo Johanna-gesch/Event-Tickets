@@ -6,6 +6,9 @@ import dk.easv.eventtickets.BLL.EventManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class EventModel {
     private EventManager eMan;
     private ObservableList<Event> eventsToBeViewed;

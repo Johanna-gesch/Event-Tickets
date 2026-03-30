@@ -100,4 +100,9 @@ public class User {
         return imagePath;
     }
 
+    @Override
+    public String toString() {
+        return FName + " " + LName;
+    }
+
 }

@@ -4,6 +4,7 @@ import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
+import dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,6 +114,10 @@ public class EventCardController{
     private void onEditEC(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Event/EditECEvent.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+
+        AEditEC controller = fxmlLoader.getController();
+        controller.setEvent(currentEvent);
+
         Stage stage = new Stage();
         stage.setTitle("ECView");
         stage.setScene(scene);

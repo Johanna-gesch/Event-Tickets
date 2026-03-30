@@ -5,10 +5,34 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC">
-   <children>
-      <HBox prefHeight="400.0" prefWidth="600.0" />
-      <VBox prefHeight="400.0" prefWidth="600.0" />
-      <ListView fx:id="EventCordinatorEvent" prefHeight="400.0" prefWidth="600.0" />
-   </children>
+    <children>
+
+        <VBox spacing="20" AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+              AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20">
+
+            <!-- Title -->
+            <Label text="Edit Event Coordinators" styleClass="title"/>
+
+            <!-- List of coordinators -->
+            <VBox spacing="10">
+                <Label text="Select coordinators for this event:" styleClass="lblTextfield"/>
+                <ListView fx:id="EventCoordinatorEvent"
+                          prefHeight="300"
+                          styleClass="lstUsers"/>
+            </VBox>
+
+            <!-- Buttons -->
+            <HBox spacing="15" alignment="center_right">
+                <Button text="Cancel" onAction="#onCancel" styleClass="btn"/>
+                <Button text="Save" onAction="#onSave" styleClass="btn"/>
+            </HBox>
+
+        </VBox>
+
+    </children>
+
 </AnchorPane>
+
