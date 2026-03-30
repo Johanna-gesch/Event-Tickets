@@ -37,4 +37,8 @@ public class UserModel {
         uMan.deleteUser(deleteUser);
 
     }
+
+    public User updateUser(User currentUser) throws Exception {
+        return uMan.updateUser(currentUser);
+    }
 }

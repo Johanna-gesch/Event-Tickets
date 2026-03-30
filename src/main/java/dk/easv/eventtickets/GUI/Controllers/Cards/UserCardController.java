@@ -23,6 +23,8 @@ public class UserCardController {
 
     private User currentUser;
 
+    private IUserCardListener listener;
+
     public void setUser(User user) {
         this.currentUser = user;
 
@@ -40,7 +42,9 @@ public class UserCardController {
 
     @FXML
     private void onEdit(ActionEvent actionEvent) {
-
+        if (listener != null) {
+            listener.onEditUser(currentUser);
+        }
     }
 
     @FXML
@@ -51,7 +55,10 @@ public class UserCardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
+
+    public void setListener(IUserCardListener listener) {
+        this.listener = listener;
+    }
+
 }

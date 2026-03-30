@@ -105,9 +105,25 @@ public class UserDAO_DB implements IUserDataAccess {
 
 
     @Override
-    public void updateUser(User user) throws Exception {
+    public User updateUser(User user) throws Exception {
+        String sql = "UPDATE dbo.Users SET Username = ?, FName = ?, LName = ?, Email = ?, PasswordHash = ?, Role = ? WHERE UserID = ?;";
 
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getFName());
+            stmt.setString(3, user.getLName());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getPasswordHash());
+            stmt.setString(6, String.valueOf(user.getRole()));
+            stmt.setInt(7, user.getId());
+
+            stmt.executeUpdate();
+            return user;
+        } catch (SQLException e) {
+            throw new Exception("Could not update user: " + e.getMessage(), e);
+        }
     }
 
     @Override

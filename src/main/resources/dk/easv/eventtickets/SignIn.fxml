@@ -63,7 +63,7 @@
                             </font></TextField>
                     </children>
                 </VBox>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSignIn" prefWidth="100.0" styleClass="btn" text="Sign In" textAlignment="RIGHT">
+                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" fx:id="btnSignIn" onAction="#onSignIn" prefWidth="100.0" styleClass="btn" text="Sign In" textAlignment="RIGHT">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>

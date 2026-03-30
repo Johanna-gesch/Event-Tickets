@@ -39,4 +39,8 @@ public class UserManager {
         //System.out.println(result);
         return bcryptHashString;
     }
+
+    public User updateUser(User currentUser) throws Exception {
+        return userDao.updateUser(currentUser);
+    }
 }

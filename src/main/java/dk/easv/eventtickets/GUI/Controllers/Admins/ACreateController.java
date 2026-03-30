@@ -49,6 +49,8 @@ public class ACreateController implements Initializable {
     @FXML
     private Button btnAvatarBig, btnAvatarSmall;
 
+    private boolean isEditMode = false;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,11 +99,26 @@ public class ACreateController implements Initializable {
             displayError(new Exception("You must fill in all the fields"));
             return;
         }
-        if ("Customer".equals(selectedType)){
-            onCustomerSave(fName, lName, email);
+
+        if (isEditMode) {
+
+            UserRole role = null;
+
+            if ("Admin".equals(selectedType)) {
+                role = UserRole.ADMIN;
+            } else if ("Event Coordinator".equals(selectedType)) {
+                role = UserRole.EVENT_COORDINATOR;
+            }
+            updateExistingUser(fName, lName, email, txtUsername.getText(), role);
         } else {
-            onBtnAdminOrCoordinatorControllerSave(fName, lName, email, selectedType);
+            if ("Customer".equals(selectedType)){
+                onCustomerSave(fName, lName, email);
+            } else {
+                onBtnAdminOrCoordinatorControllerSave(fName, lName, email, selectedType);
+            }
         }
+
+
     }
 
     public void onCustomerSave(String fName, String lName, String email){
@@ -190,4 +207,40 @@ public class ACreateController implements Initializable {
         comboType.getSelectionModel().clearSelection();
     }
 
+    public void loadUserForEditing(User user) {
+        this.currentUser = user;
+        this.isEditMode = true;
+
+        txtFName.setText(user.getFName());
+        txtLName.setText(user.getLName());
+        txtEmail.setText(user.getEmail());
+        txtUsername.setText(user.getUsername());
+        comboType.getSelectionModel().select(user.getRole().getDisplayName());
+
+        //This is to make sure the invisible layer isn't hidden when editing an admin or coordinator.
+        comboType.getOnAction().handle(null);
+    }
+
+    private void updateExistingUser(String fName, String lName, String email, String username, UserRole role) {
+        try {
+            currentUser.setFName(fName);
+            currentUser.setLName(lName);
+            currentUser.setEmail(email);
+            currentUser.setUsername(username);
+            currentUser.setRole(role);
+
+            String newPassword = txtPassword.getText();
+            if (!newPassword.isEmpty()) {
+                currentUser.setPasswordHash(userModel.hashPassword(newPassword));
+            }
+
+            userModel.updateUser(currentUser);
+
+            clearFields();
+            isEditMode = false;
+
+        } catch (Exception e) {
+            displayError(new Exception("Could not update user", e));
+        }
+    }
 }

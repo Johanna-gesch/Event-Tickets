@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ADashController implements Initializable {
+public class ADashController implements Initializable, IUserCardListener {
     private UserModel userModel;
     private EventModel eventModel;
 
@@ -76,6 +76,9 @@ public class ADashController implements Initializable {
                     ucc = loader.getController();
                     ucc.setUser(user);
                     ucc.setUserModel(userModel);
+
+                    ucc.setListener(ADashController.this);
+
                     setGraphic(graphic);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -128,5 +131,18 @@ public class ADashController implements Initializable {
     }
 
 
+    @Override
+    public void onEditUser(User user) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Admin/CreateUser.fxml"));
+            Parent root = loader.load();
 
+            ACreateController controller = loader.getController();
+            controller.loadUserForEditing(user);
+
+            lstUsers.getScene().setRoot(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
