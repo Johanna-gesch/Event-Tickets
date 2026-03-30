@@ -20,6 +20,6 @@ public interface IEventDataAccess {
 
     List<User> getCoordinatorsForEvent(int eventId) throws Exception;
 
-    void replaceCoordinators(int eventId, List<User> coordinators) throws Exception;
+    void updateCoordinators(int eventId, int userId) throws Exception;
 
 }

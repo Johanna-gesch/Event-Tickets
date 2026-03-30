@@ -12,11 +12,23 @@ import java.util.ArrayList;
 public class EventModel {
     private EventManager eMan;
     private ObservableList<Event> eventsToBeViewed;
+    private static EventModel instance;
 
     public EventModel() throws Exception {
         eMan = new EventManager();
         eventsToBeViewed = FXCollections.observableArrayList();
         eventsToBeViewed.addAll(eMan.getAllEvents());
+    }
+
+    public static EventModel getInstance() throws Exception {
+        if (instance == null) {
+            instance = new EventModel();
+        }
+        return instance;
+    }
+
+    public void reloadEvents() throws Exception {
+        eventsToBeViewed.setAll(eMan.getAllEvents());
     }
 
     public ObservableList<Event> getEventsToBeViewed() {

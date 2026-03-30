@@ -183,29 +183,20 @@ public class EventDAO_DB implements IEventDataAccess {
     }
 
     @Override
-    public void replaceCoordinators(int eventId, List<User> coordinators) throws Exception {
-        String deleteSql = "DELETE FROM EventCoordinators WHERE EventID = ?";
+    public void updateCoordinators(int eventId, int userId) throws Exception {
         String insertSql = "INSERT INTO EventCoordinators (EventID, UserID) VALUES (?, ?)";
 
         try (Connection conn = databaseConnector.getConnection()) {
             conn.setAutoCommit(false);
 
-            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteSql)) {
-                deleteStmt.setInt(1, eventId);
-                deleteStmt.executeUpdate();
-            }
-
             try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
-                for (User u : coordinators) {
-                    insertStmt.setInt(1, eventId);
-                    insertStmt.setInt(2, u.getId());
-                    insertStmt.addBatch();
-                }
+                insertStmt.setInt(1, eventId);
+                insertStmt.setInt(2, userId);
+                insertStmt.addBatch();
+
                 insertStmt.executeBatch();
             }
-
             conn.commit();
         }
-
     }
 }

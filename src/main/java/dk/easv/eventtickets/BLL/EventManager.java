@@ -41,7 +41,7 @@ public class EventManager {
         return eventDAO.getCoordinatorsForEvent(eventId);
     }
 
-    public void updateEventCoordinators(int eventId, List<User> coordinators) throws Exception {
-        eventDAO.replaceCoordinators(eventId, coordinators);
+    public void updateEventCoordinators(int eventId, int userId) throws Exception {
+        eventDAO.updateCoordinators(eventId, userId);
     }
 }

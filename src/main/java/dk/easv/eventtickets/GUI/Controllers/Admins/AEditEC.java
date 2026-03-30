@@ -3,6 +3,7 @@ package dk.easv.eventtickets.GUI.Controllers.Admins;
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.EventManager;
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class AEditEC {
     @FXML
-    private ListView EventCoordinatorEvent;
+    private ListView<User> EventCoordinatorEvent;
 
     @FXML
     private Button BtnRemove;
@@ -27,6 +28,11 @@ public class AEditEC {
 
     public AEditEC() throws Exception {
         eventManager = new EventManager();
+    }
+
+    @FXML
+    public void initialize() {
+        EventCoordinatorEvent.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
     public void setEvent(Event event) {
@@ -62,8 +68,20 @@ public class AEditEC {
     @FXML
     private void onSave(ActionEvent actionEvent) {
         try {
-            List<User> selected = EventCoordinatorEvent.getSelectionModel().getSelectedItems();
-            eventManager.updateEventCoordinators(event.getId(), selected);
+            List<User> oldList = eventManager.getCoordinatorsForEvent(event.getId());
+            List<User> newList = EventCoordinatorEvent.getSelectionModel().getSelectedItems();
+
+            // Find coordinators to add
+            for (User u : newList) {
+                if (!oldList.contains(u)) {
+                    eventManager.updateEventCoordinators(event.getId(), u.getId());
+                }
+            }
+
+            EventModel.getInstance().reloadEvents();
+
+            EventCoordinatorEvent.getScene().getWindow().hide();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +105,8 @@ public class AEditEC {
 
         // Call your BE method using its parameters: (Event event, int userId)
         eventManager.removeCoordinator(event, selected.getId());
+
+        EventModel.getInstance().reloadEvents();
     }
 
 }

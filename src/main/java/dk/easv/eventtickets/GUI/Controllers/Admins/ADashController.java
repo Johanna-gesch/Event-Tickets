@@ -28,7 +28,7 @@ public class ADashController implements Initializable, IUserCardListener {
     public void initialize(URL location, ResourceBundle resources) {
         try{
             userModel = new UserModel();
-            eventModel = new EventModel();
+            eventModel = EventModel.getInstance();
 
             handleUserCards();
             handleEventCards();
