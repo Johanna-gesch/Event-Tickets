@@ -5,6 +5,7 @@ import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.EventManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -15,8 +16,14 @@ public class AEditEC {
     @FXML
     private ListView EventCoordinatorEvent;
 
+    @FXML
+    private Button BtnRemove;
+
     private Event event;
+    private User user;
     private EventManager eventManager;
+
+
 
     public AEditEC() throws Exception {
         eventManager = new EventManager();
@@ -26,6 +33,11 @@ public class AEditEC {
         this.event = event;
         loadCoordinators();
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 
     private void loadCoordinators() {
         try{
@@ -56,4 +68,26 @@ public class AEditEC {
             e.printStackTrace();
         }
     }
+
+//    @FXML
+//    private void btnRemove(ActionEvent actionEvent) throws Exception {
+//        eventManager.removeCoordinator(event.getId(), user.getId());
+//    }
+
+    @FXML
+    private void btnRemoveAC(ActionEvent actionEvent) throws Exception {
+
+        // Get selected coordinator from your ListView
+        User selected = (User) EventCoordinatorEvent.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            System.out.println("No coordinator selected");
+            return;
+        }
+
+        // Call your BE method using its parameters: (Event event, int userId)
+        eventManager.removeCoordinator(event, selected.getId());
+    }
+
 }
+
