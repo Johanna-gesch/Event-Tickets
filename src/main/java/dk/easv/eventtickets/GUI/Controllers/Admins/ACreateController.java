@@ -122,6 +122,8 @@ public class ACreateController implements Initializable {
     public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
         String username = txtUsername.getText();
         String password = txtPassword.getText();
+        String hashPassword = userModel.hashPassword(password);
+
 
         if (username.isEmpty() || password.isEmpty()){
             displayError(new Exception("You must fill in all the fields"));
@@ -133,7 +135,7 @@ public class ACreateController implements Initializable {
         currentUser.setLName(lName);
         currentUser.setEmail(email);
         currentUser.setUsername(username);
-        currentUser.setPasswordHash(password);
+        currentUser.setPasswordHash(hashPassword);
 
         if ("Admin".equals(type)) {
             currentUser.setRole(UserRole.ADMIN);

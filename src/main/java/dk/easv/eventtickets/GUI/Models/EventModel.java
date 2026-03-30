@@ -19,4 +19,8 @@ public class EventModel {
     public ObservableList<Event> getEventsToBeViewed() {
         return eventsToBeViewed;
     }
+    public void deleteEvent(Event deleteEvent) throws Exception {
+        eMan.deleteEvent(deleteEvent);
+
+    }
 }

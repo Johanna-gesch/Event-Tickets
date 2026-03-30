@@ -99,6 +99,27 @@ public class EventDAO_DB implements IEventDataAccess {
 
     @Override
     public void deleteEvent(Event event) throws Exception {
+        String sql = "DELETE FROM Events WHERE EventID = ?;";
+
+        try (Connection conn = databaseConnector.getConnection()){
+            conn.setAutoCommit(false);
+            try (PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setInt(1, event.getId());
+                int rowsAffected = stmt.executeUpdate();
+
+                if (rowsAffected == 0) {
+                    conn.rollback();
+                    throw new Exception("Could not delete event: no event found with ID " + event.getId());
+                }
+
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw new Exception("Could not delete event: " + e.getMessage(), e);
+            }
+
+
+        }
 
     }
 

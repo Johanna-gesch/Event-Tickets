@@ -24,6 +24,11 @@ public class UserModel {
         return usercreated;
 
     }
+
+    public String hashPassword( String passwordHash){
+        return uMan.bcrypt(passwordHash);
+    }
+
     public ObservableList<User> getUserToBeViewed() {
         return userToBeViewed;
     }

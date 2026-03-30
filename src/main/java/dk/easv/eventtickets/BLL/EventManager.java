@@ -26,4 +26,8 @@ public class EventManager {
     public void removeCoordinator(Event event, int UserId) throws Exception {
         eventDAO.removeCoordinator(event, UserId);
     }
+
+    public void deleteEvent (Event event) throws Exception {
+        eventDAO.deleteEvent(event);
+    }
 }

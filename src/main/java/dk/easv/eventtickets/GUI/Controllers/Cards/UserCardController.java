@@ -40,7 +40,7 @@ public class UserCardController {
 
     @FXML
     private void onEdit(ActionEvent actionEvent) {
-        System.out.println("you pressed the button");
+
     }
 
     @FXML

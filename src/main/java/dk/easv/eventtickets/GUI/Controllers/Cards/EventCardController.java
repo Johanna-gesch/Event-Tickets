@@ -2,9 +2,12 @@ package dk.easv.eventtickets.GUI.Controllers.Cards;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,10 +16,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class EventCardController {
+public class EventCardController{
 
     @FXML
     private Button btnCreateTicket;
@@ -37,8 +42,14 @@ public class EventCardController {
     @FXML
     private HBox subCoordinators;
 
+    private Event currentEvent;
+
+    private EventModel eMod;
+
+
 
     public void setEvent(Event event) {
+        this.currentEvent = event;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm");
 
@@ -111,12 +122,23 @@ public class EventCardController {
     }
 
     @FXML
-    private void onDeleteEvent(ActionEvent actionEvent) {
-
+    private void onDeleteEvent(ActionEvent actionEvent) throws Exception {
+        try {
+            eMod.deleteEvent(currentEvent);
+            eMod.getEventsToBeViewed().remove(currentEvent);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void onCreateTicket(ActionEvent actionEvent) {
 
     }
+
+    public void setEventModel(EventModel eventModel) {
+        this.eMod = eventModel;
+    }
+
 }

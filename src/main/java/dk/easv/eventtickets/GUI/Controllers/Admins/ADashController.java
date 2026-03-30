@@ -116,6 +116,7 @@ public class ADashController implements Initializable {
                     }
                     ecc = loader.getController();
                     ecc.setEvent(event);
+                    ecc.setEventModel(eventModel);
                     ecc.isEventDash(false);
                     setGraphic(graphic);
                 } catch (IOException e) {
