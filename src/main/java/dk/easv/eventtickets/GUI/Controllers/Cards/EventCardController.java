@@ -4,10 +4,15 @@ import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -94,9 +99,15 @@ public class EventCardController {
     }
 
     @FXML
-    private void onEditEC(ActionEvent actionEvent) {
+    private void onEditEC(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Event/EditECEvent.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = new Stage();
+        stage.setTitle("ECView");
+        stage.setScene(scene);
 
-
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML

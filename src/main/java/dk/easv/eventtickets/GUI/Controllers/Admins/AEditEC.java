@@ -1,20 +1,12 @@
 package dk.easv.eventtickets.GUI.Controllers.Admins;
 
 import dk.easv.eventtickets.BLL.EventManager;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 public class AEditEC {
-    private EventManager eMan;
-    /*private
-
-
-     void onbtnDelete(ActionEvent actionEvent) {
-        try {
-
-            //uMod.deleteUser(currentUser);
-            //uMod.getUserToBeViewed().remove(currentUser); // fjerner fra UI
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }*/
+    @FXML
+    private ListView EventCordinatorEvent;
 }
