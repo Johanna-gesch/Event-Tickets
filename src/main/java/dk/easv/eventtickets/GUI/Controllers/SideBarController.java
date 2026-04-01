@@ -22,7 +22,7 @@ public class SideBarController {
 
     private String role;
     @FXML
-    private Button btnSecond;
+    private Button btnSecond, btnThird;
 
     public void setView(String fxmlPath) {
         try {
@@ -43,10 +43,14 @@ public class SideBarController {
     private void configureSidebar() {
         if ("Admin".equals(role)) {
             btnSecond.setText("\uD83D\uDC64   Create User");
+            btnThird.setVisible(false);
+            btnThird.setManaged(false);
             lblNavType.setText("Admin");
         }
         if ("Event".equals(role)) {
             btnSecond.setText("\uD83D\uDCC5   Events & Tickets");
+            btnThird.setVisible(true);
+            btnThird.setManaged(true);
             lblNavType.setText("Event Coordinator");
         }
     }
@@ -57,7 +61,7 @@ public class SideBarController {
             setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
         }
         if ("Event".equals(role)) {
-            setView("/dk/easv/eventtickets/Event/EventDash.fxml");
+            setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
         }
     }
 
@@ -67,8 +71,13 @@ public class SideBarController {
             setView("/dk/easv/eventtickets/Admin/CreateUser.fxml");
         }
         if ("Event".equals(role)) {
-            setView("/dk/easv/eventtickets/Event/CreateEvent.fxml");
+            setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
         }
+    }
+
+    @FXML
+    private void onBtnThird(ActionEvent actionEvent) {
+        setView("/dk/easv/eventtickets/EventCoordinator/CreateTickets.fxml");
     }
 
     @FXML

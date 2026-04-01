@@ -38,7 +38,7 @@ public class SignInController implements Initializable {
                 sbmc.setRole("Admin");
             }
             if ("event".equalsIgnoreCase(txtUsername.getText())) {
-                sbmc.setView("/dk/easv/eventtickets/Event/EventDash.fxml");
+                sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
                 sbmc.setRole("Event");
             }
 

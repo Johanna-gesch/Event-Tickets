@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="900.0" styleClass="BG" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ECreateController">
+    <children>
+        <Label styleClass="title" text="Create Events">
+            <padding>
+                <Insets bottom="20.0" left="20.0" top="20.0" />
+            </padding>
+        </Label>
+          <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" styleClass="topBorder" VBox.vgrow="ALWAYS">
+              <children>
+                  <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" styleClass="whiteLayerBox">
+                      <children>
+                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Event Name" />
+                          <TextField styleClass="txtField">
+                              <font>
+                                  <Font size="14.0" />
+                              </font>
+                          </TextField>
+                          <HBox maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefWidth="200.0" spacing="10.0">
+                              <children>
+                                  <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                      <children>
+                                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Date">
+                                              <VBox.margin>
+                                                  <Insets top="5.0" />
+                                              </VBox.margin>
+                                          </Label>
+                                          <TextField styleClass="txtField">
+                                              <font>
+                                                  <Font size="14.0" />
+                                              </font>
+                                          </TextField>
+                                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Time">
+                                              <VBox.margin>
+                                                  <Insets top="5.0" />
+                                              </VBox.margin>
+                                          </Label>
+                                          <TextField styleClass="txtField">
+                                              <font>
+                                                  <Font size="14.0" />
+                                              </font>
+                                          </TextField>
+                                      </children>
+                                  </VBox>
+                                  <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                      <children>
+                                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="End Date">
+                                              <VBox.margin>
+                                                  <Insets top="5.0" />
+                                              </VBox.margin>
+                                          </Label>
+                                          <TextField styleClass="txtFieldRec">
+                                              <font>
+                                                  <Font size="14.0" />
+                                              </font>
+                                          </TextField>
+                                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="End Time">
+                                              <VBox.margin>
+                                                  <Insets top="5.0" />
+                                              </VBox.margin>
+                                          </Label>
+                                          <TextField styleClass="txtFieldRec">
+                                              <font>
+                                                  <Font size="14.0" />
+                                              </font>
+                                          </TextField>
+                                      </children>
+                                  </VBox>
+                              </children>
+                          </HBox>
+                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Location">
+                              <VBox.margin>
+                                  <Insets top="5.0" />
+                              </VBox.margin>
+                          </Label>
+                          <TextField styleClass="txtField">
+                              <font>
+                                  <Font size="14.0" />
+                              </font>
+                          </TextField>
+                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="Location Guidance">
+                              <VBox.margin>
+                                  <Insets top="5.0" />
+                              </VBox.margin>
+                          </Label>
+                          <TextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" styleClass="txtFieldRec">
+                              <font>
+                                  <Font size="14.0" />
+                              </font>
+                          </TextField>
+                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Notes">
+                              <VBox.margin>
+                                  <Insets top="5.0" />
+                              </VBox.margin>
+                          </Label>
+                          <TextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" styleClass="txtField">
+                              <font>
+                                  <Font size="14.0" />
+                              </font>
+                          </TextField>
+                          <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="Assign extra coordinators">
+                              <VBox.margin>
+                                  <Insets top="5.0" />
+                              </VBox.margin>
+                          </Label>
+                          <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="20.0">
+                              <children>
+                                  <ComboBox editable="true" prefHeight="32.0" prefWidth="294.0" promptText="🔍" styleClass="txtFieldRec" />
+                                  <Button mnemonicParsing="false" styleClass="btn" text="Add">
+                                      <font>
+                                          <Font size="16.0" />
+                                      </font>
+                                      <padding>
+                                          <Insets bottom="-1.0" left="10.0" right="10.0" top="-1.0" />
+                                      </padding>
+                                  </Button>
+                              </children>
+                          </HBox>
+                          <Region prefHeight="200.0" prefWidth="200.0" />
+                          <Button mnemonicParsing="false" styleClass="btn" text="Save">
+                              <VBox.margin>
+                                  <Insets />
+                              </VBox.margin>
+                              <font>
+                                  <Font size="18.0" />
+                              </font>
+                              <padding>
+                                  <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                              </padding>
+                          </Button>
+                      </children>
+                      <padding>
+                          <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+                      </padding>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+                  </VBox>
+              </children>
+          </VBox>
+    </children>
+</VBox>

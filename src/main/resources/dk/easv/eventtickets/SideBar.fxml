@@ -57,6 +57,14 @@
                         <Font size="22.0" />
                     </font>
                 </Button>
+            <Button fx:id="btnThird" mnemonicParsing="false" onAction="#onBtnThird" styleClass="btnNav" text="🎟 Create Tickets">
+               <font>
+                  <Font size="22.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Button>
                 <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                 <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLogOut" prefWidth="80.0" styleClass="btn" text="Log Out">
                     <VBox.margin>
