@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" styleClass="ticketBG" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" styleClass="ticketBG" stylesheets="@../Style.css" fx:controller="dk.easv.eventtickets.GUI.Controllers.Tickets.TicketController" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox id="ticketBlur" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="275.0">
             <children>
@@ -16,14 +16,14 @@
                     <children>
                         <VBox alignment="CENTER" prefHeight="40.0" prefWidth="275.0" styleClass="ticketPurpleTop">
                             <children>
-                                <Label fx:id="lblCostumerName" text="Costumer name" textFill="#f8f9f9">
+                                <Label fx:id="lblTicketCostumerName" text="Costumer name" textFill="#f8f9f9">
                                     <font>
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
                             </children>
                         </VBox>
-                        <Label text="Event Name" textFill="#73408f">
+                        <Label fx:id="lblTicketTitle" text="Event Name" textFill="#73408f">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
@@ -32,7 +32,7 @@
                             </font>
                         </Label>
                         <Separator maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" styleClass="ticketSeparator" />
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Date">
+                        <Label fx:id="lblTicketDate" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Date">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
@@ -40,7 +40,7 @@
                                 <Font size="13.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Time">
+                        <Label fx:id="lblTicketTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Time">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
@@ -48,7 +48,7 @@
                                 <Font size="13.0" />
                             </font>
                         </Label>
-                        <Label maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Location">
+                        <Label fx:id="lblTicketLocation" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Location">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
@@ -77,7 +77,7 @@
                                 </ImageView>
                             </children>
                   </VBox>
-                        <Label prefHeight="40.0" text="TICKET TYPE" textFill="#f8f9f9">
+                        <Label fx:id="lblTicketType" prefHeight="40.0" text="TICKET TYPE" textFill="#f8f9f9">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>

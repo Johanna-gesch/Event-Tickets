@@ -81,4 +81,9 @@ public class Event {
     public void setCoordinators(List<User> coordinators) {
         this.coordinators = coordinators;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
