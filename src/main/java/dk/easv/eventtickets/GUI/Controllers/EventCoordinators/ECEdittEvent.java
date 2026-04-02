@@ -1,4 +1,4 @@
-package dk.easv.eventtickets.GUI.Controllers.Admins;
+package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
@@ -6,42 +6,27 @@ import dk.easv.eventtickets.BLL.EventManager;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
 import java.util.List;
 
-public class AEditEC {
+public class ECEdittEvent {
     @FXML
-    private ListView<User> EventCoordinatorEvent;
-
-    @FXML
-    private Button BtnRemove;
+    private ListView EventCoordinatorEvent;
 
     private Event event;
     private User user;
     private EventManager eventManager;
 
-
-
-    public AEditEC() throws Exception {
+    public ECEdittEvent() throws Exception {
         eventManager = new EventManager();
     }
 
     @FXML
     public void initialize() {
         EventCoordinatorEvent.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-    }
 
-    public void setEvent(Event event) {
-        this.event = event;
-        loadCoordinators();
-    }
-
-public void setUser(User user) {
-        this.user = user;
     }
 
 
@@ -60,14 +45,17 @@ public void setUser(User user) {
             throw new RuntimeException(e);
         }
     }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    @FXML
-    private void onCancel(ActionEvent actionEvent) {
-        EventCoordinatorEvent.getScene().getWindow().hide();
+    public void setEvent(Event event) {
+        this.event = event;
+        loadCoordinators();
     }
 
     @FXML
-    private void onSave(ActionEvent actionEvent) {
+    private void onAdd(ActionEvent actionEvent) {
         try {
             List<User> oldList = eventManager.getCoordinatorsForEvent(event.getId());
             List<User> newList = EventCoordinatorEvent.getSelectionModel().getSelectedItems();
@@ -87,24 +75,6 @@ public void setUser(User user) {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
-
-    @FXML
-    private void btnRemoveAC(ActionEvent actionEvent) throws Exception {
-
-        // Get selected coordinator from your ListView
-        User selected = (User) EventCoordinatorEvent.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            System.out.println("No coordinator selected");
-            return;
-        }
-
-        // Call your BE method using its parameters: (Event event, int userId)
-        eventManager.removeCoordinator(event, selected.getId());
-
-        EventModel.getInstance().reloadEvents();
-    }
-
 }
-

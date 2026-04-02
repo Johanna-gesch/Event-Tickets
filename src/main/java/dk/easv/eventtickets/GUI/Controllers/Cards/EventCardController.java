@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers.Cards;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ECEdittEvent;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC;
 import javafx.event.ActionEvent;
@@ -102,8 +103,19 @@ public class EventCardController{
     }
 
     @FXML
-    private void onEditEvent(ActionEvent actionEvent) {
-        System.out.println("You pressed the button");
+    private void onEditEvent(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/EventCoordinator/ECEditEvent.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+
+        ECEdittEvent controller = fxmlLoader.getController();
+        controller.setEvent(currentEvent);
+
+        Stage stage = new Stage();
+        stage.setTitle("ECEditView");
+        stage.setScene(scene);
+
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
     }
 
     @FXML
