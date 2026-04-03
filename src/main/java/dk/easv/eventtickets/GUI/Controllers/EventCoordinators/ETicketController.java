@@ -8,23 +8,33 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.print.PrinterJob;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
+import java.util.*;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ETicketController implements Initializable {
 
@@ -59,106 +69,114 @@ public class ETicketController implements Initializable {
 
     @FXML
     private void onPreviewTick(ActionEvent actionEvent) throws IOException {
-        //if all fields are filled out
-        //open preview
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Ticket.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
 
-        //set text in voucher
-        TicketController tc = fxmlLoader.getController();
-        //vc.setVoucherText(title, event);
+        int numOfTickets = 1;
+        if (!txtNumOfTickets.getText().isEmpty() && txtNumOfTickets.getText() != null) {
+            try {
+                numOfTickets = Integer.parseInt(txtNumOfTickets.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                displayError(new Exception("Please put a number in Number of Tickets."));
+            }
+        }
 
-        Stage stage = new Stage(StageStyle.UTILITY);
-        stage.setScene(scene);
+        List<TilePane> pages = createAllTicketPages(numOfTickets);
 
-        //Don't be able to open a new window before previous is closed.
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.show();
+        VBox container = new VBox();
+        container.setAlignment(Pos.TOP_CENTER);
+        container.setPrefWidth(595);
+        container.getChildren().addAll(pages);
+        container.setSpacing(50);
+
+        openPreviewInScrollPane(container);
+
     }
 
     @FXML
     private void onSend(ActionEvent actionEvent) {
+
     }
 
     @FXML
     private void onPrintTickets(ActionEvent actionEvent) {
+
+        int numOfTickets = 1;
+        if (!txtNumOfTickets.getText().isEmpty() && txtNumOfTickets.getText() != null) {
+            try {
+                numOfTickets = Integer.parseInt(txtNumOfTickets.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                displayError(new Exception("Please put a number in Number of Tickets."));
+            }
+        }
+
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        if (job != null && job.showPrintDialog(null)) {
+
+            List<TilePane> pages = createAllTicketPages(numOfTickets);
+
+            for (TilePane page : pages) {
+                boolean success = job.printPage(page);
+                if (!success) break;
+            }
+
+            job.endJob();
+        }
+
     }
 
     @FXML
     private void onPreviewVouc(ActionEvent actionEvent) throws IOException {
 
-        if (!txtVoucherType.getText().isEmpty()) {
-
-            //open preview
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Voucher.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            //set text in voucher
-            VoucherController vc = fxmlLoader.getController();
-            String[] info = getTextForVouchers();
-            vc.setVoucherText(info[0], info[1]);
-
-            Stage stage = new Stage(StageStyle.UTILITY);
-            stage.setScene(scene);
-
-            //Don't be able to open a new window before previous is closed.
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
-        } else {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Fejl");
-            alert.setHeaderText(null);
-            alert.setContentText("Udfyld venligst Voucher Type");
-            alert.showAndWait();
+        int numOfVouchers = 1;
+        if (!txtNumOfVouchers.getText().isEmpty() && txtNumOfVouchers.getText() != null) {
+            try {
+                numOfVouchers = Integer.parseInt(txtNumOfVouchers.getText());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                displayError(new Exception("Please put a number in Number of Vouchers."));
+            }
         }
+
+        List<TilePane> pages = createAllVoucherPages(numOfVouchers);
+
+        VBox container = new VBox();
+        container.setAlignment(Pos.TOP_CENTER);
+        container.setPrefWidth(595);
+        container.getChildren().addAll(pages);
+        container.setSpacing(50);
+
+        openPreviewInScrollPane(container);
 
     }
 
     @FXML
     private void onPrintVouchers(ActionEvent actionEvent) {
 
-        if (!txtVoucherType.getText().isEmpty() && !txtNumOfVouchers.getText().isEmpty()) {
-
-            // get number of vouchers
-            int numOfVouchers = 0;
+        int numOfVouchers = 1;
+        if (!txtNumOfVouchers.getText().isEmpty() && txtNumOfVouchers.getText() != null) {
             try {
                 numOfVouchers = Integer.parseInt(txtNumOfVouchers.getText());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                displayError(new Exception("Please put a number in Number of Vouchers"));
-            }
-
-            // number of vouchers that can be on an a4 page
-            int vouchersPerPage = 21;
-
-            int printed = 0;
-
-            // print
-            PrinterJob job = PrinterJob.createPrinterJob();
-            if (job != null && job.showPrintDialog(null)) {
-
-                while (printed < numOfVouchers) {
-                    TilePane tp = new TilePane();
-                    tp.setPrefSize(595, 842); // a4 size
-                    tp.setPrefTileWidth(160);
-                    tp.setPrefTileHeight(96);
-
-                    // Fill tilepane with vouchers
-                    for (int i = 0; i < vouchersPerPage && printed < numOfVouchers; i++, printed++) {
-                        Parent voucher = getPrintSetupForVoucher();
-                        tp.getChildren().add(voucher);
-                    }
-
-                    // Print
-                    boolean success = job.printPage(tp);
-                    if (!success) break;
-                }
-
-                job.endJob();
+                displayError(new Exception("Please put a number in Number of Vouchers."));
             }
         }
 
+        PrinterJob job = PrinterJob.createPrinterJob();
+
+        if (job != null && job.showPrintDialog(null)) {
+
+            List<TilePane> pages = createAllVoucherPages(numOfVouchers);
+
+            for (TilePane page : pages) {
+                boolean success = job.printPage(page);
+                if (!success) break;
+            }
+
+            job.endJob();
+        }
 
     }
 
@@ -176,28 +194,227 @@ public class ETicketController implements Initializable {
         return new String[] {title, event};
     }
 
-    private Parent getPrintSetupForVoucher() {
-        try {
-            // Load voucher fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Voucher.fxml"));
-            Parent voucher = loader.load();
+    private String[] getTextForTickets() {
 
-            // set text for vouchers
-            VoucherController vc = loader.getController();
-            String[] info = getTextForVouchers();
-            vc.setVoucherText(info[0], info[1]);
+        String fullname = txtFName.getText() + " " + txtLName.getText();
+        String event = String.valueOf(cboEventTickets.getValue());
+        String location = cboEventTickets.getValue().getLocation();
 
-            // Limit size on a4 paper
-            voucher.setScaleX(0.32);
-            voucher.setScaleY(0.32);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String startDateTime = "Start: " + cboEventTickets.getValue().getStartDateTime().format(formatter);
 
-            return voucher;
+        String endDateTime;
+        if (cboEventTickets.getValue().getEndDateTime() != null) {
+            endDateTime = "End: " + cboEventTickets.getValue().getEndDateTime().format(formatter);
+        } else {
+            endDateTime = "";
+        }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        String type = cboTicketType.getValue();
+
+        return new String[] {fullname, event, startDateTime, endDateTime, location, type};
+    }
+
+    private Parent createSingleVoucher() {
+
+        if (!txtVoucherType.getText().isEmpty() && !txtNumOfVouchers.getText().isEmpty()) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Voucher.fxml"));
+                Parent voucher = loader.load();
+
+                VoucherController vc = loader.getController();
+                String[] info = getTextForVouchers();
+                vc.setVoucherText(info[0], info[1]);
+
+                voucher.setScaleX(0.32);
+                voucher.setScaleY(0.32);
+
+                return voucher;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                displayError(new Exception("Error creating voucher"));
+            }
+        } else {
+            displayError(new Exception("Please fill out all required fields marked with *"));
         }
         return null;
     }
+
+    private TilePane createVoucherPage(int numberOfVouchers) {
+
+        int vouchersPerPage = 21;
+
+        TilePane tp = new TilePane();
+        tp.setMinSize(TilePane.USE_PREF_SIZE, TilePane.USE_PREF_SIZE);
+        tp.setMaxSize(TilePane.USE_PREF_SIZE, TilePane.USE_PREF_SIZE);
+        tp.setPrefColumns(3);
+        tp.setPrefRows(7);
+        tp.setPrefTileWidth(160);
+        tp.setPrefTileHeight(96);
+
+        int count = Math.min(numberOfVouchers, vouchersPerPage);
+
+        for (int i = 0; i < count; i++) {
+            tp.getChildren().add(createSingleVoucher());
+        }
+
+        return tp;
+    }
+
+    private List<TilePane> createAllVoucherPages(int totalVouchers) {
+
+        int vouchersPerPage = 21;
+        int created = 0;
+
+        List<TilePane> pages = new ArrayList<>();
+
+        while (created < totalVouchers) {
+
+            int remaining = totalVouchers - created;
+
+            TilePane page = createVoucherPage(remaining);
+            pages.add(page);
+
+            created += Math.min(remaining, vouchersPerPage);
+        }
+
+        return pages;
+    }
+
+    private Parent createSingleTicket() {
+
+        if (
+                !txtFName.getText().isEmpty() &&
+                !txtLName.getText().isEmpty() &&
+                cboEventTickets.getValue() != null &&
+                cboTicketType.getValue() != null
+        ) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Ticket.fxml"));
+                Parent ticket = loader.load();
+
+                TicketController tc = loader.getController();
+                String[] info = getTextForTickets();
+                tc.setTicketText(info[0], info[1], info[2], info[3], info[4], info[5]);
+
+                ticket.setScaleX(0.65);
+                ticket.setScaleY(0.65);
+
+                return ticket;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                displayError(new Exception("Error creating ticket"));
+            }
+
+        } else {
+            displayError(new Exception("Please fill out all required fields marked with *"));
+        }
+        return null;
+    }
+
+    private TilePane createTicketPage(int numberOfTickets) {
+
+        int ticketsPerPage = 4;
+
+        TilePane tp = new TilePane();
+        tp.setMinSize(TilePane.USE_PREF_SIZE, TilePane.USE_PREF_SIZE);
+        tp.setMaxSize(TilePane.USE_PREF_SIZE, TilePane.USE_PREF_SIZE);
+        tp.setPrefColumns(2);
+        tp.setPrefRows(2);
+        tp.setPrefTileWidth(195);
+        tp.setPrefTileHeight(357.5);
+
+        int count = Math.min(numberOfTickets, ticketsPerPage);
+
+        for (int i = 0; i < count; i++) {
+            tp.getChildren().add(createSingleTicket());
+        }
+
+        return tp;
+    }
+
+    private List<TilePane> createAllTicketPages(int totalTickets) {
+
+        int ticketsPerPage = 4;
+        int created = 0;
+
+        List<TilePane> pages = new ArrayList<>();
+
+        while (created < totalTickets) {
+
+            int remaining = totalTickets - created;
+
+            TilePane page = createTicketPage(remaining);
+            pages.add(page);
+
+            created += Math.min(remaining, ticketsPerPage);
+        }
+
+        return pages;
+    }
+
+    private void openPreviewInScrollPane(VBox vb) {
+        ScrollPane sp = new ScrollPane();
+        sp.setContent(vb);
+        vb.setFillWidth(true);
+        sp.setPrefSize(595, 842);
+
+        Scene scene = new Scene(sp);
+
+        Stage stage = new Stage(StageStyle.UTILITY);
+        stage.setScene(scene);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.show();
+    }
+
+    private void sendMailWithAttachment(String toEmail, File pdfFile) {
+        String fromEmail = "dinmail@gmail.com"; // Afsender
+        String password = "ditAppPassword"; // Gmail kræver app-password
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(fromEmail, password);
+            }
+        });
+
+        try {
+            Message msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(fromEmail));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+            msg.setSubject("Your Event Tickets");
+
+            // Body
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText("Hello,\n\nPlease find your tickets attached.\n\nBest regards.");
+
+            // Vedhæft PDF
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+            attachmentPart.attachFile(pdfFile);
+
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(attachmentPart);
+
+            msg.setContent(multipart);
+
+            // Send mail direkte
+            Transport.send(msg);
+
+            System.out.println("Mail sent successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            displayError(new Exception("Failed to send email"));
+        }
+    }
+
 
     private void displayError(Throwable t) {
         Alert alert = new Alert(AlertType.ERROR);

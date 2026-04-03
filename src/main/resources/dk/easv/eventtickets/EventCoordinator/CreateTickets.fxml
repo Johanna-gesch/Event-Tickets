@@ -47,11 +47,16 @@
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <Label styleClass="lblTextfield" text="*Costumer E-mail">
+                        <HBox alignment="CENTER">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
-                        </Label>
+                           <children>
+                              <Label styleClass="lblTextfield" text="Costumer E-mail" />
+                              <Region prefHeight="30.0" prefWidth="59.0" HBox.hgrow="ALWAYS" />
+                              <Label text="(Only required for send)" />
+                           </children>
+                        </HBox>
                         <TextField fx:id="txtEmail" styleClass="txtField">
                            <font>
                               <Font size="14.0" />

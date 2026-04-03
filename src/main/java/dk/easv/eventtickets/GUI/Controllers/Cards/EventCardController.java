@@ -48,7 +48,7 @@ public class EventCardController{
     public void setEvent(Event event) {
         this.currentEvent = event;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         lblName.setText(event.getName());
 

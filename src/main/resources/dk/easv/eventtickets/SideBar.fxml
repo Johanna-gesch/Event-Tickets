@@ -33,7 +33,7 @@
                         </StackPane>
                         <VBox alignment="CENTER_LEFT" prefHeight="70.0" prefWidth="184.0">
                             <children>
-                                <Label fx:id="lblNavName" styleClass="subTitle" text="Hej 'NAVN'" />
+                                <Label fx:id="lblNavName" styleClass="subTitle" text="Hello 'NAME'" />
                                 <Label fx:id="lblNavType" styleClass="lblNavType" text="Event Coordinator" />
                             </children>
                             <padding>

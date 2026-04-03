@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" styleClass="ticketBG" stylesheets="@../Style.css" fx:controller="dk.easv.eventtickets.GUI.Controllers.Tickets.TicketController" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="300.0" styleClass="ticketBG" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.Tickets.TicketController">
     <children>
         <VBox id="ticketBlur" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="275.0">
             <children>
@@ -32,23 +32,23 @@
                             </font>
                         </Label>
                         <Separator maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" styleClass="ticketSeparator" />
-                        <Label fx:id="lblTicketDate" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Date">
-                            <VBox.margin>
-                                <Insets top="10.0" />
-                            </VBox.margin>
-                            <font>
-                                <Font size="13.0" />
-                            </font>
-                        </Label>
-                        <Label fx:id="lblTicketTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Time">
-                            <VBox.margin>
-                                <Insets top="10.0" />
-                            </VBox.margin>
-                            <font>
-                                <Font size="13.0" />
-                            </font>
-                        </Label>
                         <Label fx:id="lblTicketLocation" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="Location">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblStartDateTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="StartDateTime">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                            <font>
+                                <Font size="13.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lblEndDateTime" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" text="EndDateTime">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
