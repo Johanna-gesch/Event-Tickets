@@ -25,13 +25,8 @@ public class EDashController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        try {
-            //eventModel = new EventModel();
-            showEvents(eventModel.getEventsToBeViewed());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public void setup() {
+        showEvents(eventModel.getEventsToBeViewed());
     }
 
     private void showEvents(List<Event> events) {
