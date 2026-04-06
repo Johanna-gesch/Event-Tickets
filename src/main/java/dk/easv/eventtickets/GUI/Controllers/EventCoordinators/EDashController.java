@@ -2,6 +2,8 @@ package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.GUI.Controllers.Cards.EventCardController;
+import dk.easv.eventtickets.GUI.Controllers.Cards.IEventCardListener;
+import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,17 +16,23 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EDashController {
+public class EDashController implements IEventCardListener {
 
     @FXML
     private TilePane tilePane;
 
     private EventModel eventModel;
 
+    private SideBarController sidebarController;
+
 
 
     public void setup() {
         showEvents(eventModel.getEventsToBeViewed());
+    }
+
+    public void setSideBarController(SideBarController sidebarController) {
+        this.sidebarController = sidebarController;
     }
 
     private void showEvents(List<Event> events) {
@@ -43,6 +51,7 @@ public class EDashController {
                 ecc.setEvent(ev);
                 ecc.isEventDash(true);
                 ecc.setEventModel(eventModel);
+                ecc.setListener(EDashController.this);
 
                 card.setFocusTraversable(false);
 
@@ -56,4 +65,15 @@ public class EDashController {
     public void setModel(EventModel eventModel) {this.eventModel = eventModel;}
 
 
+
+    @Override
+    public void onGetTickets(Event event) {
+        try {
+            ETicketController etc = (ETicketController) sidebarController.setView("/dk/easv/eventtickets/EventCoordinator/CreateTickets.fxml");
+            etc.setModel(eventModel);
+            etc.loadEventForTickets(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

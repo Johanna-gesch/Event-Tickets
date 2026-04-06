@@ -43,6 +43,8 @@ public class EventCardController{
 
     private EventModel eMod;
 
+    private IEventCardListener listener;
+
 
 
     public void setEvent(Event event) {
@@ -135,11 +137,18 @@ public class EventCardController{
 
     @FXML
     private void onCreateTicket(ActionEvent actionEvent) {
+        if (listener != null) {
+            listener.onGetTickets(currentEvent);
+        }
 
     }
 
     public void setEventModel(EventModel eventModel) {
         this.eMod = eventModel;
+    }
+
+    public void setListener(IEventCardListener listener) {
+        this.listener = listener;
     }
 
 }

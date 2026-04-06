@@ -80,6 +80,7 @@ public class SignInController implements Initializable {
                     if (userLoggingIn.getRole() == UserRole.EVENT_COORDINATOR) {
                         EDashController edc = (EDashController) sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
                         edc.setModel(eventModel);
+                        edc.setSideBarController(sbmc);
 
                         edc.setup();
                         sbmc.setRole("Event");

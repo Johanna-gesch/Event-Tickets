@@ -43,6 +43,7 @@ public class ETicketController implements Initializable {
     private TextField txtNumOfTickets, txtVoucherType, txtNumOfVouchers;
 
     private EventModel em;
+    private Event currentEvent;
 
 
     @Override
@@ -373,5 +374,8 @@ public class ETicketController implements Initializable {
     }
 
 
-
+    public void loadEventForTickets(Event event) {
+        this.currentEvent = event;
+        cboEventTickets.setValue(event);
+    }
 }
