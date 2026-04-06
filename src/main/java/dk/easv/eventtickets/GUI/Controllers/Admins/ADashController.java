@@ -25,23 +25,13 @@ public class ADashController implements Initializable, IUserCardListener {
     @FXML
     private ListView<Event> lstEvents;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try{
-            /*userModel = new UserModel();
-            eventModel = new EventModel();*/
 
-            handleUserCards();
-            handleEventCards();
+    public void setup(){
+        handleUserCards();
+        handleEventCards();
 
-            lstUsers.setItems(userModel.getUserToBeViewed());
-            lstEvents.setItems(eventModel.getEventsToBeViewed());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-
+        lstUsers.setItems(userModel.getUserToBeViewed());
+        lstEvents.setItems(eventModel.getEventsToBeViewed());
     }
 
     private void handleUserCards() {

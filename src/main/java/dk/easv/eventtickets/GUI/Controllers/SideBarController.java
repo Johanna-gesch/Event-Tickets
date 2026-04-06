@@ -39,10 +39,12 @@ public class SideBarController {
             Parent view = loader.load();
 
             rootCenter.getChildren().setAll(view);
+            System.out.println("Loaded controller" + loader.getController());
 
             return loader.getController();
 
         } catch (IOException e) {
+            e.printStackTrace();
             displayError(e, "Failed to set view");
             return null;
         }
@@ -75,10 +77,15 @@ public class SideBarController {
     @FXML
     private void onDashboard(ActionEvent actionEvent) {
         if ("Admin".equals(role)) {
-            setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
+            ADashController adc = (ADashController) setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
+            adc.setUserModel(userModel);
+            adc.setEventModel(eventModel);
+            adc.setup();
         }
         if ("Event".equals(role)) {
-            setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
+            EDashController edc = (EDashController) setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
+            edc.setModel(eventModel);
+            edc.setup();
         }
     }
 
