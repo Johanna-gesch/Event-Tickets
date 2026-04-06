@@ -22,15 +22,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.File;
 import java.util.*;
 
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -92,7 +85,6 @@ public class ETicketController implements Initializable {
 
     }
 
-    // ny kommentar
     @FXML
     private void onSend(ActionEvent actionEvent) {
 
@@ -368,52 +360,6 @@ public class ETicketController implements Initializable {
         stage.setScene(scene);
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
-    }
-
-    private void sendMailWithAttachment(String toEmail, File pdfFile) {
-        String fromEmail = "dinmail@gmail.com"; // Afsender
-        String password = "ditAppPassword"; // Gmail kræver app-password
-
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-
-        Session session = Session.getInstance(props, new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
-            }
-        });
-
-        try {
-            Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress(fromEmail));
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            msg.setSubject("Your Event Tickets");
-
-            // Body
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText("Hello,\n\nPlease find your tickets attached.\n\nBest regards.");
-
-            // Vedhæft PDF
-            MimeBodyPart attachmentPart = new MimeBodyPart();
-            attachmentPart.attachFile(pdfFile);
-
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
-            multipart.addBodyPart(attachmentPart);
-
-            msg.setContent(multipart);
-
-            // Send mail direkte
-            Transport.send(msg);
-
-            System.out.println("Mail sent successfully!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            displayError(new Exception("Failed to send email"));
-        }
     }
 
 
