@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ADashController implements Initializable, IUserCardListener {
+public class ADashController implements IUserCardListener {
     private UserModel userModel;
     private EventModel eventModel;
 

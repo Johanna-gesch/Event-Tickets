@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class EDashController implements Initializable {
+public class EDashController {
 
     @FXML
     private TilePane tilePane;
@@ -22,8 +22,6 @@ public class EDashController implements Initializable {
     private EventModel eventModel;
 
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
 
     public void setup() {
         showEvents(eventModel.getEventsToBeViewed());

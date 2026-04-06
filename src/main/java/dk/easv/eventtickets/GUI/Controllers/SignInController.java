@@ -2,6 +2,8 @@ package dk.easv.eventtickets.GUI.Controllers;
 
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BE.UserRole;
+import dk.easv.eventtickets.GUI.Controllers.Admins.ADashController;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.EDashController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
@@ -56,14 +58,6 @@ public class SignInController implements Initializable {
             sbmc.setEventModel(eventModel);
 
             // Load center content
-            if ("admin".equalsIgnoreCase(txtUsername.getText())) {
-                sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
-                sbmc.setRole("Admin");
-            }
-            if ("event".equalsIgnoreCase(txtUsername.getText())) {
-                sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
-                sbmc.setRole("Event");
-            }
 
             String password = txtPassword.getText();
 
@@ -84,21 +78,29 @@ public class SignInController implements Initializable {
                 if (valid) {
 
                     if (userLoggingIn.getRole() == UserRole.EVENT_COORDINATOR) {
-                        sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
+                        EDashController edc = (EDashController) sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
+                        edc.setModel(eventModel);
+
+                        edc.setup();
                         sbmc.setRole("Event");
                         sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
                     }
                     if (userLoggingIn.getRole() == UserRole.ADMIN) {
-                        sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
+                        ADashController adc = (ADashController) sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
+                        adc.setUserModel(userModel);
+                        adc.setEventModel(eventModel);
+                        adc.setup();
                         sbmc.setRole("Admin");
                         sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
                     }
 
                 } else {
                     displayError(new Exception("Invalid username or password"), "");
+                    return;
                 }
             } else {
                 displayError(new Exception("User doesn't exist"), "");
+                return;
             }
 
 
