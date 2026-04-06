@@ -112,6 +112,7 @@ public class EventCardController{
 
         AEditEC controller = fxmlLoader.getController();
         controller.setEvent(currentEvent);
+        controller.setModel(eMod);
 
         Stage stage = new Stage();
         stage.setTitle("ECView");

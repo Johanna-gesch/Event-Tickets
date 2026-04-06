@@ -1,5 +1,6 @@
 package dk.easv.eventtickets.GUI.Models;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.BLL.UserManager;
 import javafx.collections.FXCollections;
@@ -25,7 +26,7 @@ public class UserModel {
 
     }
 
-    public String hashPassword( String passwordHash){
+    public String hashPassword(String passwordHash){
         return uMan.bcrypt(passwordHash);
     }
 
@@ -40,5 +41,9 @@ public class UserModel {
 
     public User updateUser(User currentUser) throws Exception {
         return uMan.updateUser(currentUser);
+    }
+
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return uMan.verifyPassword(password, hashedPassword);
     }
 }

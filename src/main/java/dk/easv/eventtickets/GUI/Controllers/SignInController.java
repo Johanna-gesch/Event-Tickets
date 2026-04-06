@@ -1,5 +1,9 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
+import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.BE.UserRole;
+import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class SignInController implements Initializable {
@@ -22,6 +27,21 @@ public class SignInController implements Initializable {
     @FXML
     private Button btnSignIn;
 
+    private UserModel userModel;
+    private EventModel eventModel;
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        btnSignIn.setDefaultButton(true);
+        try {
+            userModel = new UserModel();
+            eventModel = new EventModel();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     private void onSignIn(ActionEvent actionEvent) {
@@ -32,6 +52,9 @@ public class SignInController implements Initializable {
             Parent root = rootLoader.load();
             SideBarController sbmc = rootLoader.getController();
 
+            sbmc.setUserModel(userModel);
+            sbmc.setEventModel(eventModel);
+
             // Load center content
             if ("admin".equalsIgnoreCase(txtUsername.getText())) {
                 sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
@@ -41,6 +64,43 @@ public class SignInController implements Initializable {
                 sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
                 sbmc.setRole("Event");
             }
+
+            String password = txtPassword.getText();
+
+            User userLoggingIn = null;
+
+            List<User> allUsers = userModel.getUserToBeViewed();
+
+            for (User u : allUsers) {
+                if (u.getUsername().equals(txtUsername.getText().trim())) {
+                    userLoggingIn = u;
+                }
+            }
+
+            if (userLoggingIn != null) {
+
+                boolean valid = userModel.verifyPassword(password, userLoggingIn.getPasswordHash());
+
+                if (valid) {
+
+                    if (userLoggingIn.getRole() == UserRole.EVENT_COORDINATOR) {
+                        sbmc.setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
+                        sbmc.setRole("Event");
+                        sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
+                    }
+                    if (userLoggingIn.getRole() == UserRole.ADMIN) {
+                        sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
+                        sbmc.setRole("Admin");
+                        sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
+                    }
+
+                } else {
+                    displayError(new Exception("Invalid username or password"), "");
+                }
+            } else {
+                displayError(new Exception("User doesn't exist"), "");
+            }
+
 
             // 4) switch scene in same window
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -61,10 +121,6 @@ public class SignInController implements Initializable {
         alert.showAndWait();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        btnSignIn.setDefaultButton(true);
-    }
 }
 
 

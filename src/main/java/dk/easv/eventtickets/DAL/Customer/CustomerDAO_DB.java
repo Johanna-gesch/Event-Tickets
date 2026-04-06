@@ -25,7 +25,6 @@ public class CustomerDAO_DB implements ICustomerDataAccess{
             stmt.setString(2, newCustomer.getLName());
             stmt.setString(3, newCustomer.getEmail());
 
-
             //Run the SQL statement
             stmt.executeUpdate();
 

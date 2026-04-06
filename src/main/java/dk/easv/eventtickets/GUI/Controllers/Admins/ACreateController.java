@@ -52,6 +52,7 @@ public class ACreateController implements Initializable {
     private boolean isEditMode = false;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initUserModel();
@@ -78,6 +79,8 @@ public class ACreateController implements Initializable {
 
     }
 
+    public void setModel(UserModel userModel) {this.userModel = userModel;}
+
     private void showEmptyAvatarState(boolean empty) {
         btnAvatarBig.setVisible(empty);
         btnAvatarSmall.setVisible(!empty);
@@ -101,7 +104,6 @@ public class ACreateController implements Initializable {
         }
 
         if (isEditMode) {
-
             UserRole role = null;
 
             if ("Admin".equals(selectedType)) {
@@ -117,8 +119,6 @@ public class ACreateController implements Initializable {
                 onBtnAdminOrCoordinatorControllerSave(fName, lName, email, selectedType);
             }
         }
-
-
     }
 
     public void onCustomerSave(String fName, String lName, String email){
@@ -133,14 +133,12 @@ public class ACreateController implements Initializable {
         } catch (Exception e) {
             displayError(new Exception("Could not create customer",e));
         }
-
     }
 
     public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         String hashPassword = userModel.hashPassword(password);
-
 
         if (username.isEmpty() || password.isEmpty()){
             displayError(new Exception("You must fill in all the fields"));
@@ -160,7 +158,6 @@ public class ACreateController implements Initializable {
             currentUser.setRole(UserRole.EVENT_COORDINATOR);
         }
 
-
         try {
             User userCreated = userModel.createUser(currentUser);
             clearFields();
@@ -173,7 +170,9 @@ public class ACreateController implements Initializable {
 
     private void initUserModel() {
         try {
-            userModel = new UserModel();
+            if (userModel == null) {
+                userModel = new UserModel();
+            }
             customerModel = new CustomerModel();
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

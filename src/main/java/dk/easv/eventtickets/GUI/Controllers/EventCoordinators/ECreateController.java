@@ -1,12 +1,14 @@
 package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 
+import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ECreateController implements Initializable {
+    private EventModel eventModel;
 
 
     @Override
@@ -14,7 +16,7 @@ public class ECreateController implements Initializable {
 
     }
 
-
+    public void setModel(EventModel eventModel) {this.eventModel = eventModel;}
 
 
 

@@ -40,6 +40,10 @@ public class UserManager {
         return bcryptHashString;
     }
 
+    public boolean verifyPassword(String password, String hashedPassword) {
+        return BCrypt.verifyer().verify(password.toCharArray(), hashedPassword).verified;
+    }
+
     public User updateUser(User currentUser) throws Exception {
         return userDao.updateUser(currentUser);
     }

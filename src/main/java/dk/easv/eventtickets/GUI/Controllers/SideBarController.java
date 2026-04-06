@@ -1,5 +1,12 @@
 package dk.easv.eventtickets.GUI.Controllers;
 
+import dk.easv.eventtickets.GUI.Controllers.Admins.ACreateController;
+import dk.easv.eventtickets.GUI.Controllers.Admins.ADashController;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ECreateController;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.EDashController;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ETicketController;
+import dk.easv.eventtickets.GUI.Models.EventModel;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,25 +26,35 @@ public class SideBarController {
     private VBox rootCenter;
     @FXML
     private Label lblNavName, lblNavType;
-
-    private String role;
     @FXML
     private Button btnSecond, btnThird;
 
-    public void setView(String fxmlPath) {
-        try {
+    private String role;
+    private UserModel userModel;
+    private EventModel eventModel;
 
-            Parent view = FXMLLoader.load(getClass().getResource(fxmlPath));
+    public Object setView(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent view = loader.load();
+
             rootCenter.getChildren().setAll(view);
+
+            return loader.getController();
 
         } catch (IOException e) {
             displayError(e, "Failed to set view");
+            return null;
         }
     }
 
     public void setRole(String role) {
         this.role = role;
         configureSidebar();
+    }
+
+    public void setUsername(String username) {
+        lblNavName.setText(username);
     }
 
     private void configureSidebar() {
@@ -48,7 +65,7 @@ public class SideBarController {
             lblNavType.setText("Admin");
         }
         if ("Event".equals(role)) {
-            btnSecond.setText("\uD83D\uDCC5   Events & Tickets");
+            btnSecond.setText("\uD83D\uDCC5   Create Event");
             btnThird.setVisible(true);
             btnThird.setManaged(true);
             lblNavType.setText("Event Coordinator");
@@ -68,16 +85,19 @@ public class SideBarController {
     @FXML
     private void onBtnSecond(ActionEvent actionEvent) {
         if ("Admin".equals(role)) {
-            setView("/dk/easv/eventtickets/Admin/CreateUser.fxml");
+            ACreateController acc = (ACreateController) setView("/dk/easv/eventtickets/Admin/CreateUser.fxml");
+            acc.setModel(userModel);
         }
         if ("Event".equals(role)) {
-            setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
+            ECreateController ecc = (ECreateController) setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
+            ecc.setModel(eventModel);
         }
     }
 
     @FXML
     private void onBtnThird(ActionEvent actionEvent) {
-        setView("/dk/easv/eventtickets/EventCoordinator/CreateTickets.fxml");
+        ETicketController etc = (ETicketController) setView("/dk/easv/eventtickets/EventCoordinator/CreateTickets.fxml");
+        etc.setModel(eventModel);
     }
 
     @FXML
@@ -102,5 +122,13 @@ public class SideBarController {
         alert.setTitle(title);
         alert.setHeaderText(t.getMessage());
         alert.showAndWait();
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    public void setEventModel(EventModel eventModel) {
+        this.eventModel = eventModel;
     }
 }

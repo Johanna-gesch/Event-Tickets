@@ -2,6 +2,7 @@ package dk.easv.eventtickets.GUI.Controllers.Admins;
 
 import dk.easv.eventtickets.BE.*;
 import dk.easv.eventtickets.GUI.Controllers.Cards.*;
+import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.fxml.FXML;
@@ -27,8 +28,8 @@ public class ADashController implements Initializable, IUserCardListener {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try{
-            userModel = new UserModel();
-            eventModel = EventModel.getInstance();
+            /*userModel = new UserModel();
+            eventModel = new EventModel();*/
 
             handleUserCards();
             handleEventCards();
@@ -139,6 +140,7 @@ public class ADashController implements Initializable, IUserCardListener {
 
             ACreateController controller = loader.getController();
             controller.loadUserForEditing(user);
+            controller.setModel(userModel);
 
             lstUsers.getScene().setRoot(root);
         } catch (Exception e) {

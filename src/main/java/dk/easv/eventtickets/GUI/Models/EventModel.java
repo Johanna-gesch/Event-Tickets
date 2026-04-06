@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class EventModel {
     private EventManager eMan;
@@ -20,13 +21,6 @@ public class EventModel {
         eventsToBeViewed.addAll(eMan.getAllEvents());
     }
 
-    public static EventModel getInstance() throws Exception {
-        if (instance == null) {
-            instance = new EventModel();
-        }
-        return instance;
-    }
-
     public void reloadEvents() throws Exception {
         eventsToBeViewed.setAll(eMan.getAllEvents());
     }
@@ -37,5 +31,13 @@ public class EventModel {
     public void deleteEvent(Event deleteEvent) throws Exception {
         eMan.deleteEvent(deleteEvent);
 
+    }
+
+    public List<User> getCoordinatorsForEvent(int id) throws Exception {
+        return eMan.getCoordinatorsForEvent(id);
+    }
+
+    public void updateEventCoordinators(int id, int userId) throws Exception {
+        eMan.updateEventCoordinators(id, userId);
     }
 }

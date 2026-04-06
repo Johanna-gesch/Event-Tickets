@@ -26,7 +26,7 @@ public class EDashController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            eventModel = new EventModel();
+            //eventModel = new EventModel();
             showEvents(eventModel.getEventsToBeViewed());
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,6 +49,7 @@ public class EDashController implements Initializable {
                 EventCardController ecc = loader.getController();
                 ecc.setEvent(ev);
                 ecc.isEventDash(true);
+                ecc.setEventModel(eventModel);
 
                 card.setFocusTraversable(false);
 
