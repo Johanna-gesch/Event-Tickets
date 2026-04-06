@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 public class ADashController implements IUserCardListener {
     private UserModel userModel;
     private EventModel eventModel;
+    private SideBarController sidebarController;
 
     @FXML
     private ListView<User> lstUsers;
@@ -32,6 +33,10 @@ public class ADashController implements IUserCardListener {
 
         lstUsers.setItems(userModel.getUserToBeViewed());
         lstEvents.setItems(eventModel.getEventsToBeViewed());
+    }
+
+    public void setSideBarController(SideBarController sidebarController) {
+        this.sidebarController = sidebarController;
     }
 
     private void handleUserCards() {
@@ -125,14 +130,12 @@ public class ADashController implements IUserCardListener {
     @Override
     public void onEditUser(User user) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Admin/CreateUser.fxml"));
-            Parent root = loader.load();
+            ACreateController acc = (ACreateController) sidebarController.setView(
+                    "/dk/easv/eventtickets/Admin/CreateUser.fxml"
+            );
+            acc.setModel(userModel);
+            acc.loadUserForEditing(user);
 
-            ACreateController controller = loader.getController();
-            controller.loadUserForEditing(user);
-            controller.setModel(userModel);
-
-            lstUsers.getScene().setRoot(root);
         } catch (Exception e) {
             e.printStackTrace();
         }

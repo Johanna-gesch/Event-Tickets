@@ -45,16 +45,16 @@ public class ETicketController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         cboTicketType.getItems().addAll("V.I.P", "Refreshments included", "1st row");
         cboTicketType.setEditable(true);
-
-        cboEventTickets.setItems(em.getEventsToBeViewed());
-        cboEventVouchers.setItems(em.getEventsToBeViewed());
-
     }
 
     public void setModel(EventModel eventModel) {this.em = eventModel;}
+
+    public void setup(){
+        cboEventTickets.setItems(em.getEventsToBeViewed());
+        cboEventVouchers.setItems(em.getEventsToBeViewed());
+    }
 
     @FXML
     private void onPreviewTick(ActionEvent actionEvent) throws IOException {

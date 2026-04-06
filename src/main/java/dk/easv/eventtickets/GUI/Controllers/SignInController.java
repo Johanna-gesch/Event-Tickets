@@ -89,6 +89,7 @@ public class SignInController implements Initializable {
                         ADashController adc = (ADashController) sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
                         adc.setUserModel(userModel);
                         adc.setEventModel(eventModel);
+                        adc.setSideBarController(sbmc);
                         adc.setup();
                         sbmc.setRole("Admin");
                         sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());

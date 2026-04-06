@@ -39,7 +39,6 @@ public class SideBarController {
             Parent view = loader.load();
 
             rootCenter.getChildren().setAll(view);
-            System.out.println("Loaded controller" + loader.getController());
 
             return loader.getController();
 
@@ -105,6 +104,7 @@ public class SideBarController {
     private void onBtnThird(ActionEvent actionEvent) {
         ETicketController etc = (ETicketController) setView("/dk/easv/eventtickets/EventCoordinator/CreateTickets.fxml");
         etc.setModel(eventModel);
+        etc.setup();
     }
 
     @FXML
