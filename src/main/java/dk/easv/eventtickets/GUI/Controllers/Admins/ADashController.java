@@ -137,4 +137,8 @@ public class ADashController implements Initializable, IUserCardListener {
             e.printStackTrace();
         }
     }
+
+    public void setUserModel(UserModel userModel) {this.userModel = userModel;}
+
+    public void setEventModel(EventModel eventModel) {this.eventModel = eventModel;}
 }
