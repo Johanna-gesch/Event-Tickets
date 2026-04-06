@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -57,13 +58,10 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </Label>
-                        <TextField fx:id="txtPassword" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" styleClass="txtField">
-                            <font>
-                                <Font size="18.0" />
-                            </font></TextField>
+                  <PasswordField fx:id="txtPassword" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" styleClass="txtField" />
                     </children>
                 </VBox>
-                <Button maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" fx:id="btnSignIn" onAction="#onSignIn" prefWidth="100.0" styleClass="btn" text="Sign In" textAlignment="RIGHT">
+                <Button fx:id="btnSignIn" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSignIn" prefWidth="100.0" styleClass="btn" text="Sign In" textAlignment="RIGHT">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>

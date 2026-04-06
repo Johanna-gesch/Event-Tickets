@@ -52,26 +52,6 @@
     -fx-background-color: rgba(148, 148, 148, 0.3);
 }
 
-.btnTickVouc {
-    -fx-background-color: rgba(246, 160, 72, 0.5);
-    -fx-text-fill: #54362E;
-    -fx-font-size: 18;
-    -fx-background-radius: 10 10 0 0;
-    -fx-font-weight: bold;
-}
-.active {
-    -fx-background-color: rgba(246, 160, 72, 0.3);
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-.active:disabled {
-    -fx-opacity: 1.0;  /* ellers bliver disabled automatisk grå */
-}
-.inactive:hover {
-    -fx-scale-x: 1.05;
-    -fx-scale-y: 1.05;
-}
-
 .txtField {
     -fx-background-color: #F8F9F9;
     -fx-background-radius: 10;
@@ -360,4 +340,16 @@
 .border {
     -fx-border-color: green;
     -fx-border-width: 1;
+}
+
+.lstEventCoordinator {
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+    -fx-border-color: #6C5046;
+}
+.lstEventCoordinator .list-cell:filled:selected,
+.lstEventCoordinator .list-cell:filled:selected:hover {
+    -fx-background-color: #f2edf4;
+    -fx-text-fill: #73408f;
 }

@@ -1,35 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC">
-    <children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC">
+   <children>
 
-        <VBox spacing="20" AnchorPane.bottomAnchor="20" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="20">
+               <!-- Title -->
+         <Label styleClass="subTitle" text="Edit Event Coordinators">
+         <padding>
+            <Insets left="5.0" />
+         </padding>
+      </Label>
 
-            <!-- Title -->
-            <Label styleClass="title" text="Edit Event Coordinators" />
+               <!-- List of coordinators -->
+         <VBox spacing="10" styleClass="topBorder">
+             <Label styleClass="lblTextfield" text="Select coordinators for this event:" />
+             <ListView fx:id="EventCoordinatorEvent" prefHeight="300" styleClass="lstEventCoordinator" />
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+         </VBox>
 
-            <!-- List of coordinators -->
-            <VBox spacing="10">
-                <Label styleClass="lblTextfield" text="Select coordinators for this event:" />
-                <ListView fx:id="EventCoordinatorEvent" prefHeight="300" styleClass="lstUsers" />
-            </VBox>
-
-            <!-- Buttons -->
-            <HBox alignment="center_right" spacing="15">
-            <Button fx:id="BtnRemove" mnemonicParsing="false" onAction="#btnRemoveAC" text="Remove" />
-                <Button onAction="#onCancel" styleClass="btn" text="Cancel" />
-                <Button onAction="#onSave" styleClass="btn" text="Save" />
-            </HBox>
-
-        </VBox>
-
-    </children>
-
-</AnchorPane>
+               <!-- Buttons -->
+         <HBox alignment="center_right" spacing="15">
+         <Button fx:id="BtnRemove" mnemonicParsing="false" onAction="#btnRemoveAC" styleClass="btn" text="Remove" />
+             <Button onAction="#onCancel" styleClass="btn" text="Cancel" />
+             <Button onAction="#onSave" styleClass="btn" text="Save" />
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+         </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+</VBox>
