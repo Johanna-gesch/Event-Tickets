@@ -2,6 +2,8 @@ package dk.easv.eventtickets.GUI.Controllers.Tickets;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TicketController {
 
@@ -13,6 +15,8 @@ public class TicketController {
     private Label lblStartDateTime, lblEndDateTime, lblTicketLocation;
     @FXML
     private Label lblTicketType;
+    @FXML
+    private ImageView imgQrCode;
 
 
     public void setTicketText(String fullname, String event, String location, String startDateTime, String endDateTime, String type) {
@@ -22,6 +26,10 @@ public class TicketController {
         lblStartDateTime.setText(startDateTime);
         lblEndDateTime.setText(endDateTime);
         lblTicketType.setText(type);
+    }
+
+    public void setQrCode(Image qrCode) {
+        imgQrCode.setImage(qrCode);
     }
 
 

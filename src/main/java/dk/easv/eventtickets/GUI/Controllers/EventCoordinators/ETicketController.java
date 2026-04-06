@@ -1,6 +1,7 @@
 package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.GUI.Controllers.Tickets.QrGenerator;
 import dk.easv.eventtickets.GUI.Controllers.Tickets.TicketController;
 import dk.easv.eventtickets.GUI.Controllers.Tickets.VoucherController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
@@ -16,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -286,6 +288,10 @@ public class ETicketController implements Initializable {
                 TicketController tc = loader.getController();
                 String[] info = getTextForTickets();
                 tc.setTicketText(info[0], info[1], info[2], info[3], info[4], info[5]);
+
+                String uniqueId = UUID.randomUUID().toString();
+                Image qrCode = QrGenerator.generateQr(uniqueId, 200);
+                tc.setQrCode(qrCode);
 
                 ticket.setScaleX(0.65);
                 ticket.setScaleY(0.65);
