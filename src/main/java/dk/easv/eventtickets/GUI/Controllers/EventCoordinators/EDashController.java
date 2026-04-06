@@ -55,5 +55,7 @@ public class EDashController implements Initializable {
         }
     }
 
+    public void setModel(EventModel eventModel) {this.eventModel = eventModel;}
+
 
 }
