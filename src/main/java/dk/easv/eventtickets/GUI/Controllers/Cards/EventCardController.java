@@ -2,13 +2,17 @@ package dk.easv.eventtickets.GUI.Controllers.Cards;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ECreateController;
+import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.EDashController;
 import dk.easv.eventtickets.GUI.Controllers.EventCoordinators.ETicketController;
 import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Controllers.Admins.AEditEC;
+import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +25,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class EventCardController{
+public class EventCardController {
 
     @FXML
     private Button btnCreateTicket;
@@ -46,14 +50,15 @@ public class EventCardController{
 
     private EventModel eMod;
 
+    private UserModel uMod;
+
     private IEventCardListener listener;
 
     private SideBarController sideBar;
 
-    public void setSideBar(SideBarController sideBar){
+    public void setSideBar(SideBarController sideBar) {
         this.sideBar = sideBar;
     }
-
 
 
     public void setEvent(Event event) {
@@ -115,18 +120,24 @@ public class EventCardController{
 
     @FXML
     private void onEditEvent(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                "/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml"
-        ));
+        FXMLLoader rootLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/SideBar.fxml"));
+        Parent root = rootLoader.load();
+        SideBarController sbmc = rootLoader.getController();
 
-        Parent view = loader.load();
-        ETicketController controller = loader.getController();
+        sbmc.setUserModel(uMod);
+        sbmc.setEventModel(eMod);
 
-        controller.setModel(eMod); // pass event to edit
-        controller.setup();        // initialize Edit mode
+        ECreateController ecc = (ECreateController) sbmc.setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
+        ecc.setModel(eMod);
+        ecc.setSideBarController(sbmc);
+        ecc.setup();
 
-        //sideBar.setContent(view);  // or whatever shows the view
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
+
 
     @FXML
     private void onEditEC(ActionEvent actionEvent) throws IOException {

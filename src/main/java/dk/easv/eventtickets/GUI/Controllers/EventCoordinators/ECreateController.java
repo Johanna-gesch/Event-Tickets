@@ -3,6 +3,7 @@ package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 import dk.easv.eventtickets.BE.Event;
 import dk.easv.eventtickets.BE.User;
+import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +43,7 @@ public class ECreateController implements Initializable {
     @FXML
     private ComboBox <User> comboExtraCoordinators;
 
+    private SideBarController sideBarController;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -55,6 +57,7 @@ public class ECreateController implements Initializable {
             }
         });
 
+
         comboExtraCoordinators.setButtonCell(new javafx.scene.control.ListCell<>() {
             @Override
             protected void updateItem(User user, boolean empty) {
@@ -63,10 +66,17 @@ public class ECreateController implements Initializable {
             }
         });
     }
+    public void setup(){
+        System.out.println("Hello");
+    }
 
     public void setModel(EventModel eventModel) {
         this.eventModel = eventModel;
         comboExtraCoordinators.setItems(eventModel.getAllCoordinators());
+    }
+
+    public void setSideBarController(SideBarController sideBarController) {
+        this.sideBarController = sideBarController;
     }
 
 
