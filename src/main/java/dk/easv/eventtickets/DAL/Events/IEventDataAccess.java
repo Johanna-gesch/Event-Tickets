@@ -8,7 +8,7 @@ import java.util.List;
 public interface IEventDataAccess {
     List<Event> getAllEvents() throws Exception;
 
-    Event createUser(Event event) throws Exception;
+    Event createEvent(Event newEvent) throws Exception;
 
     void updateEvent(Event event) throws Exception;
 

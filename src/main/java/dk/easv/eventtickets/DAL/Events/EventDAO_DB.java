@@ -6,10 +6,7 @@ import dk.easv.eventtickets.BE.UserRole;
 import dk.easv.eventtickets.DAL.DBConnector;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +24,8 @@ public class EventDAO_DB implements IEventDataAccess {
 
         // Left join so events without coordinators also show up
         String sql = """
-        SELECT e.EventId, e.Title, e.StartDateTime, e.EndDateTime, e.Location, e.Notes,
+        
+                SELECT e.EventId, e.Title, e.StartDateTime, e.EndDateTime, e.Location, e.Notes,
                u.UserID, u.FName, u.LName
         FROM dbo.Events e
         LEFT JOIN dbo.EventCoordinators ec ON e.EventId = ec.EventId
@@ -88,12 +86,58 @@ public class EventDAO_DB implements IEventDataAccess {
     }
 
     @Override
-    public Event createUser(Event event) throws Exception {
-        return null;
+    public Event createEvent(Event newEvent) throws Exception {
+        String sql = """
+                INSERT INTO dbo.Events
+                (Title, StartDateTime, EndDateTime, Location, Notes)
+                VALUES (?, ?, ?, ?, ?)
+                """;
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
+
+            int evnetId;
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, newEvent.getName());
+                stmt.setTimestamp(2, java.sql.Timestamp.valueOf (newEvent.getStartDateTime()));
+                stmt.setTimestamp(3, java.sql.Timestamp.valueOf (newEvent.getEndDateTime()));
+                stmt.setString(4, newEvent.getLocation());
+                stmt.setString(5, newEvent.getNotes());
+
+
+                stmt.executeUpdate();
+
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        evnetId = rs.getInt(1);
+                    } else {
+                        throw new SQLException("Intet evntId genereret");
+                    }
+                }
+            }
+
+            conn.commit();
+
+            Event created = new Event();
+            created.setId(evnetId);
+            created.setName(newEvent.getName());
+            created.setStartDateTime(newEvent.getStartDateTime());
+            created.setEndDateTime(newEvent.getEndDateTime());
+            created.setLocation(newEvent.getLocation());
+            created.setNotes(newEvent.getNotes());
+
+
+            return created;
+        } catch (Exception e) {
+            throw new Exception("Can't create Event", e);
+        }
     }
+
 
     @Override
     public void updateEvent(Event event) throws Exception {
+
 
     }
 

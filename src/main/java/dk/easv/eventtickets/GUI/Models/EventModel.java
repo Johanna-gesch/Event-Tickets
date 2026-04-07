@@ -40,4 +40,10 @@ public class EventModel {
     public void updateEventCoordinators(int id, int userId) throws Exception {
         eMan.updateEventCoordinators(id, userId);
     }
+
+    public Event createEvent(Event newEvent) throws Exception {
+        Event eventCreated = eMan.createEvent(newEvent);
+        eventsToBeViewed.add(newEvent);
+        return eventCreated;
+    }
 }

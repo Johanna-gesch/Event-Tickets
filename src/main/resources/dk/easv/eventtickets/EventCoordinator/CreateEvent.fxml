@@ -22,7 +22,7 @@
                   <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" styleClass="whiteLayerBox">
                       <children>
                           <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Event Name" />
-                          <TextField styleClass="txtField">
+                          <TextField fx:id="txtName" styleClass="txtField">
                               <font>
                                   <Font size="14.0" />
                               </font>
@@ -36,7 +36,7 @@
                                                   <Insets top="5.0" />
                                               </VBox.margin>
                                           </Label>
-                                          <TextField styleClass="txtField">
+                                          <TextField fx:id="txtStartDate" styleClass="txtField">
                                               <font>
                                                   <Font size="14.0" />
                                               </font>
@@ -46,7 +46,7 @@
                                                   <Insets top="5.0" />
                                               </VBox.margin>
                                           </Label>
-                                          <TextField styleClass="txtField">
+                                          <TextField fx:id="txtStartTime" styleClass="txtField">
                                               <font>
                                                   <Font size="14.0" />
                                               </font>
@@ -60,7 +60,7 @@
                                                   <Insets top="5.0" />
                                               </VBox.margin>
                                           </Label>
-                                          <TextField styleClass="txtFieldRec">
+                                          <TextField fx:id="txtEndDate" styleClass="txtFieldRec">
                                               <font>
                                                   <Font size="14.0" />
                                               </font>
@@ -70,7 +70,7 @@
                                                   <Insets top="5.0" />
                                               </VBox.margin>
                                           </Label>
-                                          <TextField styleClass="txtFieldRec">
+                                          <TextField fx:id="txtEndTime" styleClass="txtFieldRec">
                                               <font>
                                                   <Font size="14.0" />
                                               </font>
@@ -84,7 +84,7 @@
                                   <Insets top="5.0" />
                               </VBox.margin>
                           </Label>
-                          <TextField styleClass="txtField">
+                          <TextField fx:id="txtLocation" styleClass="txtField">
                               <font>
                                   <Font size="14.0" />
                               </font>
@@ -104,7 +104,7 @@
                                   <Insets top="5.0" />
                               </VBox.margin>
                           </Label>
-                          <TextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" styleClass="txtField">
+                          <TextField fx:id="txtNotes" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" styleClass="txtField">
                               <font>
                                   <Font size="14.0" />
                               </font>
@@ -116,7 +116,7 @@
                           </Label>
                           <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="20.0">
                               <children>
-                                  <ComboBox editable="true" prefHeight="32.0" prefWidth="294.0" promptText="🔍" styleClass="txtFieldRec" />
+                                  <ComboBox fx:id="comboExtraCoordinators" editable="true" prefHeight="32.0" prefWidth="294.0" promptText="🔍" styleClass="txtFieldRec" />
                                   <Button mnemonicParsing="false" styleClass="btn" text="Add">
                                       <font>
                                           <Font size="16.0" />
@@ -128,7 +128,7 @@
                               </children>
                           </HBox>
                           <Region prefHeight="200.0" prefWidth="200.0" />
-                          <Button mnemonicParsing="false" styleClass="btn" text="Save">
+                          <Button mnemonicParsing="false" onAction="#onBtnSave" styleClass="btn" text="Save">
                               <VBox.margin>
                                   <Insets />
                               </VBox.margin>

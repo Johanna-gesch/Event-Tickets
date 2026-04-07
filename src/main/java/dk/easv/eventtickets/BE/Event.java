@@ -22,6 +22,14 @@ public class Event {
         this.coordinators = coordinators;
     }
 
+    public Event(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String notes) {
+        this.name = name;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.location = location;
+        this.notes = notes;
+    }
+
     public Event() {
 
     }

@@ -44,4 +44,8 @@ public class EventManager {
     public void updateEventCoordinators(int eventId, int userId) throws Exception {
         eventDAO.updateCoordinators(eventId, userId);
     }
+
+    public Event createEvent (Event event) throws Exception {
+        return eventDAO.createEvent(event);
+    }
 }
