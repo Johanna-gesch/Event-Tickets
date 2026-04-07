@@ -29,6 +29,19 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.3</version>   <!-- eller nyere, f.eks. 3.5.4 hvis tilgængelig -->
+        </dependency>
+
+        <!-- Til billed-delen (MatrixToImageWriter + SwingFXUtils.toFXImage) -->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.3</version>
+        </dependency>s
+
+        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.6</version>

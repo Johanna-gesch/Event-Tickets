@@ -21,7 +21,7 @@ public class EventManager {
         eventDAO = new EventDAO_DB();
     }
 
-    public List<Event> getAllEvents() throws Exception{
+    public List<Event> getAllEvents() throws Exception {
         return eventDAO.getAllEvents();
     }
 

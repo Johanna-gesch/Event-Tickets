@@ -93,15 +93,21 @@ public class EventDAO_DB implements IEventDataAccess {
                 VALUES (?, ?, ?, ?, ?)
                 """;
 
+        String sqlCoordinator = """
+                INSERT INTO dbo.EventCoordinators (EventID, UserID)
+                VALUES (?, ?)
+                """;
+
+
         try (Connection conn = databaseConnector.getConnection()) {
             conn.setAutoCommit(false);
 
-            int evnetId;
+            int eventId;
 
             try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setString(1, newEvent.getName());
-                stmt.setTimestamp(2, java.sql.Timestamp.valueOf (newEvent.getStartDateTime()));
-                stmt.setTimestamp(3, java.sql.Timestamp.valueOf (newEvent.getEndDateTime()));
+                stmt.setTimestamp(2, Timestamp.valueOf (newEvent.getStartDateTime()));
+                stmt.setTimestamp(3, Timestamp.valueOf (newEvent.getEndDateTime()));
                 stmt.setString(4, newEvent.getLocation());
                 stmt.setString(5, newEvent.getNotes());
 
@@ -110,17 +116,24 @@ public class EventDAO_DB implements IEventDataAccess {
 
                 try (ResultSet rs = stmt.getGeneratedKeys()) {
                     if (rs.next()) {
-                        evnetId = rs.getInt(1);
+                        eventId = rs.getInt(1);
                     } else {
                         throw new SQLException("Intet evntId genereret");
                     }
+                }
+            }
+            for (User coordinator : newEvent.getCoordinators()) {
+                try (PreparedStatement stmt2 = conn.prepareStatement(sqlCoordinator)) {
+                    stmt2.setInt(1, eventId);
+                    stmt2.setInt(2, coordinator.getId());
+                    stmt2.executeUpdate();
                 }
             }
 
             conn.commit();
 
             Event created = new Event();
-            created.setId(evnetId);
+            created.setId(eventId);
             created.setName(newEvent.getName());
             created.setStartDateTime(newEvent.getStartDateTime());
             created.setEndDateTime(newEvent.getEndDateTime());
@@ -168,8 +181,37 @@ public class EventDAO_DB implements IEventDataAccess {
     }
 
     @Override
-    public List<Event> getUsersForEvent(Event event) throws Exception {
-        return List.of();
+    public List<User> getUsersForEvent(int eventId) throws Exception {
+        List<User> coordinators = new ArrayList<>();
+
+        String sql = """
+        SELECT u.UserID, u.Username, u.FName, u.LName, u.Email, u.Role
+        FROM Users u
+        JOIN EventCoordinators ec ON u.UserID = ec.UserID
+        WHERE ec.EventID = ?
+        """;
+
+        try (Connection conn = databaseConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, eventId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    User u = new User();
+                    u.setId(rs.getInt("UserID"));
+                    u.setUsername(rs.getString("Username"));
+                    u.setFName(rs.getString("FName"));
+                    u.setLName(rs.getString("LName"));
+                    u.setEmail(rs.getString("Email"));
+                    u.setRole(UserRole.valueOf(rs.getString("Role")));
+
+                    coordinators.add(u);
+                }
+            }
+        }
+
+        return coordinators;
     }
 
     @Override

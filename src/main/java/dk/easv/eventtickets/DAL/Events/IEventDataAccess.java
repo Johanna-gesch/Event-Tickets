@@ -14,7 +14,7 @@ public interface IEventDataAccess {
 
     void deleteEvent(Event event) throws Exception;
 
-    List<Event> getUsersForEvent(Event event) throws Exception;
+    List<User> getUsersForEvent(int eventId) throws Exception;
 
     void removeCoordinator(Event event, int userId) throws Exception;
 

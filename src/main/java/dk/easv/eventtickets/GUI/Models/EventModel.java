@@ -13,11 +13,16 @@ import java.util.List;
 public class EventModel {
     private EventManager eMan;
     private ObservableList<Event> eventsToBeViewed;
+    private ObservableList<User> allCoordinators;
     private static EventModel instance;
 
     public EventModel() throws Exception {
         eMan = new EventManager();
         eventsToBeViewed = FXCollections.observableArrayList();
+        allCoordinators = FXCollections.observableArrayList();
+
+        allCoordinators.addAll(eMan.getAllCoordinators());
+
         eventsToBeViewed.addAll(eMan.getAllEvents());
     }
 
@@ -25,9 +30,14 @@ public class EventModel {
         eventsToBeViewed.setAll(eMan.getAllEvents());
     }
 
+    public ObservableList<User> getAllCoordinators() {
+        return allCoordinators;
+    }
+
     public ObservableList<Event> getEventsToBeViewed() {
         return eventsToBeViewed;
     }
+
     public void deleteEvent(Event deleteEvent) throws Exception {
         eMan.deleteEvent(deleteEvent);
 
@@ -43,7 +53,9 @@ public class EventModel {
 
     public Event createEvent(Event newEvent) throws Exception {
         Event eventCreated = eMan.createEvent(newEvent);
-        eventsToBeViewed.add(newEvent);
+        eventsToBeViewed.add(eventCreated);
         return eventCreated;
     }
+
+
 }

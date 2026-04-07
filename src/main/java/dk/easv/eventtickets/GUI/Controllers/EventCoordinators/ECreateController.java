@@ -2,11 +2,15 @@ package dk.easv.eventtickets.GUI.Controllers.EventCoordinators;
 
 
 import dk.easv.eventtickets.BE.Event;
+import dk.easv.eventtickets.BE.User;
 import dk.easv.eventtickets.GUI.Models.EventModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -16,6 +20,10 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 public class ECreateController implements Initializable {
+    @FXML
+    private ListView <User> lstSelectedCoordinator;
+    @FXML
+    private ObservableList<User> selectedCoordinators = FXCollections.observableArrayList();
     private EventModel eventModel;
     @FXML
     private TextField txtNotes;
@@ -32,16 +40,33 @@ public class ECreateController implements Initializable {
     @FXML
     private TextField txtName;
     @FXML
-    private ComboBox comboExtraCoordinators;
+    private ComboBox <User> comboExtraCoordinators;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        lstSelectedCoordinator.setItems(selectedCoordinators);
 
+        comboExtraCoordinators.setCellFactory(param -> new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                setText(empty || user == null ? "" : user.getFName()); // eller user.getFullName()
+            }
+        });
+
+        comboExtraCoordinators.setButtonCell(new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(User user, boolean empty) {
+                super.updateItem(user, empty);
+                setText(empty || user == null ? "" : user.getFName());
+            }
+        });
     }
 
     public void setModel(EventModel eventModel) {
         this.eventModel = eventModel;
+        comboExtraCoordinators.setItems(eventModel.getAllCoordinators());
     }
 
 
@@ -63,12 +88,33 @@ public class ECreateController implements Initializable {
 
             Event event = new Event(name, startDateTime, endDateTime, location, notes);
 
+            event.setCoordinators(selectedCoordinators);
+
             eventModel.createEvent(event);
+            clearFields();
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void onbtnAddCoordinator(ActionEvent actionEvent) {
+        User selected = comboExtraCoordinators.getValue();
+        if (selected != null && !selectedCoordinators.contains(selected)) {
+            selectedCoordinators.add(selected);
+        }
+    }
+
+    private void clearFields() {
+        txtName.clear();
+        txtLocation.clear();
+        txtNotes.clear();
+        txtStartDate.clear();
+        txtStartTime.clear();
+        txtEndDate.clear();
+        txtEndTime.clear();
+        comboExtraCoordinators.getSelectionModel().clearSelection();
     }
 }
