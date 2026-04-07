@@ -6,8 +6,7 @@ import dk.easv.eventtickets.BLL.EventManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class EventModel {
@@ -53,6 +52,9 @@ public class EventModel {
 
     public Event createEvent(Event newEvent) throws Exception {
         Event eventCreated = eMan.createEvent(newEvent);
+        List<User> coordinators = eMan.getCoordinatorsForEvent(eventCreated.getId());
+        eventCreated.setCoordinators(coordinators);
+
         eventsToBeViewed.add(eventCreated);
         return eventCreated;
     }

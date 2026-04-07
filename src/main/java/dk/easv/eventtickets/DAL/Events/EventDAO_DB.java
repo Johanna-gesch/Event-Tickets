@@ -156,13 +156,20 @@ public class EventDAO_DB implements IEventDataAccess {
 
     @Override
     public void deleteEvent(Event event) throws Exception {
+        String deleteCoordinators = "DELETE FROM EventCoordinators WHERE EventID = ?";
         String sql = "DELETE FROM Events WHERE EventID = ?;";
 
         try (Connection conn = databaseConnector.getConnection()){
             conn.setAutoCommit(false);
-            try (PreparedStatement stmt = conn.prepareStatement(sql)){
-                stmt.setInt(1, event.getId());
-                int rowsAffected = stmt.executeUpdate();
+
+            try (PreparedStatement stmt1 = conn.prepareStatement(deleteCoordinators)) {
+                stmt1.setInt(1, event.getId());
+                stmt1.executeUpdate();
+            }
+
+            try (PreparedStatement stmt2 = conn.prepareStatement(sql)){
+                stmt2.setInt(1, event.getId());
+                int rowsAffected = stmt2.executeUpdate();
 
                 if (rowsAffected == 0) {
                     conn.rollback();
@@ -174,10 +181,7 @@ public class EventDAO_DB implements IEventDataAccess {
                 conn.rollback();
                 throw new Exception("Could not delete event: " + e.getMessage(), e);
             }
-
-
         }
-
     }
 
     @Override

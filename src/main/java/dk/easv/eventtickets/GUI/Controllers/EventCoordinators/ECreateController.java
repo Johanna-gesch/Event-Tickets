@@ -115,6 +115,7 @@ public class ECreateController implements Initializable {
         txtStartTime.clear();
         txtEndDate.clear();
         txtEndTime.clear();
+        selectedCoordinators.clear();
         comboExtraCoordinators.getSelectionModel().clearSelection();
     }
 }
