@@ -78,6 +78,9 @@ public class ECreateController implements Initializable {
         comboExtraCoordinators.setItems(eventModel.getAllCoordinators());
     }
 
+    public void setSideBarController(SideBarController sidebarController) {
+        this.sidebarController = sidebarController;
+    }
     @FXML
     private void onBtnSave(ActionEvent actionEvent) throws Exception {
 
