@@ -120,22 +120,6 @@ public class EventCardController {
 
     @FXML
     private void onEditEvent(ActionEvent actionEvent) throws IOException {
-        FXMLLoader rootLoader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/SideBar.fxml"));
-        Parent root = rootLoader.load();
-        SideBarController sbmc = rootLoader.getController();
-
-        sbmc.setUserModel(uMod);
-        sbmc.setEventModel(eMod);
-
-        ECreateController ecc = (ECreateController) sbmc.setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
-        ecc.setModel(eMod);
-        ecc.setSideBarController(sbmc);
-        sbmc.setRole("Event");
-        ecc.setup();
-
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 
 

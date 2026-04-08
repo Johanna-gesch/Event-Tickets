@@ -42,8 +42,11 @@ public class ECreateController implements Initializable {
     private TextField txtName;
     @FXML
     private ComboBox <User> comboExtraCoordinators;
+    @FXML
+    private Event currentEvent;
 
-    private SideBarController sideBarController;
+    private boolean isEditMode = false;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -66,19 +69,12 @@ public class ECreateController implements Initializable {
             }
         });
     }
-    public void setup(){
-        System.out.println("Hello");
-    }
+
 
     public void setModel(EventModel eventModel) {
         this.eventModel = eventModel;
         comboExtraCoordinators.setItems(eventModel.getAllCoordinators());
     }
-
-    public void setSideBarController(SideBarController sideBarController) {
-        this.sideBarController = sideBarController;
-    }
-
 
     @FXML
     private void onBtnSave(ActionEvent actionEvent) {
@@ -127,5 +123,23 @@ public class ECreateController implements Initializable {
         txtEndTime.clear();
         selectedCoordinators.clear();
         comboExtraCoordinators.getSelectionModel().clearSelection();
+    }
+
+    public void loadEventForEditing(Event event) {
+        this.currentEvent = event;
+        this.isEditMode = true;
+
+        txtName.setText((event.getName()));
+        txtLocation.setText(event.getLocation());
+        txtNotes.setText(event.getNotes());
+        txtStartDate.setText(event.getStartDateTime().toString());
+        txtStartTime.setText(event.getStartDateTime().toString());
+        txtEndDate.setText(event.getEndDateTime().toString());
+        txtEndTime.setText(event.getEndDateTime().toString());
+        selectedCoordinators.setAll(event.getCoordinators());
+        comboExtraCoordinators.getSelectionModel().clearSelection();
+
+        //This is to make sure the invisible layer isn't hidden when editing an admin or coordinator.
+        //comboType.getOnAction().handle(null);
     }
 }
