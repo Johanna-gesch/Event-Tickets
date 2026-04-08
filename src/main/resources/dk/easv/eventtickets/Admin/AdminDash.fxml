@@ -22,7 +22,7 @@
                     <children>
                         <HBox alignment="CENTER" prefWidth="200.0" spacing="20.0">
                             <children>
-                                <TextField prefHeight="25.0" prefWidth="258.0" promptText="🔍 Search User" styleClass="txtField">
+                                <TextField fx:id="txtSearchUser" prefHeight="25.0" prefWidth="258.0" promptText="🔍 Search User" styleClass="txtField">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -41,7 +41,7 @@
                                 <Insets left="25.0" />
                             </padding>
                         </Label>
-                        <ListView fx:id="lstUsers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="400.0" styleClass="lstUsers">
+                        <ListView fx:id="lstUsers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="400.0" styleClass="lstUsers" >
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>
@@ -52,7 +52,7 @@
                     <children>
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
-                                <TextField prefHeight="25.0" prefWidth="202.0" promptText="🔍 Search Event" styleClass="txtField">
+                                <TextField fx:id="txtSearchEvent" prefHeight="25.0" prefWidth="202.0" promptText="🔍 Search Event" styleClass="txtField">
                                     <font>
                                         <Font size="14.0" />
                                     </font>

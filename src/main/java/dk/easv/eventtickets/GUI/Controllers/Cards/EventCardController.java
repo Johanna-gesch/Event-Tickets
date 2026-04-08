@@ -146,12 +146,8 @@ public class EventCardController {
 
     @FXML
     private void onDeleteEvent(ActionEvent actionEvent) throws Exception {
-        try {
-            eMod.deleteEvent(currentEvent);
-            eMod.getEventsToBeViewed().remove(currentEvent);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        if (listener != null) {
+            listener.onDeleteEvent(currentEvent);
         }
     }
 

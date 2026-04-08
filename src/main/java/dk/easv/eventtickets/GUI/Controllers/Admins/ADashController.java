@@ -5,12 +5,14 @@ import dk.easv.eventtickets.GUI.Controllers.Cards.*;
 import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,14 +27,21 @@ public class ADashController implements IUserCardListener {
     private ListView<User> lstUsers;
     @FXML
     private ListView<Event> lstEvents;
+    @FXML
+    private TextField txtSearchUser;
+    @FXML
+    private TextField txtSearchEvent;
+
+    private FilteredList<User> filteredUsers;
+    private FilteredList<Event> filteredEvents;
 
 
     public void setup(){
         handleUserCards();
         handleEventCards();
 
-        lstUsers.setItems(userModel.getUserToBeViewed());
-        lstEvents.setItems(eventModel.getEventsToBeViewed());
+        setupUserSearch();
+        setupEventSearch();
     }
 
     public void setSideBarController(SideBarController sidebarController) {
@@ -144,4 +153,46 @@ public class ADashController implements IUserCardListener {
     public void setUserModel(UserModel userModel) {this.userModel = userModel;}
 
     public void setEventModel(EventModel eventModel) {this.eventModel = eventModel;}
+
+    private void setupUserSearch() {
+        // Wrap the original list
+        filteredUsers = new FilteredList<>(userModel.getUserToBeViewed(), u -> true);
+
+        // Bind filtered list to ListView
+        lstUsers.setItems(filteredUsers);
+
+        // Add listener to search field
+        txtSearchUser.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filter = newValue == null ? "" : newValue.toLowerCase().trim();
+
+            filteredUsers.setPredicate(user -> {
+                if (filter.isEmpty()) return true;
+
+                String fullName = (user.getFName() + " " + user.getLName()).toLowerCase();
+                String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
+
+                return fullName.contains(filter) || email.contains(filter);
+            });
+        });
+    }
+
+    private void setupEventSearch() {
+        filteredEvents = new FilteredList<>(eventModel.getEventsToBeViewed(), e -> true);
+
+        lstEvents.setItems(filteredEvents);
+
+        txtSearchEvent.textProperty().addListener((obs, oldValue, newValue) -> {
+            String filter = newValue == null ? "" : newValue.toLowerCase().trim();
+
+            filteredEvents.setPredicate(event -> {
+                if (filter.isEmpty()) return true;
+
+                boolean nameMatch = event.getName().toLowerCase().contains(filter);
+                boolean locationMatch = event.getLocation() != null &&
+                        event.getLocation().toLowerCase().contains(filter);
+
+                return nameMatch || locationMatch;
+            });
+        });
+    }
 }

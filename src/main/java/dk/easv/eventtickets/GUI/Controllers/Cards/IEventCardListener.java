@@ -7,4 +7,6 @@ public interface IEventCardListener {
     void onGetTickets(Event event);
 
     void onUpdateEvent(Event event);
+
+    void onDeleteEvent(Event event);
 }

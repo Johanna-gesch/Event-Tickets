@@ -79,11 +79,13 @@ public class SideBarController {
             ADashController adc = (ADashController) setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
             adc.setUserModel(userModel);
             adc.setEventModel(eventModel);
+            adc.setSideBarController(this);
             adc.setup();
         }
         if ("Event".equals(role)) {
             EDashController edc = (EDashController) setView("/dk/easv/eventtickets/EventCoordinator/EventDash.fxml");
             edc.setModel(eventModel);
+            edc.setSideBarController(this);
             edc.setup();
         }
     }
