@@ -21,7 +21,7 @@ public class UserDAO_DB implements IUserDataAccess {
         List<User> allUsers = new ArrayList<>();
 
         String sql = """
-        SELECT UserID, Username, FName, LName, Email, PasswordHash, Role
+        SELECT UserID, Username, FName, LName, Email, PasswordHash, Role, ImagePath
         FROM dbo.Users
         ORDER BY LName, FName
         """;
@@ -40,6 +40,7 @@ public class UserDAO_DB implements IUserDataAccess {
                 user.setEmail(rs.getString("Email"));
                 user.setPasswordHash(rs.getString("PasswordHash"));
                 user.setRole(UserRole.valueOf(rs.getString("Role").toUpperCase().replace(" ", "_")));
+                user.setImagePath(rs.getString("ImagePath"));
 
                 allUsers.add(user);
             }

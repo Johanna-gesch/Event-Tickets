@@ -6,6 +6,7 @@ import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class UserCardController {
@@ -32,8 +33,11 @@ public class UserCardController {
         lblEmail.setText(user.getEmail());
         lblType.setText(user.getRoleDisplayName());
 
-        //Image image = new Image(getClass().getResource(user.getImagePath()).toExternalForm());
-        //imgView.setImage(image);
+        if (user.getImagePath() != null) {
+            Image image = new Image(getClass().getResource(user.getImagePath()).toExternalForm());
+            imgView.setImage(image);
+        }
+
     }
 
     public void setUserModel(UserModel userModel) {

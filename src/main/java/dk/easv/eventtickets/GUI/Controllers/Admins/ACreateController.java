@@ -91,8 +91,8 @@ public class ACreateController implements Initializable {
         // Filechooser og setAvatar(Image) -> showEmptyAvatarState(false)
     }
 
-
-    public void onbtnSave(ActionEvent actionEvent) {
+    @FXML
+    private void onbtnSave(ActionEvent actionEvent) {
         String fName = txtFName.getText();
         String lName = txtLName.getText();
         String email = txtEmail.getText();
@@ -121,7 +121,7 @@ public class ACreateController implements Initializable {
         }
     }
 
-    public void onCustomerSave(String fName, String lName, String email){
+    private void onCustomerSave(String fName, String lName, String email){
         currentCustomer = new Customer();
         currentCustomer.setFName(fName);
         currentCustomer.setLName(lName);
@@ -135,7 +135,7 @@ public class ACreateController implements Initializable {
         }
     }
 
-    public void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
+    private void onBtnAdminOrCoordinatorControllerSave(String fName, String lName, String email, String type){
         String username = txtUsername.getText();
         String password = txtPassword.getText();
         String hashPassword = userModel.hashPassword(password);
