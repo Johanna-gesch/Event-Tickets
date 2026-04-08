@@ -59,5 +59,9 @@ public class EventModel {
         return eventCreated;
     }
 
+    public void updateEvent(Event event) throws Exception {
+        eMan.updateEvent(event);
+    }
+
 
 }

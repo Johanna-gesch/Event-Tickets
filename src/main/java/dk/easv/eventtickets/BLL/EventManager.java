@@ -48,4 +48,8 @@ public class EventManager {
     public Event createEvent (Event event) throws Exception {
         return eventDAO.createEvent(event);
     }
+
+    public void updateEvent (Event event) throws Exception {
+        eventDAO.updateEvent(event);
+    }
 }

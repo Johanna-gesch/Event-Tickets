@@ -120,6 +120,9 @@ public class EventCardController {
 
     @FXML
     private void onEditEvent(ActionEvent actionEvent) throws IOException {
+        if (listener != null){
+            listener.onUpdateEvent(currentEvent);
+        }
     }
 
 
@@ -167,5 +170,7 @@ public class EventCardController {
     public void setListener(IEventCardListener listener) {
         this.listener = listener;
     }
+
+
 
 }

@@ -45,6 +45,8 @@ public class ECreateController implements Initializable {
     @FXML
     private Event currentEvent;
 
+
+
     private boolean isEditMode = false;
 
 
@@ -77,33 +79,39 @@ public class ECreateController implements Initializable {
     }
 
     @FXML
-    private void onBtnSave(ActionEvent actionEvent) {
+    private void onBtnSave(ActionEvent actionEvent) throws Exception {
+
+
         String name = txtName.getText();
         String location = txtLocation.getText();
         String notes = txtNotes.getText();
-
-        try {
-            LocalDate startDate = LocalDate.parse(txtStartDate.getText());
-            LocalDate endDate = LocalDate.parse(txtEndDate.getText());
-
-            LocalTime startTime = LocalTime.parse(txtStartTime.getText());
-            LocalTime endTime = LocalTime.parse(txtEndTime.getText());
-
-            LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-            LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
-
-            Event event = new Event(name, startDateTime, endDateTime, location, notes);
-
-            event.setCoordinators(selectedCoordinators);
-
-            eventModel.createEvent(event);
-            clearFields();
+         LocalDateTime starterDateTime = LocalDateTime.parse(txtStartDate.getText());
+         LocalDateTime endDaterTime = LocalDateTime.parse(txtEndDate.getText());
 
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (isEditMode){
+            updateEvent(name, starterDateTime, endDaterTime, location, notes);
         }
+        else{
+            try {
+                LocalDate startDate = LocalDate.parse(txtStartDate.getText());
+                LocalDate endDate = LocalDate.parse(txtEndDate.getText());
 
+                LocalTime startTime = LocalTime.parse(txtStartTime.getText());
+                LocalTime endTime = LocalTime.parse(txtEndTime.getText());
+
+                LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+                LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
+
+                Event event = new Event(name, startDateTime, endDateTime, location, notes);
+
+                event.setCoordinators(selectedCoordinators);
+
+                eventModel.createEvent(event);
+                clearFields();} catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void onbtnAddCoordinator(ActionEvent actionEvent) {
@@ -139,7 +147,23 @@ public class ECreateController implements Initializable {
         selectedCoordinators.setAll(event.getCoordinators());
         comboExtraCoordinators.getSelectionModel().clearSelection();
 
-        //This is to make sure the invisible layer isn't hidden when editing an admin or coordinator.
-        //comboType.getOnAction().handle(null);
+    }
+
+    private void updateEvent(String name, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, String notes){
+        try{
+            currentEvent.setName(name);
+            currentEvent.setStartDateTime(startDateTime);
+            currentEvent.setEndDateTime(endDateTime);
+            currentEvent.setLocation(location);
+            currentEvent.setNotes(notes);
+
+            eventModel.updateEvent(currentEvent);
+
+            clearFields();
+            isEditMode = false;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -150,7 +150,54 @@ public class EventDAO_DB implements IEventDataAccess {
 
     @Override
     public void updateEvent(Event event) throws Exception {
+        String sql = """ 
+                Update dbo.Events
+                SET Title = ?, StartDateTime = ?, EndDateTime = ?, Location = ?, Notes = ? 
+                Where EventID =?""";
 
+        String deleteCoordinators = """
+                DELETE FROM dbo.EventCoordinators WHERE EventID = ?""";
+
+        String insertCordinator = """
+                INSERT INTO dbo.EventCoordinators (EventID, UserID) VALUES (?,?)""";
+
+        try (Connection conn = databaseConnector.getConnection()) {
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1,event.getName());
+                stmt.setTimestamp(2,Timestamp.valueOf(event.getStartDateTime()));
+                stmt.setTimestamp(3,Timestamp.valueOf(event.getEndDateTime()));
+                stmt.setString(4,event.getLocation());
+                stmt.setString(5, event.getNotes());
+                stmt.setInt(6,event.getId());
+
+                stmt.executeUpdate();
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(deleteCoordinators)) {
+                stmt.setInt(1, event.getId());
+                stmt.executeUpdate();
+            }
+
+            for (User coordinator : event.getCoordinators()){
+                try(PreparedStatement stmt = conn.prepareStatement(insertCordinator)) {
+                    stmt.setInt(1, event.getId());
+                    stmt.setInt(2, coordinator.getId());
+                    stmt.executeUpdate();
+                }
+            }
+
+            conn.commit();
+
+            } catch (Exception e) {
+            throw new Exception("Can't update event", e);
+        }
+
+
+
+
+      
 
     }
 

@@ -76,4 +76,14 @@ public class EDashController implements IEventCardListener {
             e.printStackTrace();
         }
     }
+
+    public void onUpdateEvent(Event event) {
+        try{
+            ECreateController ecc = (ECreateController) sidebarController.setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
+            ecc.setModel(eventModel);
+            ecc.loadEventForEditing(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
