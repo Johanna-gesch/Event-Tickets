@@ -132,14 +132,6 @@
                                         <Font size="14.0" />
                                     </font>
                                 </TextField>
-                                <Button mnemonicParsing="false" onAction="#onBtnCreateLogin" styleClass="btn" text="Create Login">
-                                    <VBox.margin>
-                                        <Insets top="30.0" />
-                                    </VBox.margin>
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                </Button>
                             </children>
                             <padding>
                                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

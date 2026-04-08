@@ -57,8 +57,8 @@ public class UserDAO_DB implements IUserDataAccess {
     public User createUser(User newUser) throws Exception {
         String sql = """
                 INSERT INTO dbo.Users
-                (Username, PasswordHash, FName, LName, Email, Role)
-                VALUES (?, ?, ?, ?, ?, ?)
+                (Username, PasswordHash, FName, LName, Email, Role, ImagePath)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
         try (Connection conn = databaseConnector.getConnection()) {
@@ -72,8 +72,8 @@ public class UserDAO_DB implements IUserDataAccess {
                 stmt.setString(3, newUser.getFName());
                 stmt.setString(4, newUser.getLName());
                 stmt.setString(5, newUser.getEmail());
-
                 stmt.setString(6, String.valueOf(newUser.getRole()));
+                stmt.setString(7, newUser.getImagePath());
 
                 stmt.executeUpdate();
 
@@ -96,6 +96,7 @@ public class UserDAO_DB implements IUserDataAccess {
             created.setLName(newUser.getLName());
             created.setEmail(newUser.getEmail());
             created.setRole(newUser.getRole());
+            created.setImagePath(newUser.getImagePath());
 
             return created;
 
@@ -107,7 +108,7 @@ public class UserDAO_DB implements IUserDataAccess {
 
     @Override
     public User updateUser(User user) throws Exception {
-        String sql = "UPDATE dbo.Users SET Username = ?, FName = ?, LName = ?, Email = ?, PasswordHash = ?, Role = ? WHERE UserID = ?;";
+        String sql = "UPDATE dbo.Users SET Username = ?, FName = ?, LName = ?, Email = ?, PasswordHash = ?, Role = ?, ImagePath = ? WHERE UserID = ?;";
 
         try (Connection conn = databaseConnector.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -118,7 +119,8 @@ public class UserDAO_DB implements IUserDataAccess {
             stmt.setString(4, user.getEmail());
             stmt.setString(5, user.getPasswordHash());
             stmt.setString(6, String.valueOf(user.getRole()));
-            stmt.setInt(7, user.getId());
+            stmt.setString(7, user.getImagePath());
+            stmt.setInt(8, user.getId());
 
             stmt.executeUpdate();
             return user;

@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.io.File;
+
 public class UserCardController {
 
     @FXML
@@ -33,10 +35,12 @@ public class UserCardController {
         lblEmail.setText(user.getEmail());
         lblType.setText(user.getRoleDisplayName());
 
-        if (user.getImagePath() != null) {
-            Image image = new Image(getClass().getResource(user.getImagePath()).toExternalForm());
-            imgView.setImage(image);
+        String path = user.getImagePath();
+        File file = new File("src/main/resources" + path);
+        if (file.exists()) {
+            imgView.setImage(new Image(file.toURI().toString()));
         }
+
 
     }
 
