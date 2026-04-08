@@ -130,6 +130,7 @@ public class EventCardController {
         ECreateController ecc = (ECreateController) sbmc.setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");
         ecc.setModel(eMod);
         ecc.setSideBarController(sbmc);
+        sbmc.setRole("Event");
         ecc.setup();
 
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
