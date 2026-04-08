@@ -161,6 +161,13 @@ public class ECreateController implements Initializable {
             currentEvent.setLocation(location);
             currentEvent.setNotes(notes);
 
+            for (User user : selectedCoordinators) {
+                if (!currentEvent.getCoordinators().contains(user)) {
+                    currentEvent.getCoordinators().add(user);
+                }
+            }
+
+
             eventModel.updateEvent(currentEvent);
 
             clearFields();
