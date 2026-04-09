@@ -6,10 +6,12 @@ import dk.easv.eventtickets.GUI.Controllers.SideBarController;
 import dk.easv.eventtickets.GUI.Models.EventModel;
 import dk.easv.eventtickets.GUI.Models.UserModel;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -18,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ADashController implements IUserCardListener {
+public class ADashController implements IUserCardListener, IEventCardListener {
     private UserModel userModel;
     private EventModel eventModel;
     private SideBarController sidebarController;
@@ -34,13 +36,19 @@ public class ADashController implements IUserCardListener {
 
     private FilteredList<User> filteredUsers;
     private FilteredList<Event> filteredEvents;
+    @FXML
+    private ComboBox<String> cboUserFilter;
+    @FXML
+    private ComboBox<String> cboEventFilter;
 
 
     public void setup(){
         handleUserCards();
         handleEventCards();
 
+        setupUserFilter();
         setupUserSearch();
+        setupEventFilter();
         setupEventSearch();
     }
 
@@ -62,10 +70,10 @@ public class ADashController implements IUserCardListener {
             @Override
             protected void updateItem(User user, boolean empty) {
 
-                // The item (user) is set correctly and the cells empty state is updated
+                // The item (user) is set correctly, and the cells' empty state is updated
                 super.updateItem(user, empty);
 
-                // If the cell has nothing to show -> remove cell completely
+                // If the cell has nothing to show -> remove the cell completely
                 if (empty || user == null) {
                     setText(null);
                     setGraphic(null);
@@ -106,7 +114,7 @@ public class ADashController implements IUserCardListener {
             @Override
             protected void updateItem(Event event, boolean empty) {
 
-                // The item (user) is set correctly and the cells empty state is updated
+                // The item (user) is set correctly, and the cells' empty state is updated
                 super.updateItem(event, empty);
 
                 // If the cell has nothing to show -> remove cell completely
@@ -126,6 +134,7 @@ public class ADashController implements IUserCardListener {
                     ecc.setEvent(event);
                     ecc.setEventModel(eventModel);
                     ecc.isEventDash(false);
+                    ecc.setListener(ADashController.this);
                     setGraphic(graphic);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -155,44 +164,108 @@ public class ADashController implements IUserCardListener {
     public void setEventModel(EventModel eventModel) {this.eventModel = eventModel;}
 
     private void setupUserSearch() {
-        // Wrap the original list
         filteredUsers = new FilteredList<>(userModel.getUserToBeViewed(), u -> true);
-
-        // Bind filtered list to ListView
         lstUsers.setItems(filteredUsers);
 
-        // Add listener to search field
-        txtSearchUser.textProperty().addListener((obs, oldValue, newValue) -> {
-            String filter = newValue == null ? "" : newValue.toLowerCase().trim();
+        txtSearchUser.textProperty().addListener((obs, oldValue, newValue) -> applyUserFilter());
+        cboUserFilter.valueProperty().addListener((obs, oldValue, newValue) -> applyUserFilter());
+    }
 
-            filteredUsers.setPredicate(user -> {
-                if (filter.isEmpty()) return true;
+    private void setupUserFilter() {
+        cboUserFilter.getItems().addAll("All", "Admin", "Event Coordinator");
+        cboUserFilter.getSelectionModel().select(0);
+    }
 
+    private void applyUserFilter() {
+        String search = txtSearchUser.getText() == null ? "" : txtSearchUser.getText().toLowerCase();
+        String roleFilter = cboUserFilter.getValue() == null ? "All" : cboUserFilter.getValue();
+
+        filteredUsers.setPredicate(user -> {
+            //Filter by search
+            boolean matchesSearch = true;
+            if (!search.isEmpty()) {
                 String fullName = (user.getFName() + " " + user.getLName()).toLowerCase();
-                String email = user.getEmail() != null ? user.getEmail().toLowerCase() : "";
+                String email = user.getEmail() == null ? "" : user.getEmail().toLowerCase();
+                matchesSearch = fullName.contains(search) || email.contains(search);
+            }
 
-                return fullName.contains(filter) || email.contains(filter);
-            });
+            //Filter by role
+            boolean matchesRole = true;
+            if (!roleFilter.equalsIgnoreCase("All")) {
+                matchesRole = user.getRole().getDisplayName().equalsIgnoreCase(roleFilter);
+            }
+
+            return matchesSearch && matchesRole;
         });
     }
 
     private void setupEventSearch() {
         filteredEvents = new FilteredList<>(eventModel.getEventsToBeViewed(), e -> true);
 
-        lstEvents.setItems(filteredEvents);
+        //wrap filtered events in a sorted list
+        SortedList<Event> sortedEvents = new SortedList<>(filteredEvents);
+        //Sort by date ascending
+        sortedEvents.setComparator((e1, e2) -> e1.getStartDateTime().compareTo(e2.getStartDateTime()));
 
-        txtSearchEvent.textProperty().addListener((obs, oldValue, newValue) -> {
-            String filter = newValue == null ? "" : newValue.toLowerCase().trim();
+        lstEvents.setItems(sortedEvents);
 
-            filteredEvents.setPredicate(event -> {
-                if (filter.isEmpty()) return true;
+        txtSearchEvent.textProperty().addListener((obs, oldValue, newValue) -> applyEventFilter());
+        cboEventFilter.valueProperty().addListener((obs, oldValue, newValue) -> applyEventFilter());
+    }
 
-                boolean nameMatch = event.getName().toLowerCase().contains(filter);
-                boolean locationMatch = event.getLocation() != null &&
-                        event.getLocation().toLowerCase().contains(filter);
+    private void setupEventFilter() {
+        cboEventFilter.getItems().addAll("All", "Upcoming", "Past");
+        cboEventFilter.getSelectionModel().select(0);
+    }
 
-                return nameMatch || locationMatch;
-            });
+    private void applyEventFilter() {
+        String search = txtSearchEvent.getText() == null ? "" : txtSearchEvent.getText().toLowerCase();
+        String filter = cboEventFilter.getValue() == null ? "All" : cboEventFilter.getValue();
+
+        filteredEvents.setPredicate(event -> {
+
+            //search filter
+            boolean matchesSearch = true;
+            if (!search.isEmpty()) {
+                boolean nameMatch = event.getName().toLowerCase().contains(search);
+                boolean locationMatch = event.getLocation().toLowerCase().contains(search);
+
+                matchesSearch = nameMatch || locationMatch;
+            }
+
+            //Filter by date
+            boolean matchesDate = true;
+            if (!filter.equalsIgnoreCase("All")) {
+                boolean isPast = event.getStartDateTime().isBefore(java.time.LocalDateTime.now());
+                boolean isUpcoming = event.getStartDateTime().isAfter(java.time.LocalDateTime.now());
+
+                if (filter.equalsIgnoreCase("Past")) {
+                    matchesDate = isPast;
+                } else if (filter.equalsIgnoreCase("Upcoming")) {
+                    matchesDate = isUpcoming;
+                }
+            }
+            return matchesSearch && matchesDate;
         });
+    }
+
+    @Override
+    public void onGetTickets(Event event) {
+
+    }
+
+    @Override
+    public void onUpdateEvent(Event event) {
+
+    }
+
+    @Override
+    public void onDeleteEvent(Event event) {
+        try{
+            eventModel.deleteEvent(event);
+            eventModel.getEventsToBeViewed().remove(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

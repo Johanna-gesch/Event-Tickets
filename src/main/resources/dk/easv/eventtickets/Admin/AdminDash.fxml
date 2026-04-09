@@ -35,7 +35,7 @@
                                         <Insets left="20.0" />
                                     </HBox.margin>
                                 </Label>
-                                <ComboBox prefHeight="32.0" prefWidth="120.0" styleClass="txtField" />
+                                <ComboBox fx:id="cboUserFilter" prefHeight="32.0" prefWidth="120.0" styleClass="txtField" />
                             </children>
                             <padding>
                                 <Insets bottom="20.0" top="20.0" />
@@ -73,7 +73,7 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <ComboBox prefHeight="32.0" prefWidth="107.0" styleClass="txtField" />
+                                <ComboBox fx:id="cboEventFilter" prefHeight="32.0" prefWidth="107.0" styleClass="txtField" />
                             </children>
                             <padding>
                                 <Insets bottom="20.0" top="20.0" />
