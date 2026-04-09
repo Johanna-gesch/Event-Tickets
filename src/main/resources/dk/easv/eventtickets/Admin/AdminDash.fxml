@@ -20,13 +20,21 @@
             <children>
                 <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" styleClass="rightBorder" HBox.hgrow="ALWAYS">
                     <children>
-                        <HBox alignment="CENTER" prefWidth="200.0" spacing="20.0">
+                        <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="txtSearchUser" prefHeight="25.0" prefWidth="258.0" promptText="🔍 Search User" styleClass="txtField">
+                                <TextField fx:id="txtSearchUser" prefHeight="25.0" prefWidth="202.0" promptText="🔍 Search User" styleClass="txtField">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </TextField>
+                                <Label text="Filter by: " textFill="#54362e">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                    <HBox.margin>
+                                        <Insets left="20.0" />
+                                    </HBox.margin>
+                                </Label>
                                 <ComboBox prefHeight="32.0" prefWidth="120.0" styleClass="txtField" />
                             </children>
                             <padding>
@@ -41,7 +49,7 @@
                                 <Insets left="25.0" />
                             </padding>
                         </Label>
-                        <ListView fx:id="lstUsers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="400.0" styleClass="lstUsers" >
+                        <ListView fx:id="lstUsers" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="400.0" styleClass="lstUsers">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>

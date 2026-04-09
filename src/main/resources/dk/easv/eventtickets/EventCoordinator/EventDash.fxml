@@ -4,12 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="900.0" styleClass="BG" stylesheets="@../Style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.eventtickets.GUI.Controllers.EventCoordinators.EDashController">
     <children>
         <Label styleClass="title" text="Dashboard">
@@ -21,23 +21,17 @@
         <HBox alignment="CENTER_LEFT">
             <children>
 
-                <!-- Left-aligned title -->
                 <Label styleClass="subTitle" text="Your Events">
                     <HBox.margin>
-                        <Insets left="20" top="20" bottom="10"/>
+                        <Insets bottom="10" left="20" top="20" />
                     </HBox.margin>
                 </Label>
 
-                <!-- Spacer pushes search field to the right -->
                 <Pane HBox.hgrow="ALWAYS" />
 
-                <!-- Right-aligned search field -->
-                <TextField fx:id="txtSearchEvent"
-                           promptText="🔍 Search Event"
-                           styleClass="txtField"
-                           prefWidth="250">
+                <TextField fx:id="txtSearchEvent" prefWidth="250" promptText="🔍 Search Event" styleClass="txtField">
                     <HBox.margin>
-                        <Insets right="20" top="20" bottom="10"/>
+                        <Insets bottom="10" right="20" top="20" />
                     </HBox.margin>
                 </TextField>
 
@@ -45,9 +39,9 @@
         </HBox>
 
 
-        <ScrollPane fitToWidth="true" pannable="true" VBox.vgrow="ALWAYS">
+        <ScrollPane fitToWidth="true" pannable="true" styleClass="BG" VBox.vgrow="ALWAYS">
             <content>
-                <TilePane fx:id="tilePane" alignment="TOP_CENTER" hgap="24.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="BG" tileAlignment="TOP_CENTER" vgap="24.0">
+                <TilePane fx:id="tilePane" alignment="TOP_CENTER" hgap="24.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="684.0" styleClass="BG" tileAlignment="TOP_CENTER" vgap="24.0">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>

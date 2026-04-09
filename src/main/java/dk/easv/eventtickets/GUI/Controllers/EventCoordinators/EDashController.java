@@ -98,6 +98,7 @@ public class EDashController implements IEventCardListener {
         }
     }
 
+    @Override
     public void onUpdateEvent(Event event) {
         try{
             ECreateController ecc = (ECreateController) sidebarController.setView("/dk/easv/eventtickets/EventCoordinator/CreateEvent.fxml");

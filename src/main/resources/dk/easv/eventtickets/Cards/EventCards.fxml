@@ -17,13 +17,16 @@
                 <Insets bottom="5.0" />
             </VBox.margin>
         </Label>
-        <Label fx:id="lblStartDateTime" styleClass="cardSub" text="Label" />
-        <Label fx:id="lblEndDateTime" styleClass="cardSub" text="Label" />
         <Label fx:id="lblLocation" styleClass="cardSub" text="Label">
             <VBox.margin>
-                <Insets bottom="10.0" />
+                <Insets />
             </VBox.margin>
         </Label>
+        <Label fx:id="lblStartDateTime" styleClass="cardSub" text="Label" />
+        <Label fx:id="lblEndDateTime" styleClass="cardSub" text="Label">
+            <VBox.margin>
+                <Insets bottom="10.0" />
+            </VBox.margin></Label>
         <Label styleClass="cardSub" text="Notes:" underline="true" />
         <Label fx:id="lblNotes" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="0.0" styleClass="cardSub" text="Label" wrapText="true" VBox.vgrow="ALWAYS">
             <VBox.margin>
@@ -33,9 +36,9 @@
         <HBox spacing="10.0">
             <children>
                 <Label styleClass="cardSub" text="Event Coordinator(s):" underline="true">
-               <HBox.margin>
-                  <Insets bottom="5.0" />
-               </HBox.margin></Label>
+                    <HBox.margin>
+                        <Insets bottom="5.0" />
+                    </HBox.margin></Label>
                 <Button fx:id="btnEditEC" alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#onEditEC" styleClass="btnNav" text="✐">
                     <font>
                         <Font name="Segoe UI Symbol" size="20.0" />
@@ -84,9 +87,9 @@
                         <Insets bottom="-8.0" left="-8.0" right="-8.0" top="-8.0" />
                     </padding></Button>
             </children>
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
+            <VBox.margin>
+                <Insets top="5.0" />
+            </VBox.margin>
         </HBox>
     </children>
     <padding>

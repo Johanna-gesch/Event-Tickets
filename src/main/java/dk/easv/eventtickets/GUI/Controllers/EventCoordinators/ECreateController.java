@@ -20,6 +20,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for an event coordinator to create a new event.
+ */
+
 public class ECreateController implements Initializable {
     @FXML
     private ListView <User> lstSelectedCoordinator;
@@ -48,6 +52,7 @@ public class ECreateController implements Initializable {
 
 
     private boolean isEditMode = false;
+    private SideBarController sidebarController;
 
 
     @Override
@@ -89,34 +94,38 @@ public class ECreateController implements Initializable {
         String name = txtName.getText();
         String location = txtLocation.getText();
         String notes = txtNotes.getText();
-         LocalDateTime starterDateTime = LocalDateTime.parse(txtStartDate.getText());
-         LocalDateTime endDaterTime = LocalDateTime.parse(txtEndDate.getText());
 
+        //Parse date and time separately, and then save them together.
+        LocalDate startDate = LocalDate.parse(txtStartDate.getText());
+        LocalDate endDate;
+        if (txtEndDate.getText().isEmpty()) {
+            endDate = startDate;
+        } else {
+            endDate = LocalDate.parse(txtEndDate.getText());
+        }
+
+        LocalTime startTime = LocalTime.parse(txtStartTime.getText());
+        LocalTime endTime;
+        if (txtEndTime.getText().isEmpty()) {
+            endTime = startTime;
+        } else {
+            endTime = LocalTime.parse(txtEndTime.getText());
+        }
+
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
 
         if (isEditMode){
-            updateEvent(name, starterDateTime, endDaterTime, location, notes);
+            updateEvent(name, startDateTime, endDateTime, location, notes);
         }
         else{
-            try {
-                LocalDate startDate = LocalDate.parse(txtStartDate.getText());
-                LocalDate endDate = LocalDate.parse(txtEndDate.getText());
-
-                LocalTime startTime = LocalTime.parse(txtStartTime.getText());
-                LocalTime endTime = LocalTime.parse(txtEndTime.getText());
-
-                LocalDateTime startDateTime = LocalDateTime.of(startDate, startTime);
-                LocalDateTime endDateTime = LocalDateTime.of(endDate, endTime);
-
-                Event event = new Event(name, startDateTime, endDateTime, location, notes);
-
-                event.setCoordinators(selectedCoordinators);
-
-                eventModel.createEvent(event);
-                clearFields();} catch (Exception e) {
-                e.printStackTrace();
-            }
+            Event event = new Event(name, startDateTime, endDateTime, location, notes);
+            event.setCoordinators(selectedCoordinators);
+            eventModel.createEvent(event);
+            clearFields();
         }
     }
+
 
     public void onbtnAddCoordinator(ActionEvent actionEvent) {
         User selected = comboExtraCoordinators.getValue();
@@ -144,10 +153,10 @@ public class ECreateController implements Initializable {
         txtName.setText((event.getName()));
         txtLocation.setText(event.getLocation());
         txtNotes.setText(event.getNotes());
-        txtStartDate.setText(event.getStartDateTime().toString());
-        txtStartTime.setText(event.getStartDateTime().toString());
-        txtEndDate.setText(event.getEndDateTime().toString());
-        txtEndTime.setText(event.getEndDateTime().toString());
+        txtStartDate.setText(event.getStartDateTime().toLocalDate().toString());
+        txtStartTime.setText(event.getStartDateTime().toLocalTime().toString());
+        txtEndDate.setText(event.getEndDateTime().toLocalDate().toString());
+        txtEndTime.setText(event.getEndDateTime().toLocalTime().toString());
         selectedCoordinators.setAll(event.getCoordinators());
         comboExtraCoordinators.getSelectionModel().clearSelection();
 
@@ -166,7 +175,6 @@ public class ECreateController implements Initializable {
                     currentEvent.getCoordinators().add(user);
                 }
             }
-
 
             eventModel.updateEvent(currentEvent);
 

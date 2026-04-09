@@ -70,7 +70,7 @@ public class EventCardController {
 
         lblStartDateTime.setText("Start: " + event.getStartDateTime().format(formatter));
 
-        if (event.getEndDateTime() != null) {
+        if (event.getEndDateTime() != null && !event.getEndDateTime().equals(event.getStartDateTime())) {
             lblEndDateTime.setText("End: " + event.getEndDateTime().format(formatter));
         } else {
             lblEndDateTime.setText("");
