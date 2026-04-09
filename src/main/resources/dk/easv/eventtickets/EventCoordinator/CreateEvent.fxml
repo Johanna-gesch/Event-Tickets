@@ -20,7 +20,7 @@
         </Label>
         <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" styleClass="topBorder" VBox.vgrow="ALWAYS">
             <children>
-                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" styleClass="whiteLayerBox">
+                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="500.0" styleClass="whiteLayerBox">
                     <children>
                         <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Event Name" />
                         <TextField fx:id="txtName" styleClass="txtField">
@@ -128,8 +128,8 @@
                                 </Button>
                             </children>
                         </HBox>
-                        <ListView fx:id="lstSelectedCoordinator" prefHeight="200.0" prefWidth="478.0" />
-                        <Region prefHeight="200.0" prefWidth="200.0" />
+                        <ListView fx:id="lstSelectedCoordinator" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                         <Button mnemonicParsing="false" onAction="#onBtnSave" styleClass="btn" text="Save">
                             <VBox.margin>
                                 <Insets />

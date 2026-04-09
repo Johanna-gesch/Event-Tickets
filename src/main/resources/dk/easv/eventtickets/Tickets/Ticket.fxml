@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -62,20 +61,13 @@
                     <children>
                         <VBox alignment="CENTER" prefHeight="297.0" prefWidth="275.0" styleClass="ticketWhite">
                             <children>
-                                <ImageView fx:id="imgQrCode"  fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="imgQrCode" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                     <VBox.margin>
                                         <Insets bottom="10.0" />
                                     </VBox.margin>
                                     <!--
                                     <image>
                                         <Image url="@/dk/easv/eventtickets/Pics/QR.png" />
-                                    </image>
-                                    -->
-                                </ImageView>
-                                <ImageView  fitHeight="80.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-                                    <!---
-                                    <image>
-                                        <Image url="@/dk/easv/eventtickets/Pics/barcode.png" />
                                     </image>
                                     -->
                                 </ImageView>

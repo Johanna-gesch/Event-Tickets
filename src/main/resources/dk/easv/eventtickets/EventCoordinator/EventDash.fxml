@@ -41,7 +41,7 @@
 
         <ScrollPane fitToWidth="true" pannable="true" styleClass="BG" VBox.vgrow="ALWAYS">
             <content>
-                <TilePane fx:id="tilePane" alignment="TOP_CENTER" hgap="24.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="684.0" styleClass="BG" tileAlignment="TOP_CENTER" vgap="24.0">
+                <TilePane fx:id="tilePane" alignment="TOP_CENTER" hgap="24.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" styleClass="BG" tileAlignment="TOP_CENTER" vgap="24.0">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>

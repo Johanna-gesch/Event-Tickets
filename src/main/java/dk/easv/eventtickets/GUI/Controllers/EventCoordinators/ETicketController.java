@@ -83,6 +83,7 @@ public class ETicketController implements Initializable {
 
         List<TilePane> pages = createAllTicketPages(numOfTickets);
 
+        // 1 VBox = 1 A4 page
         VBox container = new VBox();
         container.setAlignment(Pos.TOP_CENTER);
         container.setPrefWidth(595);
@@ -113,6 +114,7 @@ public class ETicketController implements Initializable {
                 }
             }
 
+            // Save tickets as png in finder
             List<File> files = saveTicketsAsImages(numOfTickets);
 
             openMail(email);
@@ -181,6 +183,7 @@ public class ETicketController implements Initializable {
 
         List<TilePane> pages = createAllVoucherPages(numOfVouchers);
 
+        // 1 VBox = 1 A4 page
         VBox container = new VBox();
         container.setAlignment(Pos.TOP_CENTER);
         container.setPrefWidth(595);
@@ -257,6 +260,7 @@ public class ETicketController implements Initializable {
 
     private Parent createSingleVoucher() {
 
+        // If required fields have been filled out
         if (!txtVoucherType.getText().isEmpty() && !txtNumOfVouchers.getText().isEmpty()) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/dk/easv/eventtickets/Tickets/Voucher.fxml"));
@@ -293,8 +297,10 @@ public class ETicketController implements Initializable {
         tp.setPrefTileWidth(160);
         tp.setPrefTileHeight(96);
 
+        // returns lower number of the two
         int count = Math.min(numberOfVouchers, vouchersPerPage);
 
+        // If number of vouchers is higher than 21, then the for-loop only goes to 21, otherwise it goes to whatever number numberOfVouchers is
         for (int i = 0; i < count; i++) {
             tp.getChildren().add(createSingleVoucher());
         }
@@ -305,7 +311,7 @@ public class ETicketController implements Initializable {
     private List<TilePane> createAllVoucherPages(int totalVouchers) {
 
         int vouchersPerPage = 21;
-        int created = 0;
+        int created = 0; // created vouchers so far
 
         List<TilePane> pages = new ArrayList<>();
 
@@ -370,8 +376,10 @@ public class ETicketController implements Initializable {
         tp.setPrefTileWidth(195);
         tp.setPrefTileHeight(357.5);
 
+        // returns lower number of the two
         int count = Math.min(numberOfTickets, ticketsPerPage);
 
+        // If number of tickets is higher than 4, then the for-loop only goes to 4, otherwise it goes to whatever number numberOfTickets is
         for (int i = 0; i < count; i++) {
             tp.getChildren().add(createSingleTicket());
         }
@@ -382,7 +390,7 @@ public class ETicketController implements Initializable {
     private List<TilePane> createAllTicketPages(int totalTickets) {
 
         int ticketsPerPage = 4;
-        int created = 0;
+        int created = 0; // tickets created so far
 
         List<TilePane> pages = new ArrayList<>();
 
@@ -403,7 +411,7 @@ public class ETicketController implements Initializable {
         ScrollPane sp = new ScrollPane();
         sp.setContent(vb);
         vb.setFillWidth(true);
-        sp.setPrefSize(595, 842);
+        sp.setPrefSize(595, 842); // A4 size
 
         Scene scene = new Scene(sp);
 
@@ -412,15 +420,6 @@ public class ETicketController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.show();
     }
-
-
-    private void displayError(Throwable t) {
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Something is wrong");
-        alert.setHeaderText(t.getMessage());
-        alert.showAndWait();
-    }
-
 
     public void loadEventForTickets(Event event) {
         this.currentEvent = event;
@@ -440,6 +439,7 @@ public class ETicketController implements Initializable {
 
         List<TilePane> pages = createAllTicketPages(numOfTickets);
 
+        // 1 VBox = 1 A4 page
         VBox container = new VBox();
         container.setAlignment(Pos.TOP_CENTER);
         container.setPrefWidth(595);
@@ -480,5 +480,12 @@ public class ETicketController implements Initializable {
             e.printStackTrace();
             displayError(new Exception("Could not open mail client."));
         }
+    }
+
+    private void displayError(Throwable t) {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Something is wrong");
+        alert.setHeaderText(t.getMessage());
+        alert.showAndWait();
     }
 }
