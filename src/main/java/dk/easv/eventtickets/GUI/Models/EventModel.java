@@ -14,6 +14,7 @@ public class EventModel {
     private ObservableList<Event> eventsToBeViewed;
     private ObservableList<User> allCoordinators;
     private static EventModel instance;
+    private User currentUser;
 
     public EventModel() throws Exception {
         eMan = new EventManager();
@@ -27,6 +28,14 @@ public class EventModel {
 
     public void reloadEvents() throws Exception {
         eventsToBeViewed.setAll(eMan.getAllEvents());
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public ObservableList<User> getAllCoordinators() {
