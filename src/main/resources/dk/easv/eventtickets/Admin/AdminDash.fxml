@@ -13,12 +13,12 @@
     <children>
         <Label styleClass="title" text="Dashboard">
             <padding>
-                <Insets bottom="20.0" left="20.0" top="20.0" />
+                <Insets bottom="10.0" left="20.0" top="20.0" />
             </padding>
         </Label>
-        <HBox prefHeight="100.0" prefWidth="200.0" styleClass="topBorder" VBox.vgrow="ALWAYS">
+        <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
             <children>
-                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" styleClass="rightBorder" HBox.hgrow="ALWAYS">
+                <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                     <children>
                         <HBox alignment="CENTER" prefWidth="200.0">
                             <children>
@@ -38,7 +38,7 @@
                                 <ComboBox fx:id="cboUserFilter" prefHeight="32.0" prefWidth="120.0" styleClass="txtField" />
                             </children>
                             <padding>
-                                <Insets bottom="20.0" top="20.0" />
+                                <Insets bottom="30.0" top="10.0" />
                             </padding>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" styleClass="subTitle" text="Users">
@@ -76,7 +76,7 @@
                                 <ComboBox fx:id="cboEventFilter" prefHeight="32.0" prefWidth="107.0" styleClass="txtField" />
                             </children>
                             <padding>
-                                <Insets bottom="20.0" top="20.0" />
+                                <Insets bottom="30.0" top="10.0" />
                             </padding>
                         </HBox>
                         <Label maxWidth="1.7976931348623157E308" styleClass="subTitle" text="Events">
@@ -84,7 +84,7 @@
                                 <Insets left="25.0" />
                             </padding>
                         </Label>
-                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="400.0" styleClass="whiteLayerBox">
+                        <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="400.0">
                             <VBox.margin>
                                 <Insets top="10.0" />
                             </VBox.margin>

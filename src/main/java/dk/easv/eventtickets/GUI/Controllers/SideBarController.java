@@ -16,9 +16,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.io.IOException;
 
 public class SideBarController {
@@ -28,6 +31,8 @@ public class SideBarController {
     private Label lblNavName, lblNavType;
     @FXML
     private Button btnSecond, btnThird;
+    @FXML
+    private ImageView imgSidebar;
 
     private String role;
     private UserModel userModel;
@@ -139,5 +144,12 @@ public class SideBarController {
 
     public void setEventModel(EventModel eventModel) {
         this.eventModel = eventModel;
+    }
+
+    public void setAvatar(String imagePath) {
+        File file = new File("src/main/resources" + imagePath);
+        if (file.exists()) {
+            imgSidebar.setImage(new Image(file.toURI().toString()));
+        }
     }
 }

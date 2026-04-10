@@ -25,6 +25,18 @@
     -fx-background-color: #e37315;
 }
 
+.separator:vertical .line {
+    -fx-border-color: rgba(108, 80, 70, 0.5);
+    -fx-border-width: 0 1 0 0;
+    -fx-border-radius: 20;
+}
+
+.separator:horizontal .line {
+    -fx-border-color: rgba(108, 80, 70, 0.5);
+    -fx-border-width: 0 0 1 0;
+    -fx-border-radius: 20;
+}
+
 .btnDelete {
     -fx-background-color: #D05C2F;
     -fx-background-radius: 999;
@@ -52,12 +64,23 @@
     -fx-background-color: rgba(148, 148, 148, 0.3);
 }
 
-.txtField {
+.txtFieldSignIn {
     -fx-background-color: #F8F9F9;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
     -fx-border-width: 1;
-    -fx-border-color: #6C5046;
+    -fx-border-color: rgba(108, 80, 70, 0.75);
+    -fx-text-fill: #54362E;
+    -fx-prompt-text-fill: rgba(84, 54, 46, 0.3);
+    -fx-font-size: 14;
+}
+
+.txtField {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-color: rgba(108, 80, 70, 0.6);
     -fx-text-fill: #54362E;
     -fx-prompt-text-fill: rgba(84, 54, 46, 0.3);
     -fx-font-size: 14;
@@ -77,17 +100,6 @@
 
 .combo-box-popup .list-cell:hover {
     -fx-background-color: #E6E6E6;
-}
-
-.txtFieldRec {
-    -fx-background-color: #F8F9F9;
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-width: 1;
-    -fx-border-color: rgba(108, 80, 70, 0.5);
-    -fx-text-fill: rgba(84, 54, 46, 0.7);
-    -fx-prompt-text-fill: rgba(108, 80, 70, 0.5);
-    -fx-font-size: 14;
 }
 
 .picBG {
@@ -115,10 +127,7 @@
     -fx-font-size: 20;
     -fx-text-fill: #54362E;
 }
-.lblTextfieldRec {
-    -fx-font-size: 20;
-    -fx-text-fill: rgba(84, 54, 46, 0.7);
-}
+
 .combo-box .text-field {
     -fx-prompt-text-fill: rgba(84, 54, 46, 0.5);
     -fx-background-radius: 10;
@@ -148,33 +157,29 @@
 }
 
 .lstUsers {
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
     -fx-border-width: 1;
-    -fx-border-color: #6C5046;
+    -fx-border-color: rgba(108, 80, 70, 0.5);
 }
 
 .lstEvents {
-    -fx-background-color: transparent;
-    -fx-background-radius: 15 15 0 0;
-    -fx-border-radius: 15 15 0 0;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-color: rgba(108, 80, 70, 0.5);
 }
 
 .whiteLayerBox {
     -fx-background-color: #F8F9F9;
     -fx-background-radius: 15;
     -fx-border-radius: 15;
-    -fx-border-width: 1;
-    -fx-border-color: #6C5046;
-}
+    /*-fx-border-width: 1;*/
+    /*-fx-border-color: rgba(108, 80, 70, 0.2);*/
 
-.separator {
-    -fx-background-color: transparent;
-}
-
-.separator .line {
-    -fx-border-color: #6C5046;
-    -fx-border-width: 1 0 0 0;
+    -fx-effect:
+            dropshadow(gaussian, rgba(0,0,0,0.30), 30, 0, 0, 8),
+            dropshadow(gaussian, rgba(0,0,0,0.20), 10, 0, 0, 2);
 }
 
 .ticketSeparator {
@@ -242,9 +247,8 @@
 }
 
 .cardBox {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-background-radius: 12;
-    -fx-border-color: #6C5046;
     -fx-border-radius: 12;
 }
 
@@ -262,6 +266,7 @@
     -fx-font-weight: bold;
     -fx-text-fill: #54362E;
 }
+
 .list-view .list-cell:selected .cardName {
     -fx-text-fill: #54362E;
 }
@@ -346,7 +351,7 @@
     -fx-background-radius: 15;
     -fx-border-radius: 15;
     -fx-border-width: 1;
-    -fx-border-color: #6C5046;
+    -fx-border-color: rgba(108, 80, 70, 0.5);
 }
 .lstEventCoordinator .list-cell:filled:selected,
 .lstEventCoordinator .list-cell:filled:selected:hover {
@@ -369,7 +374,7 @@
 }
 
 .scroll-bar:vertical .thumb {
-    -fx-background-color: #b8a9c9;
+    -fx-background-color: rgba(108, 80, 70, 0.2);
     -fx-background-radius: 25em;
 }
 

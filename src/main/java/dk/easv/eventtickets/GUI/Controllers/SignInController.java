@@ -86,6 +86,7 @@ public class SignInController implements Initializable {
                         edc.setup();
                         sbmc.setRole("Event");
                         sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
+                        sbmc.setAvatar(userLoggingIn.getImagePath());
                     }
                     if (userLoggingIn.getRole() == UserRole.ADMIN) {
                         ADashController adc = (ADashController) sbmc.setView("/dk/easv/eventtickets/Admin/AdminDash.fxml");
@@ -95,6 +96,7 @@ public class SignInController implements Initializable {
                         adc.setup();
                         sbmc.setRole("Admin");
                         sbmc.setUsername(userLoggingIn.getFName() + " " + userLoggingIn.getLName());
+                        sbmc.setAvatar(userLoggingIn.getImagePath());
                     }
 
                 } else {

@@ -21,7 +21,7 @@
                     <children>
                         <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="70.0" styleClass="picBG">
                             <children>
-                                <ImageView fitHeight="70.0" fitWidth="70.0" preserveRatio="true" StackPane.alignment="CENTER">
+                                <ImageView fx:id="imgSidebar" fitHeight="70.0" fitWidth="70.0" preserveRatio="true" StackPane.alignment="CENTER">
                                     <clip>
                                         <Circle centerX="35.0" centerY="35.0" radius="35.0" />
                                     </clip>

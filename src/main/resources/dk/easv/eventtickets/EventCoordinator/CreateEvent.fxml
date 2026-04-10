@@ -15,141 +15,134 @@
     <children>
         <Label styleClass="title" text="Create Events">
             <padding>
-                <Insets bottom="20.0" left="20.0" top="20.0" />
+                <Insets bottom="20.0" />
             </padding>
         </Label>
-        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" styleClass="topBorder" VBox.vgrow="ALWAYS">
+        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="450.0" VBox.vgrow="ALWAYS">
             <children>
-                <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="500.0" styleClass="whiteLayerBox">
-                    <children>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Event Name" />
-                        <TextField fx:id="txtName" styleClass="txtField">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <HBox maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefWidth="200.0" spacing="10.0">
-                            <children>
-                                <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Date">
-                                            <VBox.margin>
-                                                <Insets top="5.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <TextField fx:id="txtStartDate" promptText="yyyy-mm-dd" styleClass="txtField">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </TextField>
-                                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Time">
-                                            <VBox.margin>
-                                                <Insets top="5.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <TextField fx:id="txtStartTime" styleClass="txtField">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </TextField>
-                                    </children>
-                                </VBox>
-                                <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="End Date">
-                                            <VBox.margin>
-                                                <Insets top="5.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <TextField fx:id="txtEndDate" promptText="yyyy-mm-dd" styleClass="txtFieldRec">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </TextField>
-                                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="End Time">
-                                            <VBox.margin>
-                                                <Insets top="5.0" />
-                                            </VBox.margin>
-                                        </Label>
-                                        <TextField fx:id="txtEndTime" styleClass="txtFieldRec">
-                                            <font>
-                                                <Font size="14.0" />
-                                            </font>
-                                        </TextField>
-                                    </children>
-                                </VBox>
-                            </children>
-                        </HBox>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Location">
-                            <VBox.margin>
-                                <Insets top="5.0" />
-                            </VBox.margin>
-                        </Label>
-                        <TextField fx:id="txtLocation" styleClass="txtField">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="Location Guidance">
-                            <VBox.margin>
-                                <Insets top="5.0" />
-                            </VBox.margin>
-                        </Label>
-                        <TextField maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" styleClass="txtFieldRec">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Notes">
-                            <VBox.margin>
-                                <Insets top="5.0" />
-                            </VBox.margin>
-                        </Label>
-                        <TextField fx:id="txtNotes" alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" styleClass="txtField">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </TextField>
-                        <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfieldRec" text="Assign extra coordinators">
-                            <VBox.margin>
-                                <Insets top="5.0" />
-                            </VBox.margin>
-                        </Label>
-                        <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="20.0">
-                            <children>
-                                <ComboBox fx:id="comboExtraCoordinators" prefHeight="32.0" prefWidth="294.0" promptText="🔍" styleClass="txtFieldRec" />
-                                <Button mnemonicParsing="false" onAction="#onbtnAddCoordinator" styleClass="btn" text="Add">
-                                    <font>
-                                        <Font size="16.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets bottom="-1.0" left="10.0" right="10.0" top="-1.0" />
-                                    </padding>
-                                </Button>
-                            </children>
-                        </HBox>
-                        <ListView fx:id="lstSelectedCoordinator" prefWidth="478.0" VBox.vgrow="ALWAYS" />
-                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#onBtnSave" styleClass="btn" text="Save">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                            <padding>
-                                <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
-                            </padding>
-                        </Button>
-                    </children>
-                    <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                    </padding>
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </VBox>
+                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Event Name" />
+                  <TextField fx:id="txtName" minHeight="-Infinity" prefHeight="40.0" styleClass="txtField">
+                      <font>
+                          <Font size="14.0" />
+                      </font>
+                  </TextField>
+                  <HBox maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefWidth="200.0" spacing="10.0">
+                      <children>
+                          <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                              <children>
+                                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Date">
+                                      <VBox.margin>
+                                          <Insets top="10.0" />
+                                      </VBox.margin>
+                                  </Label>
+                                  <TextField fx:id="txtStartDate" minHeight="-Infinity" prefHeight="40.0" promptText="yyyy-mm-dd" styleClass="txtField">
+                                      <font>
+                                          <Font size="14.0" />
+                                      </font>
+                                  </TextField>
+                                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Start Time">
+                                      <VBox.margin>
+                                          <Insets top="10.0" />
+                                      </VBox.margin>
+                                  </Label>
+                                  <TextField fx:id="txtStartTime" minHeight="-Infinity" prefHeight="40.0" styleClass="txtField">
+                                      <font>
+                                          <Font size="14.0" />
+                                      </font>
+                                  </TextField>
+                              </children>
+                          </VBox>
+                          <VBox alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                              <children>
+                                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="End Date">
+                                      <VBox.margin>
+                                          <Insets top="10.0" />
+                                      </VBox.margin>
+                                  </Label>
+                                  <TextField fx:id="txtEndDate" minHeight="-Infinity" prefHeight="40.0" promptText="yyyy-mm-dd" styleClass="txtField">
+                                      <font>
+                                          <Font size="14.0" />
+                                      </font>
+                                  </TextField>
+                                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="End Time">
+                                      <VBox.margin>
+                                          <Insets top="10.0" />
+                                      </VBox.margin>
+                                  </Label>
+                                  <TextField fx:id="txtEndTime" minHeight="-Infinity" prefHeight="40.0" styleClass="txtField">
+                                      <font>
+                                          <Font size="14.0" />
+                                      </font>
+                                  </TextField>
+                              </children>
+                          </VBox>
+                      </children>
+                  </HBox>
+                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Location">
+                      <VBox.margin>
+                          <Insets top="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtLocation" minHeight="-Infinity" prefHeight="40.0" styleClass="txtField">
+                      <font>
+                          <Font size="14.0" />
+                      </font>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="Location Guidance">
+                      <VBox.margin>
+                          <Insets top="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <TextField alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="60.0" styleClass="txtField">
+                      <font>
+                          <Font size="14.0" />
+                      </font>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="*Notes">
+                      <VBox.margin>
+                          <Insets top="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtNotes" alignment="TOP_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" styleClass="txtField">
+                      <font>
+                          <Font size="14.0" />
+                      </font>
+                  </TextField>
+                  <Label maxWidth="1.7976931348623157E308" styleClass="lblTextfield" text="Assign extra coordinators">
+                      <VBox.margin>
+                          <Insets top="10.0" />
+                      </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefWidth="200.0" spacing="20.0">
+                      <children>
+                          <ComboBox fx:id="comboExtraCoordinators" minHeight="-Infinity" prefHeight="40.0" prefWidth="294.0" promptText="🔍" styleClass="txtField" />
+                          <Button mnemonicParsing="false" onAction="#onbtnAddCoordinator" styleClass="btn" text="Add">
+                              <font>
+                                  <Font size="16.0" />
+                              </font>
+                              <padding>
+                                  <Insets bottom="-1.0" left="10.0" right="10.0" top="-1.0" />
+                              </padding>
+                          </Button>
+                      </children>
+                  </HBox>
+                  <ListView fx:id="lstSelectedCoordinator" prefWidth="478.0" VBox.vgrow="ALWAYS" />
+                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#onBtnSave" styleClass="btn" text="Save">
+                      <VBox.margin>
+                          <Insets />
+                      </VBox.margin>
+                      <font>
+                          <Font size="18.0" />
+                      </font>
+                      <padding>
+                          <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                      </padding>
+                  </Button>
             </children>
         </VBox>
     </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
 </VBox>

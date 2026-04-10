@@ -18,7 +18,7 @@
       </Label>
 
                <!-- List of coordinators -->
-         <VBox spacing="10" styleClass="topBorder">
+         <VBox spacing="5.0">
              <Label styleClass="lblTextfield" text="Select coordinators for this event:" />
              <ListView fx:id="EventCoordinatorEvent" prefHeight="300" styleClass="lstEventCoordinator" />
          <padding>
